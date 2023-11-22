@@ -1,4 +1,4 @@
-package com.example.coupang.controller;
+package com.example.coupang.interfaces;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
