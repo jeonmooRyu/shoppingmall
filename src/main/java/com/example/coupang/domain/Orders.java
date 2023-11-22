@@ -3,17 +3,22 @@ package com.example.coupang.domain;
 import com.example.coupang.domain.baseTime.BaseTime;
 import com.example.coupang.domain.enums.OrderStatus;
 import com.example.coupang.domain.enums.PaymentType;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
 import java.util.List;
 
 @Entity
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
 @Getter
+@ToString
 public class Orders extends BaseTime {
-    @Id private Long id;
+
+    @Id @GeneratedValue(strategy = GenerationType.AUTO)
+    private Long id;
     @Setter private String uid; // 구매자 uid
     @Setter private String orderNumber;
     @Setter private String receiverName;

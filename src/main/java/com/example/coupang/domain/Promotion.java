@@ -2,21 +2,22 @@ package com.example.coupang.domain;
 
 import com.example.coupang.domain.baseTime.BaseTime;
 import com.example.coupang.domain.enums.CardCompany;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
+import javax.persistence.*;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
 @Entity
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
 @Getter
+@ToString
 public class Promotion extends BaseTime {
 
-    @Id private Long id;
+    @Id @GeneratedValue(strategy = GenerationType.AUTO)
+    private Long id;
     @Setter private String promotionCode;
     @Setter private CardCompany cardCompany;
     @Setter private BigDecimal discountRate;

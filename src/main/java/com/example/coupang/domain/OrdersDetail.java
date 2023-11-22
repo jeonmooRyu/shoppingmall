@@ -1,17 +1,21 @@
 package com.example.coupang.domain;
 
 import com.example.coupang.domain.baseTime.BaseTime;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
 
 @Entity
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
 @Getter
+@ToString
 public class OrdersDetail extends BaseTime {
 
-    @Id private Long id;
+    @Id @GeneratedValue(strategy = GenerationType.AUTO)
+    private Long id;
     @Setter private String orderNumber;
     @Setter private String productCode;
     @Setter private BigDecimal unitPrice;   // 개당 가격

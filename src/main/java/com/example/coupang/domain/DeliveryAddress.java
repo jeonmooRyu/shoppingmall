@@ -1,19 +1,20 @@
 package com.example.coupang.domain;
 
 import com.example.coupang.domain.baseTime.BaseTime;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
+import javax.persistence.*;
 
 @Entity
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
 @Getter
+@ToString
 public class DeliveryAddress extends BaseTime {
 
-    @Id private Long id;
+    @Id @GeneratedValue(strategy = GenerationType.AUTO)
+    private Long id;
     @Setter private String uid;
     @Setter private Boolean isDefault;
     @Setter private Boolean isRocketWow;

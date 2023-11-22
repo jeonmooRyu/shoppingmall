@@ -3,18 +3,22 @@ package com.example.coupang.domain;
 import com.example.coupang.domain.baseTime.BaseTime;
 import com.example.coupang.domain.enums.ProductType;
 import com.example.coupang.domain.enums.ServiceType;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
 import java.util.List;
 
 @Entity
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
 @Getter
+@ToString
 public class Product extends BaseTime {
 
-    @Id private Long id;
+    @Id @GeneratedValue(strategy = GenerationType.AUTO)
+    private Long id;
     @Setter private String productCode;
     @Setter private ProductType productType;
     @Setter private ServiceType serviceType;
