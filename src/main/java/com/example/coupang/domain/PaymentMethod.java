@@ -9,6 +9,8 @@ import lombok.Setter;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 
 @Entity
 @Getter
@@ -20,5 +22,9 @@ public class PaymentMethod extends BaseTime {
     @Setter private CardCompany cardCompany;
     @Setter private String cardNumber;
     @Setter private String account;
+
+    @ManyToOne
+    @JoinColumn(name = "users.id")
+    private Users user;
 
 }

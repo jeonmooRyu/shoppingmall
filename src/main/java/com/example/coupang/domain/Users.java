@@ -9,6 +9,8 @@ import lombok.ToString;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
+import java.util.List;
 
 @Entity
 @Getter
@@ -22,5 +24,20 @@ public class Users extends BaseTime {
     @Setter private UserType userType;
     @Setter private Role role;
     @Setter private Integer point;
+
+    @OneToMany(mappedBy = "user")
+    private List<Orders> orders;
+
+    @OneToMany(mappedBy = "user")
+    private List<Cart> carts;
+
+    @OneToMany(mappedBy = "user")
+    private List<DeliveryAddress> deliveryAddresses;
+
+    @OneToMany(mappedBy = "user")
+    private List<PaymentMethod> paymentMethods;
+
+    @OneToMany(mappedBy = "user")
+    private List<Auth> auths;
 
 }

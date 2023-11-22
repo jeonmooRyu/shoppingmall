@@ -6,9 +6,9 @@ import com.example.coupang.domain.enums.ServiceType;
 import lombok.Getter;
 import lombok.Setter;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.math.BigDecimal;
+import java.util.List;
 
 @Entity
 @Getter
@@ -21,5 +21,16 @@ public class Product extends BaseTime {
     @Setter private BigDecimal price;
     @Setter private Boolean isDelete;
     @Setter private String seller;
+
+    @OneToOne(mappedBy = "product")
+    @JoinColumn
+    private OrdersDetail ordersDetail;
+
+    @OneToMany(mappedBy = "product")
+    private List<Review> review;
+
+    @OneToMany(mappedBy = "product")
+    private List<Promotion> promotions;
+
 
 }

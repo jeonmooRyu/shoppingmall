@@ -3,13 +3,15 @@ package com.example.coupang.domain;
 import com.example.coupang.domain.baseTime.BaseTime;
 import com.example.coupang.domain.enums.OrderStatus;
 import com.example.coupang.domain.enums.PaymentType;
+import lombok.Getter;
 import lombok.Setter;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.math.BigDecimal;
+import java.util.List;
 
 @Entity
+@Getter
 public class Orders extends BaseTime {
     @Id private Long id;
     @Setter private String uid; // 구매자 uid
@@ -25,5 +27,12 @@ public class Orders extends BaseTime {
     @Setter private BigDecimal promotionDiscount;
     @Setter private PaymentType paymentType;
     @Setter private OrderStatus orderStatus;
+
+    @ManyToOne
+    @JoinColumn(name = "user.id")
+    private Users user;
+
+    @OneToMany(mappedBy = "order")
+    private List<OrdersDetail> ordersDetails;
 
 }

@@ -7,6 +7,8 @@ import lombok.Setter;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
@@ -20,4 +22,8 @@ public class Promotion extends BaseTime {
     @Setter private BigDecimal discountRate;
     @Setter private LocalDateTime promotionStartDateTime;
     @Setter private LocalDateTime promotionEndDateTime;
+
+    @ManyToOne
+    @JoinColumn(name = "product.id")
+    private Product product;
 }

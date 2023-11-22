@@ -6,6 +6,8 @@ import lombok.Setter;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 
 @Entity
 @Getter
@@ -22,4 +24,8 @@ public class DeliveryAddress extends BaseTime {
     @Setter private String receiverTel;
     @Setter private String dayTimeDeliverMsg;
     @Setter private String nightTimeDeliverMsg;
+
+    @ManyToOne
+    @JoinColumn(name = "users.id")
+    private Users user;
 }
