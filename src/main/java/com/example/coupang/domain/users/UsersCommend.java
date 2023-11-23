@@ -9,7 +9,7 @@ public class UsersCommend {
     @Builder
     @NoArgsConstructor
     @AllArgsConstructor
-    public static class signUpRequest {
+    public static class SignUpRequest {
         private String email;
         private String password;
         private String name;

@@ -14,7 +14,7 @@ public class UsersFacade {
     private final UsersService usersService;
 
     @Transactional
-    public Users signUp(UsersCommend.signUpRequest usersCommend) {
+    public Users signUp(UsersCommend.SignUpRequest usersCommend) {
         var user = usersCommend.toEntity();
         return usersService.signUp(user);
     }

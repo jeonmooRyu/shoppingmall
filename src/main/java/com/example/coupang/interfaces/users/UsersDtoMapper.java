@@ -14,5 +14,5 @@ public interface UsersDtoMapper {
 //    @Mappings({
 //            @Mapping(target = "email", source = "email")
 //    })
-    UsersCommend.signUpRequest of(UsersDto.SignUpUserRequest request);
+    UsersCommend.SignUpRequest of(UsersDto.SignUpUserRequest request);
 }
