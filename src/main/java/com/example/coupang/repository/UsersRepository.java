@@ -1,6 +1,6 @@
 package com.example.coupang.repository;
 
-import com.example.coupang.domain.Users;
+import com.example.coupang.domain.users.Users;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

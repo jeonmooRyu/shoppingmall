@@ -3,7 +3,7 @@ package com.example.coupang.domain.enums;
 import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
-public enum Role {
+public enum Authority {
 
     // 권한관
     COMMON("일반권한"),

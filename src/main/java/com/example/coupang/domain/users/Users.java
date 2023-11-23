@@ -1,9 +1,9 @@
-package com.example.coupang.domain;
+package com.example.coupang.domain.users;
 
+import com.example.coupang.domain.Cart;
 import com.example.coupang.domain.baseTime.BaseTime;
-import com.example.coupang.domain.enums.Role;
+import com.example.coupang.domain.enums.Authority;
 import com.example.coupang.domain.enums.UserType;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 
 import javax.persistence.*;
@@ -14,17 +14,18 @@ import java.util.List;
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
-@Builder
 @ToString
 public class Users extends BaseTime {
 
     @Id @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
+    @Setter private String email;   // 유저 계정
+    @Setter private String password;   // 유저 계정
     @Setter private String uid;
     @Setter private String name;
     @Setter private String phoneNumber;
     @Setter private UserType userType;
-    @Setter private Role role;
+    @Setter private Authority authority;
     @Setter private Integer point;
 
 //    @OneToMany(mappedBy = "user")
@@ -41,5 +42,17 @@ public class Users extends BaseTime {
 //
 //    @OneToMany(mappedBy = "user")
 //    private List<Auth> auths;
+
+    @Builder
+    private Users(String email, String name, String phoneNumber, String password) {
+        this.email = email;
+        this.name = name;
+        this.phoneNumber = phoneNumber;
+        this.password = password;
+        this.userType = UserType.MEMBER_COMMON;
+        this.uid = "testUid";
+        this.point = 0;
+        this.authority = Authority.COMMON;
+    }
 
 }

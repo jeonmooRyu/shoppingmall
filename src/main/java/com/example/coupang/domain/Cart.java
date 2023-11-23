@@ -1,7 +1,7 @@
 package com.example.coupang.domain;
 
 import com.example.coupang.domain.baseTime.BaseTime;
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.example.coupang.domain.users.Users;
 import lombok.*;
 
 import javax.persistence.*;

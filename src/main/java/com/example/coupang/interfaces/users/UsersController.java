@@ -1,42 +1,28 @@
 package com.example.coupang.interfaces.users;
 
-import com.example.coupang.domain.Cart;
-import com.example.coupang.domain.Users;
-import com.example.coupang.repository.UsersRepository;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.example.coupang.application.UsersFacade;
+import com.example.coupang.domain.users.Users;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
-import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import java.util.List;
-
 @Controller
 @RequestMapping("/users/v1")
+@RequiredArgsConstructor
 public class UsersController {
 
-    @Autowired
-    private UsersRepository usersRepository;
+    private final UsersDtoMapper usersDtoMapper;
+    private final UsersFacade usersFacade;
 
-    @GetMapping
-    @Transactional
-    public @ResponseBody String test() {
-        var user = usersRepository.findById(1L).orElseThrow();
-        List<Cart> carts = user.getCarts();
-        return user.getId().toString();
-    }
 
     @PostMapping
-    public @ResponseBody Users joinUser() {
-        var user = Users.builder()
-                .name("testName")
-                .uid("testUid")
-                .phoneNumber("testPhone")
-                .build();
-        usersRepository.save(user);
-        return user;
+    public @ResponseBody String signUp(@RequestBody UsersDto.SignUpUserRequest request) {
+        var usersCommend = usersDtoMapper.of(request);
+        var result = usersFacade.signUp(usersCommend);
+        return result.toString();
     }
 
 }

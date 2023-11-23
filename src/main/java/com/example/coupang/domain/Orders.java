@@ -3,6 +3,7 @@ package com.example.coupang.domain;
 import com.example.coupang.domain.baseTime.BaseTime;
 import com.example.coupang.domain.enums.OrderStatus;
 import com.example.coupang.domain.enums.PaymentType;
+import com.example.coupang.domain.users.Users;
 import lombok.*;
 
 import javax.persistence.*;

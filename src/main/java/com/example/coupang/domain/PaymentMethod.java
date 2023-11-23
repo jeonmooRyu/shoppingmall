@@ -4,6 +4,7 @@ import com.example.coupang.domain.baseTime.BaseTime;
 import com.example.coupang.domain.enums.Bank;
 import com.example.coupang.domain.enums.CardCompany;
 import com.example.coupang.domain.enums.PaymentType;
+import com.example.coupang.domain.users.Users;
 import lombok.*;
 
 import javax.persistence.*;
