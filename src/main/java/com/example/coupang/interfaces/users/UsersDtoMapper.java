@@ -11,8 +11,5 @@ import org.mapstruct.factory.Mappers;
 )
 public interface UsersDtoMapper {
 
-//    @Mappings({
-//            @Mapping(target = "email", source = "email")
-//    })
     UsersCommend.SignUpRequest of(UsersDto.SignUpUserRequest request);
 }

@@ -1,6 +1,7 @@
 package com.example.coupang.domain;
 
 import com.example.coupang.domain.baseTime.BaseTime;
+import com.example.coupang.domain.product.Product;
 import lombok.*;
 
 import javax.persistence.*;

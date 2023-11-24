@@ -1,5 +1,8 @@
-package com.example.coupang.domain;
+package com.example.coupang.domain.product;
 
+import com.example.coupang.domain.OrdersDetail;
+import com.example.coupang.domain.Promotion;
+import com.example.coupang.domain.Review;
 import com.example.coupang.domain.baseTime.BaseTime;
 import com.example.coupang.domain.enums.ProductType;
 import com.example.coupang.domain.enums.ServiceType;
@@ -12,12 +15,11 @@ import java.util.List;
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor
-@Builder
 @Getter
 @ToString
 public class Product extends BaseTime {
 
-    @Id @GeneratedValue(strategy = GenerationType.AUTO)
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @Setter private String productCode;
     @Setter private ProductType productType;
@@ -25,6 +27,7 @@ public class Product extends BaseTime {
     @Setter private BigDecimal price;
     @Setter private Boolean isDelete;
     @Setter private String seller;
+    @Setter private String image;
 
     @OneToOne(mappedBy = "product")
     @JoinColumn
@@ -36,5 +39,14 @@ public class Product extends BaseTime {
     @OneToMany(mappedBy = "product")
     private List<Promotion> promotions;
 
-
+    @Builder
+    public Product(String productCode, ProductType productType, ServiceType serviceType, BigDecimal price, String seller, String image) {
+        this.productCode = productCode;
+        this.productType = productType;
+        this.serviceType = serviceType;
+        this.price = price;
+        this.isDelete = false;
+        this.seller = seller;
+        this.image = image;
+    }
 }
