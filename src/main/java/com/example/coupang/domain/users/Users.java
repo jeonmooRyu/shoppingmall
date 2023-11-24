@@ -17,7 +17,7 @@ import java.util.List;
 @ToString
 public class Users extends BaseTime {
 
-    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Id @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     @Setter private String email;   // 유저 계정
     @Setter private String password;   // 유저 계정

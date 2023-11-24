@@ -1,6 +1,6 @@
 package com.example.coupang.domain.product;
 
-import com.example.coupang.domain.OrdersDetail;
+import com.example.coupang.domain.orders.OrdersDetail;
 import com.example.coupang.domain.Promotion;
 import com.example.coupang.domain.Review;
 import com.example.coupang.domain.baseTime.BaseTime;
@@ -19,7 +19,7 @@ import java.util.List;
 @ToString
 public class Product extends BaseTime {
 
-    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Id @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     @Setter private String productCode;
     @Setter private ProductType productType;
