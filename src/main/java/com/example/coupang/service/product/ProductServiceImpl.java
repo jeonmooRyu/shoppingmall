@@ -1,4 +1,4 @@
-package com.example.coupang.service.users;
+package com.example.coupang.service.product;
 
 import com.example.coupang.domain.product.Product;
 import com.example.coupang.repository.ProductRepository;

@@ -3,7 +3,7 @@ package com.example.coupang.application;
 import com.example.coupang.domain.orders.Orders;
 import com.example.coupang.domain.orders.OrdersCommend;
 import com.example.coupang.repository.OrdersRepository;
-import com.example.coupang.service.users.ProductService;
+import com.example.coupang.service.product.ProductService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
