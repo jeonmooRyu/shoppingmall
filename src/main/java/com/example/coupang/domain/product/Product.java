@@ -29,9 +29,9 @@ public class Product extends BaseTime {
     @Setter private String seller;
     @Setter private String image;
 
-    @OneToOne(mappedBy = "product")
-    @JoinColumn
-    private OrdersDetail ordersDetail;
+//    @OneToOne(mappedBy = "product")
+//    @JoinColumn
+//    private OrdersDetail ordersDetail;
 
     @OneToMany(mappedBy = "product")
     private List<Review> review;

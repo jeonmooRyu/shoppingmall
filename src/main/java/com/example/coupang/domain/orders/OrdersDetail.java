@@ -26,9 +26,9 @@ public class OrdersDetail extends BaseTime {
     @JoinColumn(name = "orders.id")
     private Orders orders;
 
-    @OneToOne
-    @JoinColumn(name = "product.id")
-    private Product product;
+//    @OneToOne
+//    @JoinColumn(name = "product.id")
+//    private Product product;
 
     @Builder
     public OrdersDetail(String productCode, BigDecimal unitPrice, Integer quantity) {
