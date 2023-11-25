@@ -19,7 +19,7 @@ public class ProductController {
     @PostMapping
     public @ResponseBody String registProduct(@RequestBody ProductDto.ProductRegistRequest request) {
         var productRegistCommend = productDtoMapper.of(request);
-        var result = productFacade.productRegist(productRegistCommend);
+        var result = productFacade.registProduct(productRegistCommend);
         return request.toString();
     }
 }

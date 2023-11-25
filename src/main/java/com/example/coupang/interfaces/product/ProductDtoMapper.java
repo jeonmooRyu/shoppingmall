@@ -1,9 +1,7 @@
 package com.example.coupang.interfaces.product;
 
 import com.example.coupang.domain.product.ProductCommend;
-import org.mapstruct.InjectionStrategy;
-import org.mapstruct.Mapper;
-import org.mapstruct.ReportingPolicy;
+import org.mapstruct.*;
 
 @Mapper(componentModel = "spring",
         injectionStrategy = InjectionStrategy.CONSTRUCTOR,

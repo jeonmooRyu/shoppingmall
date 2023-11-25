@@ -19,6 +19,7 @@ public class OrdersDetail extends BaseTime {
     private Long id;
 //    @Setter private String orderNumber;
     @Setter private String productCode;
+    @Setter private String productName;
     @Setter private BigDecimal unitPrice;   // 개당 가격
     @Setter private Integer quantity;
 
@@ -31,8 +32,9 @@ public class OrdersDetail extends BaseTime {
 //    private Product product;
 
     @Builder
-    public OrdersDetail(String productCode, BigDecimal unitPrice, Integer quantity) {
+    public OrdersDetail(String productCode, String productName, BigDecimal unitPrice, Integer quantity) {
         this.productCode = productCode;
+        this.productName = productName;
         this.unitPrice = unitPrice;
         this.quantity = quantity;
     }

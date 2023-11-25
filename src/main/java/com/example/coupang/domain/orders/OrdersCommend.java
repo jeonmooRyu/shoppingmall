@@ -63,12 +63,14 @@ public class OrdersCommend {
         @ToString
         public static class OrdersDetail {
             private String productCode;
+            private String productName;
             private BigDecimal unitPrice;   // 개당 가격
             private Integer quantity;
 
             public com.example.coupang.domain.orders.OrdersDetail toEntity() {
                 return com.example.coupang.domain.orders.OrdersDetail.builder()
                         .productCode(productCode)
+                        .productName(productName)
                         .unitPrice(unitPrice)
                         .quantity(quantity)
                         .build();

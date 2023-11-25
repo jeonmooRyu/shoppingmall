@@ -3,6 +3,7 @@ package com.example.coupang.application;
 import com.example.coupang.domain.product.Product;
 import com.example.coupang.domain.product.ProductCommend;
 import com.example.coupang.repository.ProductRepository;
+import com.example.coupang.service.users.ProductService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -10,10 +11,10 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 public class ProductFacade {
 
-    private final ProductRepository productRepository;
+    private final ProductService productService;
 
-    public Product productRegist(ProductCommend.ProductRegist commend) {
+    public Product registProduct(ProductCommend.ProductRegist commend) {
         var product = commend.toEntity();
-        return productRepository.save(product);
+        return productService.registProduct(product);
     }
 }

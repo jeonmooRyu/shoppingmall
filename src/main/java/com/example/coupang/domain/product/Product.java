@@ -22,6 +22,7 @@ public class Product extends BaseTime {
     @Id @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     @Setter private String productCode;
+    @Setter private String productName;
     @Setter private ProductType productType;
     @Setter private ServiceType serviceType;
     @Setter private BigDecimal price;
@@ -40,8 +41,9 @@ public class Product extends BaseTime {
     private List<Promotion> promotions;
 
     @Builder
-    public Product(String productCode, ProductType productType, ServiceType serviceType, BigDecimal price, String seller, String image) {
+    public Product(String productCode, String productName, ProductType productType, ServiceType serviceType, BigDecimal price, String seller, String image) {
         this.productCode = productCode;
+        this.productName = productName;
         this.productType = productType;
         this.serviceType = serviceType;
         this.price = price;
