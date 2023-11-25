@@ -1,5 +1,6 @@
 package com.example.coupang.domain.users;
 
+import com.example.coupang.common.TokenGenerator;
 import com.example.coupang.domain.Cart;
 import com.example.coupang.domain.baseTime.BaseTime;
 import com.example.coupang.domain.enums.Authority;
@@ -50,7 +51,7 @@ public class Users extends BaseTime {
         this.phoneNumber = phoneNumber;
         this.password = password;
         this.userType = UserType.MEMBER_COMMON;
-        this.uid = "testUid";
+        this.uid = TokenGenerator.generateUid();
         this.point = 0;
         this.authority = Authority.COMMON;
     }
