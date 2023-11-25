@@ -23,7 +23,7 @@ public class OrdersController {
                 .toList();
         var commend = ordersDtoMapper.of(request, ordersDetailsCommend);
         var result = ordersFacade.registOrder(commend);
-        return result.getOrderNumber();
+        return result.getOrderToken();
     }
 
 }

@@ -14,4 +14,5 @@ public class OrdersServiceImpl implements OrdersService{
     public Orders registOrder(Orders orders) {
         return ordersRepository.save(orders);
     }
+
 }

@@ -1,5 +1,6 @@
 package com.example.coupang.domain.orders;
 
+import com.example.coupang.common.TokenGenerator;
 import com.example.coupang.domain.baseTime.BaseTime;
 import com.example.coupang.domain.enums.OrderStatus;
 import com.example.coupang.domain.enums.PaymentType;
@@ -20,7 +21,7 @@ public class Orders extends BaseTime {
     @Id @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     @Setter private String uid; // 구매자 uid
-    @Setter private String orderNumber;
+    @Setter private String orderToken;
     @Setter private String receiverName;
     @Setter private String receiverTel;
     @Setter private String receiverEmail;
@@ -46,7 +47,7 @@ public class Orders extends BaseTime {
                   BigDecimal totalPrice, BigDecimal deliveryFee, BigDecimal promotionDiscount,
                   PaymentType paymentType, List<OrdersDetail> ordersDetails) {
         this.uid = uid;
-        this.orderNumber = "testOrderNumber";
+        this.orderToken = TokenGenerator.generateOrderToken();
         this.receiverName = receiverName;
         this.receiverTel = receiverTel;
         this.receiverEmail = receiverEmail;
