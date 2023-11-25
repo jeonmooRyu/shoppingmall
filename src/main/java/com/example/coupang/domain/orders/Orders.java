@@ -37,7 +37,7 @@ public class Orders extends BaseTime {
     @JoinColumn(name = "user.id")
     private Users user;
 
-    @OneToMany(mappedBy = "orders")
+    @OneToMany(mappedBy = "orders", cascade = CascadeType.PERSIST, orphanRemoval = true)
     private List<OrdersDetail> ordersDetails;
 
     @Builder
