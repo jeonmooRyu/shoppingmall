@@ -14,7 +14,6 @@ public class ProductCommend {
     @NoArgsConstructor
     @AllArgsConstructor
     public static class ProductRegist {
-        private String productCode;
         private String productName;
         private ProductType productType;
         private ServiceType serviceType;
@@ -24,7 +23,6 @@ public class ProductCommend {
 
         public Product toEntity() {
             return Product.builder()
-                    .productCode(productCode)
                     .productName(productName)
                     .productType(productType)
                     .serviceType(serviceType)

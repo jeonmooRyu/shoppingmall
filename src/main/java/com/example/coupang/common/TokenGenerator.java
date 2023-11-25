@@ -13,6 +13,7 @@ import java.util.UUID;
 public class TokenGenerator {
 
     private static final int ORDER_TOKEN_LENGTH = 18;
+    private static final int PRODUCT_CODE_LENGTH = 20;
 
 
     // uid 생성
@@ -25,5 +26,10 @@ public class TokenGenerator {
     public static String generateOrderToken() {
         var prefix = LocalDate.now().format(DateTimeFormatter.ofPattern("yyMMdd"));
         return prefix + "-" + RandomStringUtils.randomNumeric(ORDER_TOKEN_LENGTH - prefix.length());
+    }
+
+    // 상품코드 생성
+    public static String generateProductCode() {
+        return RandomStringUtils.randomAlphanumeric(PRODUCT_CODE_LENGTH);
     }
 }

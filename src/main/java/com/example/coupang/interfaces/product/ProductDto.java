@@ -14,7 +14,6 @@ public class ProductDto {
     @Setter
     @ToString
     public static class ProductRegistRequest {
-        private String productCode;
         private String productName;
         private ProductType productType;
         private ServiceType serviceType;

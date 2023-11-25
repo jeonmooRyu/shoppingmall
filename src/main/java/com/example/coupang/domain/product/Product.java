@@ -1,5 +1,6 @@
 package com.example.coupang.domain.product;
 
+import com.example.coupang.common.TokenGenerator;
 import com.example.coupang.domain.orders.OrdersDetail;
 import com.example.coupang.domain.Promotion;
 import com.example.coupang.domain.Review;
@@ -41,8 +42,8 @@ public class Product extends BaseTime {
     private List<Promotion> promotions;
 
     @Builder
-    public Product(String productCode, String productName, ProductType productType, ServiceType serviceType, BigDecimal price, String seller, String image) {
-        this.productCode = productCode;
+    public Product(String productName, ProductType productType, ServiceType serviceType, BigDecimal price, String seller, String image) {
+        this.productCode = TokenGenerator.generateProductCode();
         this.productName = productName;
         this.productType = productType;
         this.serviceType = serviceType;
