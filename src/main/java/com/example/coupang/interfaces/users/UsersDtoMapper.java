@@ -12,4 +12,6 @@ import org.mapstruct.factory.Mappers;
 public interface UsersDtoMapper {
 
     UsersCommend.SignUpRequest of(UsersDto.SignUpUserRequest request);
+
+    UsersDto.SignUpCheckEmailResponse toResponse(Boolean isDuplicated);
 }

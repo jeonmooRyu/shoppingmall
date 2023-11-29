@@ -22,5 +22,20 @@ public class UsersDto {
         private String password;
     }
 
+    @Getter
+    @Setter
+    @ToString
+    public static class SignUpCheckEmailRequest {
+        @NonNull
+        private String email;
+    }
+
+    @Getter
+    @Setter
+    @ToString
+    public static class SignUpCheckEmailResponse {
+        private Boolean isDuplicated;
+    }
+
 
 }
