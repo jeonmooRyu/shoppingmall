@@ -3,37 +3,158 @@
 <head>
     <meta charset="UTF-8">
     <title>회원가입 페이지</title>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
 </head>
 <body>
   <h1>회원가입 페이지</h1>
   <form action="/users/v1" method="post">
       <div class="form-group">
-          <label for="name">이름</label>
-          <input type="text" id="name" name="name" placeholder="이름을 입력하세요">
-      </div>
-      <br>
-      <div class="form-group">
-          <label for="name">아이디</label>
-          <input type="text" id="email" name="email" placeholder="email을 입력하세요">
+          <span><label for="name">아이디</label></span>
+          <span><input type="email" id="email" name="email" placeholder="아이디(이메일)" required onblur="checkEmail()"></span>
+          <span><button type="button" onclick="checkDuplicateEmail()">중복확인</button></span>
+          <div id="emailErrorMsg"></div>
       </div>
       <br>
       <div class="form-group">
           <label for="name">비밀번호</label>
-          <input type="password" id="password" name="password" placeholder="비밀번호를 입력하세요">
+          <input type="password" id="password1" name="password" placeholder="비밀번호" required onblur="checkPassword1()">
+          <div>최소 하나의 영문과 특수기호가 포함되고 8~20자로 입력해주세요.</div>
+          <div id="pw1ErrorMsg"></div>
       </div>
       <br>
       <div class="form-group">
           <label for="name">비밀번호 확인</label>
-          <input type="password" id="password2" name="password2" placeholder="비밀번호를 한번 더 입력하세요">
+          <input type="password" id="password2" name="password2" placeholder="비밀번호 확인" required onblur="checkPassword2()">
+          <div id="pw2ErrorMsg"></div>
+      </div>
+      <br>
+
+      <div class="form-group">
+          <label for="name">이름</label>
+          <input type="text" id="name" name="name" placeholder="이름" required onblur="checkName()">
+          <div id="nameErrorMsg"></div>
       </div>
       <br>
       <div class="form-group">
           <label for="name">휴대폰 번호</label>
-          <input type="text" id="phone" name="phoneNumber" placeholder="휴대폰 번호를 입력하세요">
+          <input type="number" id="phone" name="phoneNumber" placeholder="휴대폰번호" maxlength="11" onblur="checkPhone()">
+          <div id="phoneErrorMsg"></div>
       </div>
+<!--      <div>-->
+<!--          <input type="checkbox", id="checkAllBtn"> 모두 확인하였으며 동의합니다.-->
+<!--          <input type="checkbox", id="ageTerms"> [필수] 만 14세 이상입니다-->
+<!--          <input type="checkbox", id="serviceUseTerms"> [필수] 쿠팡 이용약관 동의-->
+<!--          <input type="checkbox", id="eftTerms"> [필수] 전자금융거래 이용약관 동의-->
+<!--          <input type="checkbox", id="userInfoColTerms"> [필수] 개인정보 수집 및 이용 동의-->
+<!--          <input type="checkbox", id="userInfoOfferTerms"> [선택] 마케팅 목적의 개인정보 수집 및 이용 동의-->
+<!--          <input type="checkbox", id="marketingTerms"> [선택] 광고성 정보 수신 동의-->
+<!--          <input type="checkbox", id="emailTerms"> [선택] 이메일 수신 동의-->
+<!--          <input type="checkbox", id="smsTerms"> [선택] SMS, SNS 수신 동의-->
+<!--          <input type="checkbox", id="appPushTerms"> [선택] 앱 푸시 수신 동의-->
+<!--      </div>-->
       <br>
       <button type="submit">등록</button>
   </form>
+<script>
+    let isMailCheck = false;
+    let isNameCheck = false;
+    let isPw1Check = false;
+    let isPw2Check = false;
+    let isPhoneCheck = false;
+
+    // 이메일 중복확인
+    const EMAIL_DUPLICATED_ERROR_MSG = "중복된 이메일 입니다.";
+    function checkDuplicateEmail() {
+        let usersEmail = document.getElementById("email").value;
+        let serverUrl = "http://localhost:8080/users/v1/signUp/check";
+        $.ajax({
+            url : serverUrl,
+            contentType : "application/json",
+            dataType : "json",
+            data : JSON.stringify({email : usersEmail}),
+            type : "post",
+            success : function(response) {
+                if (response.isDuplicated) {
+                    isMailCheck = false;
+                    document.getElementById("emailErrorMsg").innerText = EMAIL_DUPLICATED_ERROR_MSG;
+                } else {
+                    isMailCheck = true;
+                }
+            }
+        })
+
+    }
+
+    // 이메일 체크
+    const EMAIL_REGEX = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+.[a-zA-Z]{2,4}$/;
+    const EMAIL_ERROR_MSG = "이메일을 올바르게 입력해주세요."
+    function checkEmail() {
+        let email = document.getElementById("email");
+        if (!EMAIL_REGEX.test(email.value)) {
+            document.getElementById("emailErrorMsg").innerText = EMAIL_ERROR_MSG;
+        } else {
+            document.getElementById("emailErrorMsg").innerText = "";
+        }
+    }
+
+    // 비밀번호1 체크
+    const PW1_REGEX = /^(?=.*[A-Za-z])(?=.*\d|.*[!@#$%^&*()-_+=])[A-Za-z\d!@#$%^&*()-_+=]{8,20}$/;
+    const PW_ERROR_MSG = "비밀번호 확인해주세요."
+    function checkPassword1() {
+        let pw1 = document.getElementById("password1");
+        if (!PW1_REGEX.test(pw1.value)) {
+            isPw1Check = false;
+            document.getElementById("pw1ErrorMsg").innerText = PW_ERROR_MSG;
+        } else {
+            document.getElementById("pw1ErrorMsg").innerText = "";
+            isPw1Check = true;
+        }
+    }
+
+    // 비밀번호2 체크
+    const PW2_ERROR_MSG = "비밀번호가 일치하지 않습니다."
+    function checkPassword2() {
+        let pw1 = document.getElementById("password1");
+        let pw2 = document.getElementById("password2");
+        if (pw1.value !== pw2.value) {
+            isPw2Check = false;
+            document.getElementById("pw2ErrorMsg").innerText = PW2_ERROR_MSG;
+        } else {
+            isPw2Check = true;
+            document.getElementById("pw2ErrorMsg").innerText = "";
+        }
+    }
+
+    // 이름 체크
+    const NAME_REGEX =  /^[a-zA-Z가-힣]+$/;
+    const NAME_ERROR_MSG = "영문과 한글만 입력해주세요.";
+    function checkName() {
+        let name = document.getElementById("name");
+        if (!NAME_REGEX.test(name.value)) {
+            isNameCheck = false;
+            document.getElementById("nameErrorMsg").innerText = NAME_ERROR_MSG;
+        } else {
+            isNameCheck = true;
+            document.getElementById("nameErrorMsg").innerText = "";
+        }
+    }
+
+    // 휴대폰번호 체크
+    const PHONE_ERROR_MSG = "휴대폰번호를 확인해주세요.";
+    function checkPhone() {
+        let phone = document.getElementById("phone");
+        if (phone.value.length !== 11) {
+            isPhoneCheck = false;
+            document.getElementById("phoneErrorMsg").innerText = PHONE_ERROR_MSG;
+        } else {
+            isPhoneCheck = true;
+            document.getElementById("phoneErrorMsg").innerText = "";
+        }
+    }
+
+
+
+</script>
 
 </body>
 </html>

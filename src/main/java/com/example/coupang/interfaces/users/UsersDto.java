@@ -26,7 +26,7 @@ public class UsersDto {
     @Setter
     @ToString
     public static class SignUpCheckEmailRequest {
-        @NonNull
+//        @NonNull
         private String email;
     }
 
