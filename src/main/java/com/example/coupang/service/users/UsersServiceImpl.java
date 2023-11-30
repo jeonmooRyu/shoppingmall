@@ -15,4 +15,9 @@ public class UsersServiceImpl implements UsersService{
     public Users signUp(Users user) {
         return usersRepository.save(user);
     }
+
+    @Override
+    public Boolean isDuplicateUser(String email) {
+        return usersRepository.existsByEmail(email);
+    }
 }

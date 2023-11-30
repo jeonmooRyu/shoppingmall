@@ -19,4 +19,9 @@ public class UsersFacade {
         return usersService.signUp(user);
     }
 
+    @Transactional
+    public Boolean isCheckDuplicateEmail(String email) {
+        return usersService.isDuplicateUser(email);
+    }
+
 }

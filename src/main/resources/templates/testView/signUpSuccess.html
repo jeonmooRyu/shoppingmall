@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>회원가입 성공</title>
+</head>
+<body>
+    <h1>회원가입 완료!</h1><br>
+    <div th:object="${user}">
+        <div>
+            id : <span th:text="*{email}"></span>
+        </div>
+        <br>
+        <div>
+            이름 : <span th:text="*{name}"></span>
+        </div>
+        <br>
+        <div>
+            휴대폰 번호 : <span th:text="*{phoneNumber}"></span>
+        </div>
+    </div>
+</body>
+</html>
