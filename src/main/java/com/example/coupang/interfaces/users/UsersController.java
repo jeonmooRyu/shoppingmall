@@ -14,9 +14,16 @@ public class UsersController {
     private final UsersDtoMapper usersDtoMapper;
     private final UsersFacade usersFacade;
 
+    // 로그인 페이지
+    @GetMapping("/signIn")
+    public String goToLoginForm() {
+        return "signIn";
+    }
+
+
     // 회원가입 페이지
     @GetMapping("/signUp")
-    public String createSignUpForm() {
+    public String goToSignUpForm() {
         return "/testView/signUpForm";
     }
 

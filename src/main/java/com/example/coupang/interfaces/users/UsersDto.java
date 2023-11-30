@@ -11,6 +11,17 @@ public class UsersDto {
     @Getter
     @Setter
     @ToString
+    public static class SignInUserRequest {
+        @NonNull
+        private String email;
+        @NonNull
+        private String password;
+    }
+
+
+    @Getter
+    @Setter
+    @ToString
     public static class SignUpUserRequest {
         @NonNull
         private String name;
