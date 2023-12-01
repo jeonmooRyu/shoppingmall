@@ -14,17 +14,17 @@ public class UsersController {
     private final UsersDtoMapper usersDtoMapper;
     private final UsersFacade usersFacade;
 
-    // 로그인 페이지
-    @GetMapping("/signIn")
-    public String goToLoginForm() {
-        return "signIn";
-    }
+//    // 로그인 페이지
+//    @GetMapping("/login")
+//    public String goToLoginForm() {
+//        return "login";
+//    }
 
 
     // 회원가입 페이지
     @GetMapping("/signUp")
     public String goToSignUpForm() {
-        return "/testView/signUpForm";
+        return "signUp";
     }
 
     // 중복 회원가입 이메일로 유무 확인 api
@@ -40,7 +40,7 @@ public class UsersController {
         var usersCommend = usersDtoMapper.of(request);
         var user = usersFacade.signUp(usersCommend);
         model.addAttribute("user", user);
-        return "/testView/signUpSuccess";
+        return "/signUpSuccess";
     }
 
 }

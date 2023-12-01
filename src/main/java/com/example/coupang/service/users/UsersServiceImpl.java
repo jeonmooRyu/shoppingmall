@@ -20,4 +20,9 @@ public class UsersServiceImpl implements UsersService{
     public Boolean isDuplicateUser(String email) {
         return usersRepository.existsByEmail(email);
     }
+
+    @Override
+    public Users getUsersByEmail(String email) {
+        return usersRepository.findUsersByEmail(email);
+    }
 }
