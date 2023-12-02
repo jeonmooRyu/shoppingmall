@@ -1,7 +1,7 @@
 package com.example.coupang.domain.orders;
 
 import com.example.coupang.common.TokenGenerator;
-import com.example.coupang.domain.baseTime.BaseTime;
+import com.example.coupang.domain.baseEntity.BaseEntity;
 import com.example.coupang.domain.enums.OrderStatus;
 import com.example.coupang.domain.enums.PaymentType;
 import com.example.coupang.domain.users.Users;
@@ -16,7 +16,7 @@ import java.util.List;
 @AllArgsConstructor
 @Getter
 @ToString
-public class Orders extends BaseTime {
+public class Orders extends BaseEntity {
 
     @Id @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;

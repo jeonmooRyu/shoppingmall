@@ -1,4 +1,4 @@
-package com.example.coupang.domain.baseTime;
+package com.example.coupang.domain.baseEntity;
 
 import lombok.Getter;
 import org.springframework.data.annotation.CreatedBy;
@@ -14,7 +14,7 @@ import java.time.LocalDateTime;
 @EntityListeners(AuditingEntityListener.class)
 @MappedSuperclass
 @Getter
-public class BaseTime {
+public class BaseEntity {
 
     @CreatedDate
     private LocalDateTime createdAt;

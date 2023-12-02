@@ -1,6 +1,6 @@
 package com.example.coupang.domain;
 
-import com.example.coupang.domain.baseTime.BaseTime;
+import com.example.coupang.domain.baseEntity.BaseEntity;
 import com.example.coupang.domain.users.Users;
 import lombok.*;
 
@@ -12,7 +12,7 @@ import javax.persistence.*;
 @Builder
 @Getter
 @ToString
-public class Cart extends BaseTime {
+public class Cart extends BaseEntity {
 
     @Id @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;

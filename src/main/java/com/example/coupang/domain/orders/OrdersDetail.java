@@ -1,8 +1,6 @@
 package com.example.coupang.domain.orders;
 
-import com.example.coupang.domain.baseTime.BaseTime;
-import com.example.coupang.domain.orders.Orders;
-import com.example.coupang.domain.product.Product;
+import com.example.coupang.domain.baseEntity.BaseEntity;
 import lombok.*;
 
 import javax.persistence.*;
@@ -13,7 +11,7 @@ import java.math.BigDecimal;
 @AllArgsConstructor
 @Getter
 @ToString
-public class OrdersDetail extends BaseTime {
+public class OrdersDetail extends BaseEntity {
 
     @Id @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;

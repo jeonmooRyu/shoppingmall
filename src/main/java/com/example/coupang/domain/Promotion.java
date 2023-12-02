@@ -1,6 +1,6 @@
 package com.example.coupang.domain;
 
-import com.example.coupang.domain.baseTime.BaseTime;
+import com.example.coupang.domain.baseEntity.BaseEntity;
 import com.example.coupang.domain.enums.CardCompany;
 import com.example.coupang.domain.product.Product;
 import lombok.*;
@@ -15,7 +15,7 @@ import java.time.LocalDateTime;
 @Builder
 @Getter
 @ToString
-public class Promotion extends BaseTime {
+public class Promotion extends BaseEntity {
 
     @Id @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
