@@ -5,12 +5,16 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
-@RequestMapping("/")
 public class HomeController {
 
     @GetMapping("/login")
     public String goToLogin() {
         return "/login";
+    }
+
+    @GetMapping("/logout")
+    public String goToLogout() {
+        return "/logout";
     }
 
     @GetMapping("/main")
