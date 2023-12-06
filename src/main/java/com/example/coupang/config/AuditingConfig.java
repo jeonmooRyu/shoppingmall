@@ -15,8 +15,11 @@ public class AuditingConfig implements AuditorAware{
     @Override
     public Optional<String> getCurrentAuditor() {
         var authentication = SecurityContextHolder.getContext().getAuthentication();
-        var userDetails = (CustomUserDetails) authentication.getPrincipal();
-        return Optional.of(userDetails.getUsername());
+        if (authentication.getPrincipal().equals("anonymousUser")) {
+            return Optional.empty();
+        }
+        var customUserDetails = (CustomUserDetails) authentication.getPrincipal();
+        return Optional.of(customUserDetails.getUsername());
     }
 
 }
