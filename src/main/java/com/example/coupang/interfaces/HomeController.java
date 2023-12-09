@@ -20,4 +20,9 @@ public class HomeController {
     public String goToMain() {
         return "/main";
     }
+
+    @GetMapping("/sign-up")
+    public String goToSignUp() {
+        return "/signUp";
+    }
 }
