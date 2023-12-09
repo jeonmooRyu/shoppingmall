@@ -8,21 +8,21 @@ public class HomeController {
 
     @GetMapping("/login")
     public String goToLogin() {
-        return "/login";
+        return "login";
     }
 
     @GetMapping("/logout")
     public String goToLogout() {
-        return "/logout";
+        return "logout";
     }
 
     @GetMapping("/main")
     public String goToMain() {
-        return "/main";
+        return "main";
     }
 
     @GetMapping("/sign-up")
     public String goToSignUp() {
-        return "/signUp";
+        return "signUp";
     }
 }
