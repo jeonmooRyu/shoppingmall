@@ -16,10 +16,12 @@ public class SecurityConfiguration {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
                 .authorizeHttpRequests((requests) -> requests
-                        .antMatchers("/*/*/*").permitAll()
-                        .antMatchers("/*/*").permitAll()
+//                                .antMatchers("/static/css/**").permitAll()
+                                .antMatchers("/*/*/*").permitAll()
+                                .antMatchers("/*/*").permitAll()
+                                .antMatchers("/*").permitAll()
 //                        .requestMatchers("", "/home").permitAll()
-                        .anyRequest().authenticated()
+                                .anyRequest().authenticated()
                 )
                 .formLogin((form) -> form
                         .loginPage("/login").permitAll()
@@ -27,30 +29,23 @@ public class SecurityConfiguration {
                         .defaultSuccessUrl("/main")     // "/"으로 설정시 로그인 후 기존에 접근하려던 페이지로 이동
                 )
                 .logout((logout) -> logout
-                        .permitAll()
+                                .permitAll()
 //                        .logoutRequestMatcher()
-                        .logoutSuccessUrl("/main")
-                        .invalidateHttpSession(true)
+                                .logoutSuccessUrl("/main")
+                                .invalidateHttpSession(true)
                 );
 
         return http.build();
     }
 
+//    @Bean
+//    public WebSecurityCustomizer webSecurityCustomizer() {
+//        return (web) -> web.ignoring().antMatchers("/resources/static/css/**");
+//    }
+
     @Bean
-    public PasswordEncoder passwordEncoder(){
+    public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
-
-//    @Bean
-//    public UserDetailsService userDetailsService() {
-//        UserDetails user =
-//                User.withDefaultPasswordEncoder()
-//                        .username("user")
-//                        .password("password")
-//                        .roles("USER")
-//                        .build();
-//
-//        return new InMemoryUserDetailsManager(user);
-//    }
 
 }

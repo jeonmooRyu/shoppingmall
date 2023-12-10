@@ -27,7 +27,7 @@ public class Product extends BaseEntity {
     @Setter private ServiceType serviceType;
     @Setter private BigDecimal price;
     @Setter private Boolean isDelete;
-    @Setter private String seller;
+//    @Setter private String seller;
     @Setter private String image;
 
 //    @OneToOne(mappedBy = "product")
@@ -48,7 +48,7 @@ public class Product extends BaseEntity {
         this.serviceType = serviceType;
         this.price = price;
         this.isDelete = false;
-        this.seller = seller;
+//        this.seller = seller;
         this.image = image;
     }
 }

@@ -12,7 +12,7 @@ public class ProductServiceImpl implements ProductService{
     private final ProductRepository productRepository;
 
     @Override
-    public Product getProductByProductCode(String productCode) {
+    public Product getProduct(String productCode) {
         return productRepository.findByProductCode(productCode);
     }
 
