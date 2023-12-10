@@ -5,7 +5,7 @@ import org.springframework.stereotype.Service;
 
 public interface ProductService {
 
-    Product getProductByProductCode(String productCode);
+    Product getProduct(String productCode);
 
     Product registProduct(Product product);
 }

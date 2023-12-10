@@ -16,4 +16,8 @@ public class ProductFacade {
         var product = commend.toEntity();
         return productService.registProduct(product);
     }
+
+    public Product getProduct(String productCode) {
+        return productService.getProduct(productCode);
+    }
 }

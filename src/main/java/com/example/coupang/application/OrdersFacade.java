@@ -16,7 +16,7 @@ public class OrdersFacade {
 
     public Orders registOrder(OrdersCommend.RegistOrders commend) {
         commend.getOrdersDetails().forEach(detail -> {
-            var product = productService.getProductByProductCode(detail.getProductCode());
+            var product = productService.getProduct(detail.getProductCode());
             detail.setProductName(product.getProductName());
         });
 
