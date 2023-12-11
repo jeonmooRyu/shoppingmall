@@ -50,7 +50,8 @@
 <!--                <div sec:authorize="isAuthenticated()">-->
 <!--                    <div th:text="${#authentication.principal.username}"></div>-->
 <!--                </div>-->
-                <a class="btn btn-outline-info" sec:authorize="isAnonymous()" th:href="@{/login}">로그인</a>
+                <a class="btn btn-outline-info" sec:authorize="isAnonymous()" th:href="@{/login}">Login</a>
+                <a class="btn btn-outline-info" sec:authorize="isAnonymous()" th:href="@{/signUp}">SignUp</a>
                 <form sec:authorize="isAuthenticated()" th:action="@{/logout}" method="post">
                     <button type="submit" class="btn btn-outline-info">Logout</button>
                 </form>
