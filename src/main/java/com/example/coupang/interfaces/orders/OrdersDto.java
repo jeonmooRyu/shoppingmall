@@ -13,19 +13,31 @@ public class OrdersDto {
     @Getter
     @Setter
     @ToString
+    public static class OrderSheetProducts {
+            private String productCode;
+            private String productName;
+            private Integer quantity;
+            private BigDecimal originPrice;   // 원래 가격
+            private BigDecimal discount;   // 할인액
+            private BigDecimal finalPrice;   // 최종 금액 ( 원래가격 - 할인액 )
+    }
+
+    @Getter
+    @Setter
+    @ToString
     public static class RegistOrderRequest {
         private String uid;
-        private String orderNumber;
         private String receiverName;
         private String receiverTel;
-        private String receiverEmail;
         private String receiverAddr;
         private String receiverAddrDetail;
         private String deliveryMsg;
         private BigDecimal totalPrice;
+        private BigDecimal price;
         private BigDecimal deliveryFee;
         private BigDecimal promotionDiscount;
         private PaymentType paymentType;
+//        private String paymentType;
         private List<OrdersDetail> ordersDetails;
 
         @Setter
@@ -33,8 +45,11 @@ public class OrdersDto {
         @ToString
         public static class OrdersDetail {
             private String productCode;
-            private BigDecimal unitPrice;   // 개당 가격
+            private String productName;
             private Integer quantity;
+            private BigDecimal originPrice;   // 원래 가격
+            private BigDecimal discount;   // 할인액
+            private BigDecimal finalPrice;   // 최종 금액 ( 원래가격 - 할인액 )
         }
 
     }
