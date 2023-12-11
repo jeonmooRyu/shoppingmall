@@ -3,10 +3,10 @@ package com.example.coupang.interfaces.orders;
 import com.example.coupang.application.OrdersFacade;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @Controller
 @RequestMapping("/orders/v1")
@@ -16,8 +16,14 @@ public class OrdersController {
     private final OrdersDtoMapper ordersDtoMapper;
     private final OrdersFacade ordersFacade;
 
+    @PostMapping("/sheet")
+    public String goToCheckout(@ModelAttribute List<OrdersDto.OrderSheetProducts> products , Model model) {
+        model.addAttribute("products", products);
+        return "checkout";
+    }
+
     @PostMapping
-    public @ResponseBody String registOrder(@RequestBody OrdersDto.RegistOrderRequest request) {
+    public @ResponseBody String registOrder(@ModelAttribute OrdersDto.RegistOrderRequest request) {
         var ordersDetailsCommend = request.getOrdersDetails().stream()
                 .map(ordersDtoMapper::of)
                 .toList();
