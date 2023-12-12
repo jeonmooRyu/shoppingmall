@@ -18,8 +18,8 @@ public class ProductCommend {
         private ProductType productType;
         private ServiceType serviceType;
         private BigDecimal price;
-        private String seller;
-        private String image;
+        private String detailImage;
+        private String thumbnail;
 
         public Product toEntity() {
             return Product.builder()
@@ -27,8 +27,8 @@ public class ProductCommend {
                     .productType(productType)
                     .serviceType(serviceType)
                     .price(price)
-                    .seller(seller)
-                    .image(image)
+                    .detailImage(detailImage)
+                    .thumbnail(thumbnail)
                     .build();
         }
     }

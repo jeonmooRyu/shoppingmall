@@ -6,6 +6,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @Controller
 @RequestMapping("/product/v1")
 @RequiredArgsConstructor
@@ -21,10 +23,18 @@ public class ProductController {
         return request.toString();
     }
 
-    @GetMapping("/{pCode}")   // pCode -> productCode
-    public String gotoProduct(@PathVariable("pCode") String productCode, Model model) {
+    @GetMapping("/{productCode}")
+    public String gotoProduct(@PathVariable String productCode, Model model) {
         var product = productFacade.getProduct(productCode);
-        model.addAttribute("product", product);
+
+        var response = productDtoMapper.toResponse(product);
+        model.addAttribute("product", response);
+
+//        var detail = productDtoMapper.toProductDetail(product);
+//        ProductDto.ProductResponses responses = new ProductDto.ProductResponses();
+//        responses.setProductDetails(List.of(detail));
+
+        model.addAttribute("products", List.of(response));
         return "product";
     }
 }

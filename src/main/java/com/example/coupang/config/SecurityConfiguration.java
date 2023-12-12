@@ -18,7 +18,9 @@ public class SecurityConfiguration {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
+                .csrf().disable()
                 .authorizeHttpRequests((requests) -> requests
+                                .requestMatchers(new AntPathRequestMatcher("/orders/v1/*")).permitAll()
                                 .requestMatchers(new AntPathRequestMatcher("/orders/v1")).permitAll()
                                 .antMatchers("/*/*/*").permitAll()
                                 .antMatchers("/*/*").permitAll()
@@ -46,6 +48,7 @@ public class SecurityConfiguration {
         return web -> {
             web.ignoring()
                     .antMatchers(
+                            "/orders/v1/sheet",
                             "/orders/v1",
                             "/product/v1"
                     );
