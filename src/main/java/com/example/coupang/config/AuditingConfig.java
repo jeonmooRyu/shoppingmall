@@ -1,5 +1,6 @@
 package com.example.coupang.config;
 
+import com.example.coupang.common.Util;
 import com.example.coupang.domain.users.CustomUserDetails;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -14,12 +15,13 @@ import java.util.Optional;
 public class AuditingConfig implements AuditorAware{
     @Override
     public Optional<String> getCurrentAuditor() {
-        var authentication = SecurityContextHolder.getContext().getAuthentication();
-        if (authentication == null || authentication.getPrincipal().equals("anonymousUser")) {
-            return Optional.empty();
-        }
-        var customUserDetails = (CustomUserDetails) authentication.getPrincipal();
-        return Optional.of(customUserDetails.getUsername());
+        return Util.getUid();
+//        var authentication = SecurityContextHolder.getContext().getAuthentication();
+//        if (authentication == null || authentication.getPrincipal().equals("anonymousUser")) {
+//            return Optional.empty();
+//        }
+//        var customUserDetails = (CustomUserDetails) authentication.getPrincipal();
+//        return Optional.of(customUserDetails.getUsername());
     }
 
 }
