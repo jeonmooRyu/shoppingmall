@@ -13,14 +13,35 @@ public class OrdersDto {
     @Getter
     @Setter
     @ToString
-    public static class OrderSheetProducts {
+    public static class OrderSheetProduct {
+        private List<ProductDetail> productDetails;
+
+        @Getter
+        @Setter
+        @ToString
+        public static class ProductDetail {
             private String productCode;
             private String productName;
             private Integer quantity;
             private BigDecimal originPrice;   // 원래 가격
             private BigDecimal discount;   // 할인액
             private BigDecimal finalPrice;   // 최종 금액 ( 원래가격 - 할인액 )
+        }
     }
+
+//    @Getter
+//    @Setter
+//    @ToString
+//    public static class OrderSheetProduct {
+//        private String productCode;
+//        private String productName;
+//        private Integer quantity;
+//        private BigDecimal originPrice;   // 원래 가격
+//        private BigDecimal discount;   // 할인액
+//        private BigDecimal finalPrice;   // 최종 금액 ( 원래가격 - 할인액 )
+//    }
+
+
 
     @Getter
     @Setter

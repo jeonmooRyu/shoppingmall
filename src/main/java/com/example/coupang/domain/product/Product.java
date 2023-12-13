@@ -28,7 +28,8 @@ public class Product extends BaseEntity {
     @Setter private BigDecimal price;
     @Setter private Boolean isDelete;
 //    @Setter private String seller;
-    @Setter private String image;
+    @Setter private String detailImage;
+    @Setter private String thumbnail;
 
 //    @OneToOne(mappedBy = "product")
 //    @JoinColumn
@@ -41,7 +42,7 @@ public class Product extends BaseEntity {
     private List<Promotion> promotions;
 
     @Builder
-    public Product(String productName, ProductType productType, ServiceType serviceType, BigDecimal price, String seller, String image) {
+    public Product(String productName, ProductType productType, ServiceType serviceType, BigDecimal price, String seller, String detailImage, String thumbnail) {
         this.productCode = TokenGenerator.generateProductCode();
         this.productName = productName;
         this.productType = productType;
@@ -49,6 +50,7 @@ public class Product extends BaseEntity {
         this.price = price;
         this.isDelete = false;
 //        this.seller = seller;
-        this.image = image;
+        this.detailImage = detailImage;
+        this.thumbnail = thumbnail;
     }
 }

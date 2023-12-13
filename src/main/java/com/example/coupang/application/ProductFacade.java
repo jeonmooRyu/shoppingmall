@@ -6,6 +6,8 @@ import com.example.coupang.service.product.ProductService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 @RequiredArgsConstructor
 public class ProductFacade {
@@ -19,5 +21,10 @@ public class ProductFacade {
 
     public Product getProduct(String productCode) {
         return productService.getProduct(productCode);
+    }
+
+    // 초기 노출 상품 리스트
+    public List<Product> getMainProducts() {
+        return productService.getProducts();
     }
 }
