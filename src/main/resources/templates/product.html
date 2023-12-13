@@ -1,6 +1,6 @@
 <!doctype html>
 <html lang="en" data-bs-theme="auto" xmlns:th="http://www.thymeleaf.org"
-      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" xmlns="http://www.w3.org/1999/html">
 <head>
     <script src="https://getbootstrap.com/docs/5.3/assets/js/color-modes.js"></script>
 
@@ -216,66 +216,76 @@
             <!--                <a class="btn btn-outline-secondary rounded-pill disabled" aria-disabled="true">Newer</a>-->
             <!--            </nav>-->
             <div>   <!-- 여기에 이미지 넣기 -->
-                <img th:src="${product.image}"/>
-<!--                <img src="https://www.popco.net/zboard/data/dica_forum_fujifilm/2010/09/24/4314057764c9c811731d18.jpg"/>-->
+                <img th:src="${product.detailImage}"/>
             </div>
         </div>
 
         <div class="col-md-4">
-            <div class="position-sticky" style="top: 10rem;">
-                <div class="p-4 mb-3 bg-body-tertiary rounded" th:object="${product}">
+            <div class="position-sticky" style="top: 10rem;" th:object="${product}">
+                <div class="p-4 mb-3 bg-body-tertiary rounded" >
                     <h4 class="fst-italic">About</h4>
                     <div th:text="*{productName}"></div>
                     <div>price : <span th:text="*{price}"></span></div>
                 </div>
+                <form th:action="@{/orders/v1/sheet}" th:method="post">
+                    <div th:each="product, productStat : ${products}">
+                        <input th:type="hidden" th:name="|products[__${productStat.index}__].productCode|" th:value="${product.productCode}" />
+                        <input th:type="hidden" th:name="|products[__${productStat.index}__].productName|" th:value="${product.productName}" />
+<!--                        <input th:type="hidden" th:name="|products[__${productStat.index}__].quantity|" th:value="${product.quantity}" />-->
+<!--                        <input th:type="hidden" th:name="|products[__${productStat.index}__].originPrice|" th:value="${product.originPrice}" />-->
+<!--                        <input th:type="hidden" th:name="|products[__${productStat.index}__].discount|" th:value="${product.discount}" />-->
+<!--                        <input th:type="hidden" th:name="|products[__${productStat.index}__].finalPrice|" th:value="${product.finalPrice}" />-->
+                        <button class="w-100 btn btn-primary btn-lg">Continue to checkout</button>
+                    </div>
+                </form>
 
-                <div>
-                    <h4 class="fst-italic">Recent posts</h4>
-                    <ul class="list-unstyled">
-                        <li>
-                            <a class="d-flex flex-column flex-lg-row gap-3 align-items-start align-items-lg-center py-3 link-body-emphasis text-decoration-none border-top"
-                               href="#">
-                                <svg class="bd-placeholder-img" width="100%" height="96"
-                                     xmlns="http://www.w3.org/2000/svg" aria-hidden="true"
-                                     preserveAspectRatio="xMidYMid slice" focusable="false">
-                                    <rect width="100%" height="100%" fill="#777"/>
-                                </svg>
-                                <div class="col-lg-8">
-                                    <h6 class="mb-0">Example blog post title</h6>
-                                    <small class="text-body-secondary">January 15, 2023</small>
-                                </div>
-                            </a>
-                        </li>
-                        <li>
-                            <a class="d-flex flex-column flex-lg-row gap-3 align-items-start align-items-lg-center py-3 link-body-emphasis text-decoration-none border-top"
-                               href="#">
-                                <svg class="bd-placeholder-img" width="100%" height="96"
-                                     xmlns="http://www.w3.org/2000/svg" aria-hidden="true"
-                                     preserveAspectRatio="xMidYMid slice" focusable="false">
-                                    <rect width="100%" height="100%" fill="#777"/>
-                                </svg>
-                                <div class="col-lg-8">
-                                    <h6 class="mb-0">This is another blog post title</h6>
-                                    <small class="text-body-secondary">January 14, 2023</small>
-                                </div>
-                            </a>
-                        </li>
-                        <li>
-                            <a class="d-flex flex-column flex-lg-row gap-3 align-items-start align-items-lg-center py-3 link-body-emphasis text-decoration-none border-top"
-                               href="#">
-                                <svg class="bd-placeholder-img" width="100%" height="96"
-                                     xmlns="http://www.w3.org/2000/svg" aria-hidden="true"
-                                     preserveAspectRatio="xMidYMid slice" focusable="false">
-                                    <rect width="100%" height="100%" fill="#777"/>
-                                </svg>
-                                <div class="col-lg-8">
-                                    <h6 class="mb-0">Longer blog post title: This one has multiple lines!</h6>
-                                    <small class="text-body-secondary">January 13, 2023</small>
-                                </div>
-                            </a>
-                        </li>
-                    </ul>
-                </div>
+<!--                <div>-->
+<!--                    <h4 class="fst-italic">Recent posts</h4>-->
+<!--                    <ul class="list-unstyled">-->
+<!--                        <li>-->
+<!--                            <a class="d-flex flex-column flex-lg-row gap-3 align-items-start align-items-lg-center py-3 link-body-emphasis text-decoration-none border-top"-->
+<!--                               href="#">-->
+<!--                                <svg class="bd-placeholder-img" width="100%" height="96"-->
+<!--                                     xmlns="http://www.w3.org/2000/svg" aria-hidden="true"-->
+<!--                                     preserveAspectRatio="xMidYMid slice" focusable="false">-->
+<!--                                    <rect width="100%" height="100%" fill="#777"/>-->
+<!--                                </svg>-->
+<!--                                <div class="col-lg-8">-->
+<!--                                    <h6 class="mb-0">Example blog post title</h6>-->
+<!--                                    <small class="text-body-secondary">January 15, 2023</small>-->
+<!--                                </div>-->
+<!--                            </a>-->
+<!--                        </li>-->
+<!--                        <li>-->
+<!--                            <a class="d-flex flex-column flex-lg-row gap-3 align-items-start align-items-lg-center py-3 link-body-emphasis text-decoration-none border-top"-->
+<!--                               href="#">-->
+<!--                                <svg class="bd-placeholder-img" width="100%" height="96"-->
+<!--                                     xmlns="http://www.w3.org/2000/svg" aria-hidden="true"-->
+<!--                                     preserveAspectRatio="xMidYMid slice" focusable="false">-->
+<!--                                    <rect width="100%" height="100%" fill="#777"/>-->
+<!--                                </svg>-->
+<!--                                <div class="col-lg-8">-->
+<!--                                    <h6 class="mb-0">This is another blog post title</h6>-->
+<!--                                    <small class="text-body-secondary">January 14, 2023</small>-->
+<!--                                </div>-->
+<!--                            </a>-->
+<!--                        </li>-->
+<!--                        <li>-->
+<!--                            <a class="d-flex flex-column flex-lg-row gap-3 align-items-start align-items-lg-center py-3 link-body-emphasis text-decoration-none border-top"-->
+<!--                               href="#">-->
+<!--                                <svg class="bd-placeholder-img" width="100%" height="96"-->
+<!--                                     xmlns="http://www.w3.org/2000/svg" aria-hidden="true"-->
+<!--                                     preserveAspectRatio="xMidYMid slice" focusable="false">-->
+<!--                                    <rect width="100%" height="100%" fill="#777"/>-->
+<!--                                </svg>-->
+<!--                                <div class="col-lg-8">-->
+<!--                                    <h6 class="mb-0">Longer blog post title: This one has multiple lines!</h6>-->
+<!--                                    <small class="text-body-secondary">January 13, 2023</small>-->
+<!--                                </div>-->
+<!--                            </a>-->
+<!--                        </li>-->
+<!--                    </ul>-->
+<!--                </div>-->
 
             </div>
         </div>
@@ -288,6 +298,7 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
         crossorigin="anonymous"></script>
+<script type="text/javascript" src="http://code.jquery.com/jquery-3.5.1.min.js"></script>
 
 </body>
 </html>

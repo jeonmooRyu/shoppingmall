@@ -17,7 +17,7 @@ public class OrdersController {
     private final OrdersFacade ordersFacade;
 
     @PostMapping("/sheet")
-    public String goToCheckout(@ModelAttribute List<OrdersDto.OrderSheetProducts> products , Model model) {
+    public String goToCheckout(@ModelAttribute OrdersDto.OrderSheetProduct products , Model model) {
         model.addAttribute("products", products);
         return "checkout";
     }
