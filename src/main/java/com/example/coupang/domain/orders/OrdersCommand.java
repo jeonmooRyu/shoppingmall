@@ -1,16 +1,12 @@
 package com.example.coupang.domain.orders;
 
 import com.example.coupang.domain.enums.PaymentType;
-import com.example.coupang.domain.payment.Payment;
-import com.example.coupang.interfaces.orders.OrdersDto;
 import lombok.*;
-import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
 import java.util.List;
 
-@Service
-public class OrdersCommend {
+public class OrdersCommand {
 
     @NoArgsConstructor
     @AllArgsConstructor
@@ -28,7 +24,7 @@ public class OrdersCommend {
         private String receiverAddrDetail;
         private String deliveryMsg;
         private BigDecimal totalPrice;
-        private BigDecimal price;
+//        private BigDecimal price;
         private BigDecimal deliveryFee;
         private BigDecimal promotionDiscount;
         private PaymentType paymentType;
@@ -56,11 +52,11 @@ public class OrdersCommend {
             orders.setOrdersDetails(details);
 
             // payment 생성 및 연관관계설정
-            var payment = Payment.builder()
-                    .payAmount(orders.getTotalPrice())
-                    .paymentType(orders.getPaymentType())
-                    .build();
-            orders.setPayment(payment);
+//            var payment = Payment.builder()
+//                    .payAmount(orders.getTotalPrice())
+//                    .paymentType(orders.getPaymentType())
+//                    .build();
+//            orders.setPayment(payment);
 
             return orders;
         }

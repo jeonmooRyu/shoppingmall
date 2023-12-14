@@ -1,8 +1,7 @@
 package com.example.coupang.interfaces.users;
 
-import com.example.coupang.domain.users.UsersCommend;
+import com.example.coupang.domain.users.UsersCommand;
 import org.mapstruct.*;
-import org.mapstruct.factory.Mappers;
 
 @Mapper(
         componentModel = "Spring",
@@ -11,7 +10,7 @@ import org.mapstruct.factory.Mappers;
 )
 public interface UsersDtoMapper {
 
-    UsersCommend.SignUpRequest of(UsersDto.SignUpUserRequest request);
+    UsersCommand.SignUpRequest of(UsersDto.SignUpUserRequest request);
 
     UsersDto.SignUpCheckEmailResponse toResponse(Boolean isDuplicated);
 }
