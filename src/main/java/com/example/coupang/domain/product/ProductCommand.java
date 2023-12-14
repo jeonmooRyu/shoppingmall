@@ -6,7 +6,7 @@ import lombok.*;
 
 import java.math.BigDecimal;
 
-public class ProductCommend {
+public class ProductCommand {
 
     @Getter
     @Setter

@@ -2,9 +2,8 @@ package com.example.coupang.domain.users;
 
 import lombok.*;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.password.PasswordEncoder;
 
-public class UsersCommend {
+public class UsersCommand {
 
     @Setter
     @Getter
