@@ -1,6 +1,8 @@
 package com.example.coupang.interfaces.orders;
 
-import com.example.coupang.domain.orders.OrdersCommend;
+import com.example.coupang.domain.orders.Orders;
+import com.example.coupang.domain.orders.OrdersCommand;
+import com.example.coupang.domain.payment.PaymentCommand;
 import org.mapstruct.InjectionStrategy;
 import org.mapstruct.Mapper;
 import org.mapstruct.ReportingPolicy;
@@ -12,7 +14,14 @@ import java.util.List;
         unmappedTargetPolicy = ReportingPolicy.IGNORE)
 public interface OrdersDtoMapper {
 
-    OrdersCommend.RegistOrders.OrdersDetail of(OrdersDto.RegistOrderRequest.OrdersDetail ordersDetail);
+    OrdersCommand.RegistOrders.OrdersDetail of(OrdersDto.RegistOrderRequest.OrdersDetail ordersDetail);
 
-    OrdersCommend.RegistOrders of(OrdersDto.RegistOrderRequest ordersDto, List<OrdersCommend.RegistOrders.OrdersDetail> ordersDetailsCommend);
+    OrdersCommand.RegistOrders of(OrdersDto.RegistOrderRequest ordersDto, String uid, List<OrdersCommand.RegistOrders.OrdersDetail> ordersDetailsCommand);
+
+    OrdersDto.RegistOrderResponse of(Orders orders);
+
+    OrdersDto.CheckoutOrderDto toCheckoutOrders(OrdersDto.CheckoutOrderRequest request);
+    PaymentCommand of(OrdersDto.CheckoutOrderRequest request);
+
+    OrdersDto.CheckoutOrderResponse toCheckOrderResponse(Orders orders);
 }

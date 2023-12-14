@@ -14,13 +14,6 @@ public class UsersController {
     private final UsersDtoMapper usersDtoMapper;
     private final UsersFacade usersFacade;
 
-//    // 로그인 페이지
-//    @GetMapping("/login")
-//    public String goToLoginForm() {
-//        return "login";
-//    }
-
-
     // 회원가입 페이지
     @GetMapping("/signUp")
     public String goToSignUpForm() {
@@ -37,8 +30,8 @@ public class UsersController {
 
     @PostMapping
     public String signUp(@ModelAttribute UsersDto.SignUpUserRequest request, Model model) {
-        var usersCommend = usersDtoMapper.of(request);
-        var user = usersFacade.signUp(usersCommend);
+        var usersCommand = usersDtoMapper.of(request);
+        var user = usersFacade.signUp(usersCommand);
         model.addAttribute("user", user);
         return "/signUpSuccess";
     }

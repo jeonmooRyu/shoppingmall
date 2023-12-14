@@ -26,6 +26,8 @@ public class Orders extends BaseEntity {
     @Setter
     private String orderToken;
     @Setter
+    private Boolean isPay;
+    @Setter
     private String receiverName;
     @Setter
     private String receiverTel;
@@ -40,14 +42,14 @@ public class Orders extends BaseEntity {
     @Setter
     private BigDecimal totalPrice;      // 상품가격 + 배송비
     @Setter
-    private BigDecimal price;       // 상품가격
-    @Setter
     private BigDecimal deliveryFee;
     @Setter
     private BigDecimal promotionDiscount;
     @Setter
+    @Enumerated(value = EnumType.STRING)
     private PaymentType paymentType;
     @Setter
+    @Enumerated(value = EnumType.STRING)
     private OrderStatus orderStatus;
 
     @ManyToOne
@@ -57,23 +59,23 @@ public class Orders extends BaseEntity {
     @OneToMany(mappedBy = "orders", cascade = CascadeType.PERSIST, orphanRemoval = true)
     private List<OrdersDetail> ordersDetails;
 
+    @Setter
     @OneToOne(mappedBy = "orders", cascade = CascadeType.PERSIST, orphanRemoval = true)
     private Payment payment;
 
     @Builder
     public Orders(String uid, String receiverName, String receiverTel,
                   String receiverAddr, String receiverAddrDetail, String deliveryMsg,
-                  BigDecimal totalPrice, BigDecimal price, BigDecimal deliveryFee, BigDecimal promotionDiscount,
+                  BigDecimal totalPrice, BigDecimal deliveryFee, BigDecimal promotionDiscount,
                   PaymentType paymentType, List<OrdersDetail> ordersDetails) {
         this.uid = uid;
+        this.isPay = false;
         this.orderToken = TokenGenerator.generateOrderToken();
         this.receiverName = receiverName;
         this.receiverTel = receiverTel;
-//        this.receiverEmail = receiverEmail;
         this.receiverAddr = receiverAddr;
         this.receiverAddrDetail = receiverAddrDetail;
         this.deliveryMsg = deliveryMsg;
-        this.price = price;
         this.totalPrice = totalPrice;
         this.deliveryFee = deliveryFee;
         this.promotionDiscount = promotionDiscount;
@@ -89,8 +91,13 @@ public class Orders extends BaseEntity {
         });
     }
 
-    public void setPayment(Payment payment) {
-        this.payment = payment;
-        payment.setOrders(this);
+    public Orders checkout(String receiverName, String receiverTel, String receiverAddr, String receiverAddrDetail, String deliveryMsg) {
+        this.isPay = true;
+        this.receiverName = receiverName;
+        this.receiverTel = receiverTel;
+        this.receiverAddr = receiverAddr;
+        this.receiverAddrDetail = receiverAddrDetail;
+        this.deliveryMsg = deliveryMsg;
+        return this;
     }
 }

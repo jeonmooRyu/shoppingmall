@@ -1,8 +1,7 @@
 package com.example.coupang.interfaces.product;
 
 import com.example.coupang.domain.product.Product;
-import com.example.coupang.domain.product.ProductCommend;
-import com.example.coupang.interfaces.orders.OrdersDto;
+import com.example.coupang.domain.product.ProductCommand;
 import org.mapstruct.*;
 
 
@@ -11,7 +10,7 @@ import org.mapstruct.*;
         unmappedTargetPolicy = ReportingPolicy.ERROR)
 public interface ProductDtoMapper {
 
-    ProductCommend.ProductRegist of(ProductDto.ProductRegistRequest request);
+    ProductCommand.ProductRegist of(ProductDto.ProductRegistRequest request);
 
     ProductDto.ProductResponse toResponse(Product product);
 
