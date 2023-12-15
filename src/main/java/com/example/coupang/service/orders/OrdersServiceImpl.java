@@ -15,4 +15,14 @@ public class OrdersServiceImpl implements OrdersService{
         return ordersRepository.save(orders);
     }
 
+    @Override
+    public Orders getOrder(String orderToken) {
+        return ordersRepository.findOrderByOrderToken(orderToken);
+    }
+
+    @Override
+    public Orders checkout(Orders orders, String receiverName, String receiverTel, String receiverAddr, String receiverAddrDetail, String deliveryMsg) {
+        return orders.checkout(receiverName, receiverTel, receiverAddr, receiverAddrDetail, deliveryMsg);
+    }
+
 }

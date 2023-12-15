@@ -48,9 +48,9 @@ public class SecurityConfiguration {
         return web -> {
             web.ignoring()
                     .antMatchers(
-                            "/orders/v1/sheet",
-                            "/orders/v1",
-                            "/product/v1"
+//                            "/orders/v1/sheet",
+//                            "/orders/v1",
+//                            "/product/v1"
                     );
         };
     }

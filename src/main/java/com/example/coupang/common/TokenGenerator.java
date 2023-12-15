@@ -14,6 +14,7 @@ public class TokenGenerator {
 
     private static final int ORDER_TOKEN_LENGTH = 18;
     private static final int PRODUCT_CODE_LENGTH = 20;
+    private static final int PG_PAYMENT_ID_LENGTH = 10;
 
 
     // uid 생성
@@ -31,5 +32,10 @@ public class TokenGenerator {
     // 상품코드 생성
     public static String generateProductCode() {
         return RandomStringUtils.randomAlphanumeric(PRODUCT_CODE_LENGTH);
+    }
+
+    // PG사 결제 id 생성
+    public static String generatePgId() {
+        return RandomStringUtils.randomAlphanumeric(PG_PAYMENT_ID_LENGTH);
     }
 }
