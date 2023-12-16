@@ -202,27 +202,30 @@
     </symbol>
 </svg>
 
-<main class="container">
+<main class="container-fluid">
     <div>
         <th:block th:replace="header :: headerFragment"></th:block>
     </div>
     <div class="row g-5">
         <div class="col-md-8">
-            <h3 class="pb-4 mb-4 fst-italic border-bottom">
-                From the Firehose
-            </h3>
-            <div>   <!-- 여기에 이미지 넣기 -->
-                <img th:src="${product.detailImage}"/>
+            <!--            <h3 class="pb-4 mb-4 fst-italic border-bottom">-->
+            <!--                <img src="https://cdn.greened.kr/news/photo/201912/226205_230434_4859.jpg"/>-->
+            <!--            </h3>-->
+            <div class="col-md-8">
+                <div id="detail-img-location">
+                </div>
+                <input th:id="detail-img" th:type="hidden" th:value="${product.detailImage}"
+                       th:src="${product.detailImage}"/>
             </div>
         </div>
 
         <div class="col-md-4">
-            <div class="position-sticky" style="top: 10rem;" th:object="${product}">
+            <div class="position-sticky" style="top: 10rem; right: 0;" th:object="${product}">
                 <div class="p-4 mb-3 bg-body-tertiary rounded">
-                    <h4 class="fst-italic">About</h4>
+                    <h4 class="fst-italic"><input th:type="hidden" th:text="*{productName}"></h4>
                     <input th:type="hidden" th:id="productCode" th:name="productCode" th:value="*{productCode}">
-                    <input th:type="hidden" th:text="*{productName}">
-                    <div><span>quantity : </span><input type="number" th:id="quantity" th:name="quantity" value="1">
+                    <div><span>quantity : </span><input type="number" th:id="quantity" th:name="quantity" value="1"
+                                                        style="width: 50px">
                     </div>
                     <div>price : <span th:text="*{price}"></span></div>
                     <input th:type="hidden" th:id="productName" th:name="productName" th:value="*{productName}">
@@ -243,6 +246,14 @@
 
 <script>
     $(document).ready(function () {
+        let detailImages = $('#detail-img').val().split(',');
+        detailImages.forEach(imageUrl => {
+            $('#detail-img-location').prepend($('<img>', {
+                src: imageUrl
+            }))
+        })
+
+
         $('#sbm-btn').click(function () {
 
             let sendData = new Object();

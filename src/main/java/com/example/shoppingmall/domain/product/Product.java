@@ -9,6 +9,7 @@ import com.example.shoppingmall.domain.enums.ServiceType;
 import lombok.*;
 
 import javax.persistence.*;
+import javax.validation.constraints.Size;
 import java.math.BigDecimal;
 import java.util.List;
 
@@ -28,7 +29,8 @@ public class Product extends BaseEntity {
     @Setter private BigDecimal price;
     @Setter private Boolean isDelete;
 //    @Setter private String seller;
-    @Setter private String detailImage;
+    @Setter @Size(max = 1000)
+    private String detailImage;
     @Setter private String thumbnail;
 
 //    @OneToOne(mappedBy = "product")

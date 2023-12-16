@@ -18,7 +18,7 @@ public class ProductRepositorySupport {
 
     public List<Product> getProducts() {
         return jpaQueryFactory.selectFrom(product)
-                .limit(10)
+//                .limit(10)
                 .fetch();
     }
 
