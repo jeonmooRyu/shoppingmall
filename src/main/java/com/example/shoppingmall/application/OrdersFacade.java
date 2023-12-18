@@ -9,6 +9,7 @@ import com.example.shoppingmall.service.payment.PaymentService;
 import com.example.shoppingmall.service.product.ProductService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @RequiredArgsConstructor
@@ -18,15 +19,18 @@ public class OrdersFacade {
     private final OrdersService ordersService;
     private final PaymentService paymentService;
 
+    @Transactional
     public Orders registOrder(OrdersCommand.RegistOrders command) {
         var orders = command.toEntity();
         return ordersService.registOrder(orders);
     }
 
+    @Transactional
     public Orders getOrder(String orderToken) {
         return ordersService.getOrder(orderToken);
     }
 
+    @Transactional
     public Orders checkoutOrder(OrdersDto.CheckoutOrderDto checkoutOrderDto, PaymentDto.PaymentRequest paymentRequest) {
         // 결제 진행
         var orders = ordersService.getOrder(checkoutOrderDto.getOrderToken());
