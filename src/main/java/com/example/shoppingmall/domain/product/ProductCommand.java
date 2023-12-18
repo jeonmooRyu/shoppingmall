@@ -15,6 +15,7 @@ public class ProductCommand {
     @AllArgsConstructor
     public static class ProductRegist {
         private String productName;
+        private String option;
         private ProductType productType;
         private ServiceType serviceType;
         private BigDecimal price;
@@ -24,6 +25,7 @@ public class ProductCommand {
         public Product toEntity() {
             return Product.builder()
                     .productName(productName)
+                    .option(option)
                     .productType(productType)
                     .serviceType(serviceType)
                     .price(price)

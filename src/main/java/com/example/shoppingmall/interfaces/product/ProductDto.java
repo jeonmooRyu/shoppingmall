@@ -16,6 +16,7 @@ public class ProductDto {
     @ToString
     public static class ProductRegistRequest {
         private String productName;
+        private String option;
         private ProductType productType;
         private ServiceType serviceType;
         private BigDecimal price;
@@ -47,6 +48,7 @@ public class ProductDto {
     @ToString
     public static class ProductResponse {
         private String productCode;
+        private String option;
         private String productName;
         private String detailImage;
         private BigDecimal price;   // 원래 가격

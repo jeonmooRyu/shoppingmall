@@ -32,6 +32,7 @@ public class Product extends BaseEntity {
     @Setter @Size(max = 1000)
     private String detailImage;
     @Setter private String thumbnail;
+    @Setter private String option;
 
 //    @OneToOne(mappedBy = "product")
 //    @JoinColumn
@@ -44,7 +45,7 @@ public class Product extends BaseEntity {
     private List<Promotion> promotions;
 
     @Builder
-    public Product(String productName, ProductType productType, ServiceType serviceType, BigDecimal price, String seller, String detailImage, String thumbnail) {
+    public Product(String productName, ProductType productType, ServiceType serviceType, BigDecimal price, String seller, String detailImage, String thumbnail, String option) {
         this.productCode = TokenGenerator.generateProductCode();
         this.productName = productName;
         this.productType = productType;
@@ -54,5 +55,6 @@ public class Product extends BaseEntity {
 //        this.seller = seller;
         this.detailImage = detailImage;
         this.thumbnail = thumbnail;
+        this.option = option;
     }
 }
