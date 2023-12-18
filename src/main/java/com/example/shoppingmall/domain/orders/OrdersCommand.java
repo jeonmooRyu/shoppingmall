@@ -1,5 +1,6 @@
 package com.example.shoppingmall.domain.orders;
 
+import com.example.shoppingmall.domain.enums.Option;
 import com.example.shoppingmall.domain.enums.PaymentType;
 import lombok.*;
 
@@ -16,15 +17,7 @@ public class OrdersCommand {
     @ToString
     public static class RegistOrders {
         private String uid;
-//        private String orderNumber;
-        private String receiverName;
-        private String receiverTel;
-//        private String receiverEmail;
-        private String receiverAddr;
-        private String receiverAddrDetail;
-        private String deliveryMsg;
         private BigDecimal totalPrice;
-//        private BigDecimal price;
         private BigDecimal deliveryFee;
         private BigDecimal promotionDiscount;
         private PaymentType paymentType;
@@ -33,16 +26,9 @@ public class OrdersCommand {
         public Orders toEntity() {
             var orders = Orders.builder()
                     .uid(uid)
-                    .receiverName(receiverName)
-                    .receiverTel(receiverTel)
-//                    .receiverEmail(receiverEmail)
-                    .receiverAddr(receiverAddr)
-                    .receiverAddrDetail(receiverAddrDetail)
-                    .deliveryMsg(deliveryMsg)
                     .totalPrice(totalPrice)
                     .promotionDiscount(promotionDiscount)
                     .paymentType(paymentType)
-//                    .ordersDetails(ordersDetails.stream().map(OrdersDetail::toEntity).toList())
                     .build();
 
             // details 생성 및 연관관계설정
@@ -70,6 +56,7 @@ public class OrdersCommand {
         public static class OrdersDetail {
             private String productCode;
             private String productName;
+            private Option option;
             private BigDecimal originPrice;   // 원래 가격
             private BigDecimal discount;   // 할인액
             private BigDecimal finalPrice;   // 최종 금액 ( 원래가격 - 할인액 )
@@ -79,6 +66,7 @@ public class OrdersCommand {
                 return com.example.shoppingmall.domain.orders.OrdersDetail.builder()
                         .productCode(productCode)
                         .productName(productName)
+                        .option(option)
                         .originPrice(originPrice)
                         .discount(discount)
                         .finalPrice(finalPrice)

@@ -19,11 +19,6 @@ public class OrdersFacade {
     private final PaymentService paymentService;
 
     public Orders registOrder(OrdersCommand.RegistOrders command) {
-        command.getOrdersDetails().forEach(detail -> {
-            var product = productService.getProduct(detail.getProductCode());
-            detail.setProductName(product.getProductName());
-        });
-
         var orders = command.toEntity();
         return ordersService.registOrder(orders);
     }

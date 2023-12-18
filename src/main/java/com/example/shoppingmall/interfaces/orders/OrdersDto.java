@@ -1,6 +1,7 @@
 package com.example.shoppingmall.interfaces.orders;
 
 import com.example.shoppingmall.domain.enums.CardCompany;
+import com.example.shoppingmall.domain.enums.Option;
 import com.example.shoppingmall.domain.enums.PaymentType;
 import lombok.Getter;
 import lombok.Setter;
@@ -26,6 +27,7 @@ public class OrdersDto {
         public static class OrdersDetail {
             private String productCode;
             private String productName;
+            private Option option;
             private Integer quantity;
             private BigDecimal originPrice;   // 원래 가격
             private BigDecimal finalPrice;   // 최종 금액 ( 원래가격 - 할인액 )
