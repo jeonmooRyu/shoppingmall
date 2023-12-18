@@ -5,6 +5,7 @@ import com.example.shoppingmall.repository.ProductRepository;
 import com.example.shoppingmall.repository.support.ProductRepositorySupport;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -15,17 +16,17 @@ public class ProductServiceImpl implements ProductService{
     private final ProductRepository productRepository;
     private final ProductRepositorySupport productRepositorySupport;
 
-    @Override
+    @Transactional
     public Product getProduct(String productCode) {
         return productRepository.findByProductCode(productCode);
     }
 
-    @Override
+    @Transactional
     public Product registProduct(Product product) {
         return productRepository.save(product);
     }
 
-    @Override
+    @Transactional
     public List<Product> getProducts() {
         return productRepositorySupport.getProducts();
     }
