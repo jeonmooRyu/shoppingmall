@@ -4,6 +4,7 @@ import com.example.shoppingmall.application.OrdersFacade;
 import com.example.shoppingmall.common.Util;
 import com.example.shoppingmall.interfaces.payment.PaymentDtoMapper;
 import lombok.RequiredArgsConstructor;
+import org.springframework.lang.Nullable;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -59,11 +60,15 @@ public class OrdersController {
     }
 
     @GetMapping("/orderHistory")
-    public @ResponseBody List<OrdersDto.OrdersHistoryResponse> getOrders(LocalDate startDate, LocalDate endDate, String productName ) {
-        var orders = ordersFacade.getOrder();
+    public @ResponseBody List<OrdersDto.OrdersHistoryResponse> getOrders(@RequestParam @Nullable LocalDate startDate,
+                                                                         @RequestParam @Nullable LocalDate endDate) {
+        var startDateTime = startDate != null ? startDate.atStartOfDay() : null;
+        var endDateTime = endDate != null ? endDate.atStartOfDay() : null;
+        var orders = ordersFacade.getOrders(startDateTime, endDateTime);
         return orders.stream()
                 .map(ordersDtoMapper::toOrdersHistoryResponse)
                 .toList();
     }
+
 
 }
