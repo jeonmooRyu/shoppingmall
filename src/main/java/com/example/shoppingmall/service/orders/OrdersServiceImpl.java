@@ -22,12 +22,12 @@ public class OrdersServiceImpl implements OrdersService{
     }
 
     @Override
-    public List<Orders> getOrderByUid(String uid) {
-        return ordersRepositorySupport.findOrdersByUid(uid);
+    public List<Orders> getOrder() {
+        return ordersRepositorySupport.findOrders();
     }
 
     @Transactional
-    public Orders getOrderByOrderToken(String orderToken) {
+    public Orders getOrder(String orderToken) {
         return ordersRepository.findOrdersByOrderToken(orderToken);
     }
 

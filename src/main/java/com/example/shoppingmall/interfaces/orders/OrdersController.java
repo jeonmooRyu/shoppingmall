@@ -8,6 +8,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
 import java.util.List;
 
 @Controller
@@ -22,7 +23,7 @@ public class OrdersController {
 
     @GetMapping("/{orderToken}")
     public String goToCheckout(@PathVariable String orderToken, Model model) {
-        var order = ordersFacade.getOrderByOrderToken(orderToken);
+        var order = ordersFacade.getOrder(orderToken);
         model.addAttribute("order", order);
         return "checkout";
     }
@@ -58,8 +59,8 @@ public class OrdersController {
     }
 
     @GetMapping("/orderHistory")
-    public @ResponseBody List<OrdersDto.OrdersHistoryResponse> getOrders() {
-        var orders = ordersFacade.getOrderByUid(Util.getUid().orElseThrow());
+    public @ResponseBody List<OrdersDto.OrdersHistoryResponse> getOrders(LocalDate startDate, LocalDate endDate, String productName ) {
+        var orders = ordersFacade.getOrder();
         return orders.stream()
                 .map(ordersDtoMapper::toOrdersHistoryResponse)
                 .toList();

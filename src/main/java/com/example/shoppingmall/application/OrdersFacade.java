@@ -28,18 +28,18 @@ public class OrdersFacade {
     }
 
     @Transactional
-    public List<Orders> getOrderByUid(String uid) {
-        return ordersService.getOrderByUid(uid);
+    public List<Orders> getOrder() {
+        return ordersService.getOrder();
     }
     @Transactional
-    public Orders getOrderByOrderToken(String orderToken) {
-        return ordersService.getOrderByOrderToken(orderToken);
+    public Orders getOrder(String orderToken) {
+        return ordersService.getOrder(orderToken);
     }
 
     @Transactional
     public Orders checkoutOrder(OrdersDto.CheckoutOrderDto checkoutOrderDto, PaymentDto.PaymentRequest paymentRequest) {
         // 결제 진행
-        var orders = ordersService.getOrderByOrderToken(checkoutOrderDto.getOrderToken());
+        var orders = ordersService.getOrder(checkoutOrderDto.getOrderToken());
         paymentService.payOrders(orders, paymentRequest);
 
         // order checkout process
