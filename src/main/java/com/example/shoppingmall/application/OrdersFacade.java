@@ -11,6 +11,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
 @Service
 @RequiredArgsConstructor
 public class OrdersFacade {
@@ -26,14 +28,18 @@ public class OrdersFacade {
     }
 
     @Transactional
-    public Orders getOrder(String orderToken) {
-        return ordersService.getOrder(orderToken);
+    public List<Orders> getOrderByUid(String uid) {
+        return ordersService.getOrderByUid(uid);
+    }
+    @Transactional
+    public Orders getOrderByOrderToken(String orderToken) {
+        return ordersService.getOrderByOrderToken(orderToken);
     }
 
     @Transactional
     public Orders checkoutOrder(OrdersDto.CheckoutOrderDto checkoutOrderDto, PaymentDto.PaymentRequest paymentRequest) {
         // 결제 진행
-        var orders = ordersService.getOrder(checkoutOrderDto.getOrderToken());
+        var orders = ordersService.getOrderByOrderToken(checkoutOrderDto.getOrderToken());
         paymentService.payOrders(orders, paymentRequest);
 
         // order checkout process

@@ -24,4 +24,6 @@ public interface OrdersDtoMapper {
     PaymentCommand of(OrdersDto.CheckoutOrderRequest request);
 
     OrdersDto.CheckoutOrderResponse toCheckOrderResponse(Orders orders);
+
+    OrdersDto.OrdersHistoryResponse toOrdersHistoryResponse(Orders orders);
 }

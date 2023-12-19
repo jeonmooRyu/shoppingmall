@@ -8,6 +8,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @Controller
 @RequestMapping("/orders/v1")
 @RequiredArgsConstructor
@@ -20,7 +22,7 @@ public class OrdersController {
 
     @GetMapping("/{orderToken}")
     public String goToCheckout(@PathVariable String orderToken, Model model) {
-        var order = ordersFacade.getOrder(orderToken);
+        var order = ordersFacade.getOrderByOrderToken(orderToken);
         model.addAttribute("order", order);
         return "checkout";
     }
@@ -48,6 +50,19 @@ public class OrdersController {
     @GetMapping("/complete")
     public String goToOrderComplete() {
         return "orderComplete";
+    }
+
+    @GetMapping
+    public String goToOrderHistory() {
+        return "orderHistory";
+    }
+
+    @GetMapping("/orderHistory")
+    public @ResponseBody List<OrdersDto.OrdersHistoryResponse> getOrders() {
+        var orders = ordersFacade.getOrderByUid(Util.getUid().orElseThrow());
+        return orders.stream()
+                .map(ordersDtoMapper::toOrdersHistoryResponse)
+                .toList();
     }
 
 }

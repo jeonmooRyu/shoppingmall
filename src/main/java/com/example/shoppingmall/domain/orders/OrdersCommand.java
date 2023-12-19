@@ -18,6 +18,7 @@ public class OrdersCommand {
     public static class RegistOrders {
         private String uid;
         private BigDecimal totalPrice;
+        private Integer totalQuantity;
         private BigDecimal deliveryFee;
         private BigDecimal promotionDiscount;
         private PaymentType paymentType;
@@ -27,6 +28,7 @@ public class OrdersCommand {
             var orders = Orders.builder()
                     .uid(uid)
                     .totalPrice(totalPrice)
+                    .totalQuantity(totalQuantity)
                     .promotionDiscount(promotionDiscount)
                     .paymentType(paymentType)
                     .build();

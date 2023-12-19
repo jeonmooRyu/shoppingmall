@@ -329,6 +329,7 @@
             sendData.promotionDiscount = 0;
             sendData.paymentType = 'CARD';
             sendData.totalPrice = 0;
+            sendData.totalQuantity = 0;
             sendData.ordersDetails = [];
             let options = $('.select-option input');
             options.each(function() {
@@ -341,6 +342,7 @@
                 detail.originPrice = $("#price").val();
                 detail.finalPrice = detail.originPrice * detail.quantity;
                 sendData.totalPrice += detail.finalPrice;
+                sendData.totalQuantity += parseInt(detail.quantity);
                 sendData.ordersDetails.push(detail);
             })
 

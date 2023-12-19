@@ -8,6 +8,8 @@ import lombok.Setter;
 import lombok.ToString;
 
 import java.math.BigDecimal;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 
 public class OrdersDto {
@@ -18,6 +20,7 @@ public class OrdersDto {
     public static class RegistOrderRequest {
         //        private String uid;
         private BigDecimal totalPrice;
+        private Integer totalQuantity;
         private BigDecimal deliveryFee;
         private List<OrdersDetail> ordersDetails;
 
@@ -92,6 +95,29 @@ public class OrdersDto {
         private String cardExpMon;
         private String cardCvv;
         private String cardPw;
+    }
+
+    @Getter
+    @Setter
+    @ToString
+    public static class OrdersHistoryResponse {
+        private String thumbnail;
+        private String orderToken;
+        private String totalPrice;
+        private String totalQuantity;
+        private LocalDateTime createdAt;
+        private List<OrdersDetail> ordersDetails;
+
+        @Getter
+        @Setter
+        @ToString
+        public static class OrdersDetail {
+            private String productName;
+            private BigDecimal originPrice;
+            private String quantity;
+            private Option option;
+        }
+
     }
 
 }
