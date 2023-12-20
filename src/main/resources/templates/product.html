@@ -249,7 +249,8 @@
                     <input th:type="hidden" th:id="productName" th:name="productName" th:value="*{productName}">
                     <input th:type="hidden" th:id="price" th:name="price" th:value="*{price}">
                     <input th:type="hidden" th:id="option" th:name="options" th:value="*{option}">
-                    <button class="w-100 btn btn-primary btn-lg" id="sbm-btn">Continue to checkout</button>
+                    <button class="w-100 btn btn-success btn-lg" id="sbm-cart-btn">Add to Cart</button><br><br>
+                    <button class="w-100 btn btn-primary btn-lg" id="sbm-orders-btn">Continue to checkout</button>
                 </div>
             </div>
         </div>
@@ -320,8 +321,40 @@
             }))
         })
 
-        /* submit 버튼 */
-        $('#sbm-btn').click(function () {
+        /* 장바구니 버튼 */
+        $('#sbm-cart-btn').click(function () {
+            if ($('[id^=option-]').length === 0) {
+                alert("선택된 옵션이 없습니다.")
+                return;
+            }
+
+            let sendData = new Object();
+            sendData.cartDetails = [];
+            let options = $('.select-option input');
+            options.each(function() {
+                let detail = new Object();
+                detail.productCode = $("#productCode").val();
+                let option = $(this).attr('name');
+                detail.option = option.substring(option.indexOf('-') + 1);
+                detail.quantity = $(this).val();
+                sendData.cartDetails.push(detail);
+            })
+
+            $.ajax({
+                type: 'post',
+                async: false,
+                url: '/cart/v1',
+                data: JSON.stringify(sendData),
+                contentType: "application/json; charset=utf-8",
+                dataType: 'json',
+                success: function (data) {
+                    alert("장바구니에 담았습니다.")
+                }
+            });
+        });
+
+        /* 주문 버튼 */
+        $('#sbm-orders-btn').click(function () {
             if ($('[id^=option-]').length === 0) {
                 alert("선택된 옵션이 없습니다.")
                 return;
@@ -349,7 +382,6 @@
                 sendData.ordersDetails.push(detail);
             })
 
-            const xhr = new XMLHttpRequest();
             $.ajax({
                 type: 'post',
                 async: false,
