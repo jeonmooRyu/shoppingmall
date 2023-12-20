@@ -32,14 +32,14 @@
         <div class="col-md-2 offset-md-3">
             <div class="input-group mb-3">
                 <!-- 시작일 -->
-                <input type="text" class="form-control datepicker" placeholder="Select start date" data-date-format="yyyy.mm.dd">
+                <input type="text" class="form-control datepicker" id="startDate" placeholder="Select start date" data-date-format="yyyy.mm.dd">
             </div>
         </div>
         ~
         <div class="col-md-2">
             <div class="input-group mb-3">
                 <!-- 마지막일 -->
-                <input type="text" class="form-control datepicker" placeholder="Select end date" data-date-format="yyyy.mm.dd">
+                <input type="text" class="form-control datepicker" id="endDate" placeholder="Select end date" data-date-format="yyyy.mm.dd">
             </div>
         </div>
     </div>
@@ -49,7 +49,6 @@
             <table class="table">
                 <thead>
                 <tr>
-                    <th>Thumbnail</th>
                     <th>Order Date</th>
                     <th>Order Number</th>
                     <th>Total Quantity</th>
@@ -79,49 +78,56 @@
 <script>
     $(document).ready(function () {
         // datePicker 초기화
-        $('.datepicker').datepicker();
+        $('.datepicker').datepicker({
+            format: 'yyyy-mm-dd'
+        });
 
-        $.ajax({
-            type: "get",
-            url: "/orders/v1/orderHistory",
-            async: true,
-            dataType: 'json',
-            success: function (data) {
-                console.log("data : " + data)
-                console.log("data type : " + typeof data)
-                populateOrderTable(data)
-            },
-            error: function () {
-                console.log("에")
-            },
+        let tbody = $('tbody');
 
-        })
+        callOrderHistoryApi();
 
-        // var orders = [
-        //     {
-        //         orderId: 1,
-        //         productName: 'Product 1',
-        //         quantity: 2,
-        //         totalPrice: 50.00,
-        //         details: [
-        //             { productName: 'Detail 1', price: 25.00, option: 'Option 1' },
-        //             { productName: 'Detail 2', price: 15.00, option: 'Option 2' }
-        //         ]
-        //     },
-        //     {
-        //         orderId: 2,
-        //         productName: 'Product 2',
-        //         quantity: 1,
-        //         totalPrice: 30.00,
-        //         details: [
-        //             { productName: 'Detail 3', price: 20.00, option: 'Option 3' },
-        //             { productName: 'Detail 4', price: 10.00, option: 'Option 4' }
-        //         ]
-        //     },
-        // ];
+        let startDate = null;
+        let endDate = null;
+
+        $('#startDate').on('changeDate', function () {
+            tbody.empty();
+            startDate = $('#startDate').val();
+            callOrderHistoryApi(startDate, endDate);
+        });
+
+        $('#endDate').on('changeDate', function () {
+            tbody.empty();
+            endDate = $('#endDate').val();
+            callOrderHistoryApi(startDate, endDate);
+        });
+
+        function callOrderHistoryApi(startDate, endDate) {
+            let urlStr = '/orders/v1/orderHistory';
+            if (startDate !== null && startDate !== undefined) {
+                urlStr += '?startDate=' + startDate;
+            }
+            if (endDate !== null && endDate !== undefined) {
+                urlStr += (startDate !== null ? '&' : '?') + 'endDate=' + endDate;
+            }
+
+            $.ajax({
+                type: "get",
+                url: urlStr,
+                async: true,
+                dataType: 'json',
+                success: function (data) {
+                    console.log("data : " + data)
+                    console.log("data type : " + typeof data)
+                    populateOrderTable(data)
+                },
+                error: function () {
+                    console.log("에러")
+                },
+
+            });
+        }
 
         function populateOrderTable(data) {
-            let tbody = $('tbody');
             tbody.empty();
 
             $.each(data, function (index, order) {
@@ -129,8 +135,6 @@
                 let orderDate = createdAt.getFullYear() + "-" + (createdAt.getMonth()+1) + "-" + createdAt.getDate()
 
                 let row = '<tr>' +
-                    // '<td>' + order.thumbnail + '</td>' +
-                    '<td>' + "" + '</td>' +
                     '<td>' + orderDate + '</td>' +
                     '<td>' + order.orderToken + '</td>' +
                     '<td>' + order.totalQuantity + '</td>' +
@@ -170,8 +174,6 @@
                 tbody.append(row);
             });
         }
-
-        // populateOrderTable(orders);
 
         $(document).on('click.bs.dropdown.data-api', '.datepicker', function (e) {
             e.stopPropagation();

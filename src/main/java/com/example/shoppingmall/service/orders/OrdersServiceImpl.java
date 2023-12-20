@@ -7,6 +7,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
@@ -22,12 +23,12 @@ public class OrdersServiceImpl implements OrdersService{
     }
 
     @Override
-    public List<Orders> getOrderByUid(String uid) {
-        return ordersRepositorySupport.findOrdersByUid(uid);
+    public List<Orders> getOrders(LocalDateTime startDateTime, LocalDateTime endDateTime) {
+        return ordersRepositorySupport.findOrders(startDateTime, endDateTime);
     }
 
     @Transactional
-    public Orders getOrderByOrderToken(String orderToken) {
+    public Orders getOrder(String orderToken) {
         return ordersRepository.findOrdersByOrderToken(orderToken);
     }
 

@@ -4,10 +4,13 @@ import com.example.shoppingmall.application.OrdersFacade;
 import com.example.shoppingmall.common.Util;
 import com.example.shoppingmall.interfaces.payment.PaymentDtoMapper;
 import lombok.RequiredArgsConstructor;
+import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.lang.Nullable;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
 import java.util.List;
 
 @Controller
@@ -22,7 +25,7 @@ public class OrdersController {
 
     @GetMapping("/{orderToken}")
     public String goToCheckout(@PathVariable String orderToken, Model model) {
-        var order = ordersFacade.getOrderByOrderToken(orderToken);
+        var order = ordersFacade.getOrder(orderToken);
         model.addAttribute("order", order);
         return "checkout";
     }
@@ -58,11 +61,15 @@ public class OrdersController {
     }
 
     @GetMapping("/orderHistory")
-    public @ResponseBody List<OrdersDto.OrdersHistoryResponse> getOrders() {
-        var orders = ordersFacade.getOrderByUid(Util.getUid().orElseThrow());
+    public @ResponseBody List<OrdersDto.OrdersHistoryResponse> getOrders(@RequestParam @Nullable @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate startDate,
+                                                                         @RequestParam @Nullable @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate endDate) {
+        var startDateTime = startDate != null ? startDate.atStartOfDay() : null;
+        var endDateTime = endDate != null ? endDate.atStartOfDay().plusDays(1) : null;
+        var orders = ordersFacade.getOrders(startDateTime, endDateTime);
         return orders.stream()
                 .map(ordersDtoMapper::toOrdersHistoryResponse)
                 .toList();
     }
+
 
 }
