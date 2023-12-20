@@ -1,7 +1,7 @@
 package com.example.shoppingmall.domain.users;
 
 import com.example.shoppingmall.common.TokenGenerator;
-import com.example.shoppingmall.domain.Cart;
+import com.example.shoppingmall.domain.cart.Cart;
 import com.example.shoppingmall.domain.baseEntity.BaseEntity;
 import com.example.shoppingmall.domain.enums.Authority;
 import com.example.shoppingmall.domain.enums.UserType;

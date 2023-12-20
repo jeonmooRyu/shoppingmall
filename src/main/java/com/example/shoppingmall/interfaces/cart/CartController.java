@@ -1,36 +1,39 @@
 package com.example.shoppingmall.interfaces.cart;
 
-import com.example.shoppingmall.domain.Cart;
-import com.example.shoppingmall.repository.CartRepository;
-import com.example.shoppingmall.repository.UsersRepository;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.example.shoppingmall.application.CartFacade;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
-import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.*;
+
 
 @Controller
-@RequestMapping("cart/v1")
+@RequiredArgsConstructor
+@RequestMapping("/cart/v1")
 public class CartController {
 
-    @Autowired
-    private UsersRepository usersRepository;
+    private final CartFacade cartFacade;
 
-    @Autowired
-    private CartRepository cartRepository;
+    private final CartDtoMapper cartDtoMapper;
+
+    @GetMapping
+    public String goToCart(Model model) {
+        var carts = cartFacade.getCarts();
+        var result =  carts.stream().map(cartDtoMapper::of).toList();
+        model.addAttribute("carts", result);
+        return "cart";
+    }
 
     @PostMapping
-    @Transactional
-    public @ResponseBody String addToCart() {
-        var user = usersRepository.findById(1L).orElseThrow();
-        var cart = Cart.builder()
-                .user(user)
-                .quantity(1)
-                .productCode("testCode")
-                .build();
-        cartRepository.save(cart);
-
-        return cart.getId().toString();
+    public @ResponseBody CartDto.AddCartResponse addToCart(@RequestBody CartDto.AddCartRequest request) {
+        var commands = request.getCartDetails().stream().map(cartDtoMapper::of).toList();
+        var carts = cartFacade.addCarts(commands);
+        if (request.getCartDetails().size() == carts.size()) {
+            return cartDtoMapper.toSuccess(true);
+        }
+        return cartDtoMapper.toFail(false);
     }
+
+
+
 }
