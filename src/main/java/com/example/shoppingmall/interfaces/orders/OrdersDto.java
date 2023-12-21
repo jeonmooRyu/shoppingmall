@@ -8,7 +8,6 @@ import lombok.Setter;
 import lombok.ToString;
 
 import java.math.BigDecimal;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -35,7 +34,6 @@ public class OrdersDto {
             private BigDecimal originPrice;   // 원래 가격
             private BigDecimal finalPrice;   // 최종 금액 ( 원래가격 - 할인액 )
         }
-
     }
 
     @Getter

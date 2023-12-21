@@ -18,18 +18,28 @@ import java.util.List;
 @ToString
 public class Users extends BaseEntity {
 
-    @Id @GeneratedValue(strategy = GenerationType.AUTO)
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-    @Setter private String email;   // 유저 계정
-    @Setter private String password;   // 유저 계정
-    @Setter private String uid;
-    @Setter private String name;
-    @Setter private String phoneNumber;
-    @Setter private UserType userType;
-    @Setter private Authority authority;
-    @Setter private Integer point;
+    @Setter
+    private String email;   // 유저 계정
+    @Setter
+    private String password;   // 유저 계정
+    @Setter
+    private String uid;
+    @Setter
+    private String name;
+    @Setter
+    private String phoneNumber;
+    @Setter
+    @Enumerated(value = EnumType.STRING)
+    private UserType userType;
+    @Setter
+    private Authority authority;
+    @Setter
+    private Integer point;
 
-//    @OneToMany(mappedBy = "user")
+    //    @OneToMany(mappedBy = "user")
 //    private List<Orders> orders;
 //
     @OneToMany(mappedBy = "user")

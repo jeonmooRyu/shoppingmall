@@ -15,18 +15,29 @@ import java.math.BigDecimal;
 @ToString
 public class Payment extends BaseEntity {
 
-    @Id @GeneratedValue(strategy = GenerationType.AUTO)
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-    @Setter private BigDecimal payAmount;
-    @Setter private String payCompanyCode;  // 결제사에서 발급한 결제코드
-    @Setter @Enumerated(value = EnumType.STRING)
+    @Setter
+    private BigDecimal payAmount;
+    @Setter
+    private String payCompanyCode;  // 결제사에서 발급한 결제코드
+    @Setter
+    @Enumerated(value = EnumType.STRING)
     private PaymentType paymentType;
-    @Setter private CardCompany cardCompany;
-    @Setter private String cardNo;
-    @Setter private String cardExpYear;
-    @Setter private String cardExpMon;
-    @Setter private String cardCvv;
-    @Setter private String cardPw;
+    @Setter
+    @Enumerated(value = EnumType.STRING)
+    private CardCompany cardCompany;
+    @Setter
+    private String cardNo;
+    @Setter
+    private String cardExpYear;
+    @Setter
+    private String cardExpMon;
+    @Setter
+    private String cardCvv;
+    @Setter
+    private String cardPw;
 
     @OneToOne
     @JoinColumn(name = "orders.id")

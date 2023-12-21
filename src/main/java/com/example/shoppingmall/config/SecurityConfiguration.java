@@ -20,6 +20,10 @@ public class SecurityConfiguration {
                 .csrf().disable()
                 .authorizeHttpRequests((requests) -> requests
                                 .requestMatchers(new AntPathRequestMatcher("/product/v1/*")).permitAll()
+                                .requestMatchers(new AntPathRequestMatcher("/product/v1")).permitAll()
+                                .requestMatchers(new AntPathRequestMatcher("/signUp")).permitAll()
+                                .requestMatchers(new AntPathRequestMatcher("/users/v1")).permitAll()
+//                                .antMatchers("/users/v1/signUp").permitAll()
 //                        .requestMatchers("", "/home").permitAll()
                                 .anyRequest().authenticated()
                 )
@@ -42,8 +46,8 @@ public class SecurityConfiguration {
     public WebSecurityCustomizer webSecurityCustomizer() {
         return web -> web.ignoring()
                     .antMatchers(
-                            "/css/**",
-                            "/js/**"
+                            "/css/**"
+                            , "/js/**"
                     );
 
     }
