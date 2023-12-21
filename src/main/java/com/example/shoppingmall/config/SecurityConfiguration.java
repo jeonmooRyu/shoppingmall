@@ -2,7 +2,6 @@ package com.example.shoppingmall.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityCustomizer;
@@ -20,11 +19,11 @@ public class SecurityConfiguration {
         http
                 .csrf().disable()
                 .authorizeHttpRequests((requests) -> requests
-                                .requestMatchers(new AntPathRequestMatcher("/orders/v1/*")).permitAll()
-                                .requestMatchers(new AntPathRequestMatcher("/orders/v1")).permitAll()
-                                .antMatchers("/*/*/*").permitAll()
-                                .antMatchers("/*/*").permitAll()
-                                .antMatchers("/*").permitAll()
+                                .requestMatchers(new AntPathRequestMatcher("/product/v1/*")).permitAll()
+                                .requestMatchers(new AntPathRequestMatcher("/product/v1")).permitAll()
+                                .requestMatchers(new AntPathRequestMatcher("/signUp")).permitAll()
+                                .requestMatchers(new AntPathRequestMatcher("/users/v1")).permitAll()
+//                                .antMatchers("/users/v1/signUp").permitAll()
 //                        .requestMatchers("", "/home").permitAll()
                                 .anyRequest().authenticated()
                 )
@@ -45,14 +44,12 @@ public class SecurityConfiguration {
 
     @Bean
     public WebSecurityCustomizer webSecurityCustomizer() {
-        return web -> {
-            web.ignoring()
+        return web -> web.ignoring()
                     .antMatchers(
-//                            "/orders/v1/sheet",
-//                            "/orders/v1",
-//                            "/product/v1"
+                            "/css/**"
+                            , "/js/**"
                     );
-        };
+
     }
 
 //    @Bean

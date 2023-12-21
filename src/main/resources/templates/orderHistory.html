@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>MyPage</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-datepicker@1.9.0/dist/css/bootstrap-datepicker.min.css">
+    <!-- Favicons -->
+    <link rel="apple-touch-icon" href="https://getbootstrap.com/docs/5.3/assets/img/favicons/apple-touch-icon.png"
+          sizes="180x180">
+    <link rel="icon" href="https://getbootstrap.com/docs/5.3/assets/img/favicons/favicon-32x32.png" sizes="32x32"
+          type="image/png">
+    <link rel="icon" href="https://getbootstrap.com/docs/5.3/assets/img/favicons/favicon-16x16.png" sizes="16x16"
+          type="image/png">
+    <link rel="manifest" href="https://getbootstrap.com/docs/5.3/assets/img/favicons/manifest.json">
+    <link rel="mask-icon" href="https://getbootstrap.com/docs/5.3/assets/img/favicons/safari-pinned-tab.svg"
+          color="#712cf9">
+    <link rel="icon" href="https://getbootstrap.com/docs/5.3/assets/img/favicons/favicon.ico">
+    <meta name="theme-color" content="#712cf9">
+</head>
+<body>
+
+<div>
+    <th:block th:replace="header :: headerFragment"></th:block>
+</div>
+
+<div class="container mt-4">
+<!--    <h1 class="text-center">주문내역</h1>-->
+
+    <div class="row">
+        <div class="col-md-2 offset-md-3">
+            <div class="input-group mb-3">
+                <!-- 시작일 -->
+                <input type="text" class="form-control datepicker" id="startDate" placeholder="Select start date" data-date-format="yyyy.mm.dd">
+            </div>
+        </div>
+        ~
+        <div class="col-md-2">
+            <div class="input-group mb-3">
+                <!-- 마지막일 -->
+                <input type="text" class="form-control datepicker" id="endDate" placeholder="Select end date" data-date-format="yyyy.mm.dd">
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12">
+            <table class="table">
+                <thead>
+                <tr>
+                    <th>Order Date</th>
+                    <th>Order Number</th>
+                    <th>Total Quantity</th>
+                    <th>Total Price</th>
+                    <th></th>
+                </tr>
+                </thead>
+                <tbody>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<div>
+    <input th:type="hidden" th:id="orders" th:value="${orders}">
+</div>
+
+<div>
+    <th:block th:replace="footer :: footerFragment"></th:block>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap-datepicker@1.9.0/dist/js/bootstrap-datepicker.min.js"></script>
+
+<script>
+    $(document).ready(function () {
+        // datePicker 초기화
+        $('.datepicker').datepicker({
+            format: 'yyyy-mm-dd'
+        });
+
+        let tbody = $('tbody');
+
+        callOrderHistoryApi();
+
+        let startDate = null;
+        let endDate = null;
+
+        $('#startDate').on('changeDate', function () {
+            tbody.empty();
+            startDate = $('#startDate').val();
+            callOrderHistoryApi(startDate, endDate);
+        });
+
+        $('#endDate').on('changeDate', function () {
+            tbody.empty();
+            endDate = $('#endDate').val();
+            callOrderHistoryApi(startDate, endDate);
+        });
+
+        function callOrderHistoryApi(startDate, endDate) {
+            let urlStr = '/orders/v1/orderHistory';
+            if (startDate !== null && startDate !== undefined) {
+                urlStr += '?startDate=' + startDate;
+            }
+            if (endDate !== null && endDate !== undefined) {
+                urlStr += (startDate !== null ? '&' : '?') + 'endDate=' + endDate;
+            }
+
+            $.ajax({
+                type: "get",
+                url: urlStr,
+                async: true,
+                dataType: 'json',
+                success: function (data) {
+                    console.log("data : " + data)
+                    console.log("data type : " + typeof data)
+                    populateOrderTable(data)
+                },
+                error: function () {
+                    console.log("에러")
+                },
+
+            });
+        }
+
+        function populateOrderTable(data) {
+            tbody.empty();
+
+            $.each(data, function (index, order) {
+                let createdAt = new Date(order.createdAt);
+                let orderDate = createdAt.getFullYear() + "-" + (createdAt.getMonth()+1) + "-" + createdAt.getDate()
+
+                let row = '<tr>' +
+                    '<td>' + orderDate + '</td>' +
+                    '<td>' + order.orderToken + '</td>' +
+                    '<td>' + order.totalQuantity + '</td>' +
+                    '<td>' + order.totalPrice + '</td>' +
+                    '<td>' +
+                    '<button class="btn btn-info view-details" data-bs-toggle="collapse" data-bs-target="#orderDetail' + order.orderToken + '" aria-expanded="false" aria-controls="orderDetail' + order.orderToken + '">' +
+                    'View Details' +
+                    '</button>' +
+                    '</td>' +
+                    '</tr>' +
+                    '<tr class="collapse" id="orderDetail' + order.orderToken + '">' +
+                    '<td colspan="5">' +
+                    '<table class="table">' +
+                    '<thead>' +
+                    '<tr>' +
+                    '<th>Product Name</th>' +
+                    '<th>Quantity</th>' +
+                    '<th>Option</th>' +
+                    '<th>Price</th>' +
+                    '</tr>' +
+                    '</thead>' +
+                    '<tbody>';
+
+                $.each(order.ordersDetails, function (idx, detail) {
+                    row += '<tr>' +
+                        '<td>' + detail.productName + '</td>' +
+                        '<td>' + detail.quantity + '</td>' +
+                        '<td>' + detail.option + '</td>' +
+                        '<td>' + detail.originPrice + '</td>' +
+                        '</tr>';
+                });
+
+                row += '</tbody>' +
+                    '</table>' +
+                    '</td>' +
+                    '</tr>';
+                tbody.append(row);
+            });
+        }
+
+        $(document).on('click.bs.dropdown.data-api', '.datepicker', function (e) {
+            e.stopPropagation();
+        });
+    });
+</script>
+
+</body>
+</html>

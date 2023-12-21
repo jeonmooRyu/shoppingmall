@@ -1,12 +1,14 @@
 package com.example.shoppingmall.interfaces.orders;
 
 import com.example.shoppingmall.domain.enums.CardCompany;
+import com.example.shoppingmall.domain.enums.Option;
 import com.example.shoppingmall.domain.enums.PaymentType;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 
 import java.math.BigDecimal;
+import java.time.LocalDateTime;
 import java.util.List;
 
 public class OrdersDto {
@@ -17,6 +19,7 @@ public class OrdersDto {
     public static class RegistOrderRequest {
         //        private String uid;
         private BigDecimal totalPrice;
+        private Integer totalQuantity;
         private BigDecimal deliveryFee;
         private List<OrdersDetail> ordersDetails;
 
@@ -26,11 +29,11 @@ public class OrdersDto {
         public static class OrdersDetail {
             private String productCode;
             private String productName;
+            private Option option;
             private Integer quantity;
             private BigDecimal originPrice;   // 원래 가격
             private BigDecimal finalPrice;   // 최종 금액 ( 원래가격 - 할인액 )
         }
-
     }
 
     @Getter
@@ -90,6 +93,29 @@ public class OrdersDto {
         private String cardExpMon;
         private String cardCvv;
         private String cardPw;
+    }
+
+    @Getter
+    @Setter
+    @ToString
+    public static class OrdersHistoryResponse {
+        private String thumbnail;
+        private String orderToken;
+        private String totalPrice;
+        private String totalQuantity;
+        private LocalDateTime createdAt;
+        private List<OrdersDetail> ordersDetails;
+
+        @Getter
+        @Setter
+        @ToString
+        public static class OrdersDetail {
+            private String productName;
+            private BigDecimal originPrice;
+            private String quantity;
+            private Option option;
+        }
+
     }
 
 }

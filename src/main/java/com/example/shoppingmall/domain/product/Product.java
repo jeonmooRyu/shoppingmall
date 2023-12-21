@@ -9,6 +9,7 @@ import com.example.shoppingmall.domain.enums.ServiceType;
 import lombok.*;
 
 import javax.persistence.*;
+import javax.validation.constraints.Size;
 import java.math.BigDecimal;
 import java.util.List;
 
@@ -19,17 +20,31 @@ import java.util.List;
 @ToString
 public class Product extends BaseEntity {
 
-    @Id @GeneratedValue(strategy = GenerationType.AUTO)
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-    @Setter private String productCode;
-    @Setter private String productName;
-    @Setter private ProductType productType;
-    @Setter private ServiceType serviceType;
-    @Setter private BigDecimal price;
-    @Setter private Boolean isDelete;
-//    @Setter private String seller;
-    @Setter private String detailImage;
-    @Setter private String thumbnail;
+    @Setter
+    private String productCode;
+    @Setter
+    private String productName;
+    @Setter
+    @Enumerated(value = EnumType.STRING)
+    private ProductType productType;
+    @Setter
+    @Enumerated(value = EnumType.STRING)
+    private ServiceType serviceType;
+    @Setter
+    private BigDecimal price;
+    @Setter
+    private Boolean isDelete;
+    //    @Setter private String seller;
+    @Setter
+    @Size(max = 1000)
+    private String detailImage;
+    @Setter
+    private String thumbnail;
+    @Setter
+    private String option;
 
 //    @OneToOne(mappedBy = "product")
 //    @JoinColumn
@@ -42,7 +57,7 @@ public class Product extends BaseEntity {
     private List<Promotion> promotions;
 
     @Builder
-    public Product(String productName, ProductType productType, ServiceType serviceType, BigDecimal price, String seller, String detailImage, String thumbnail) {
+    public Product(String productName, ProductType productType, ServiceType serviceType, BigDecimal price, String seller, String detailImage, String thumbnail, String option) {
         this.productCode = TokenGenerator.generateProductCode();
         this.productName = productName;
         this.productType = productType;
@@ -52,5 +67,6 @@ public class Product extends BaseEntity {
 //        this.seller = seller;
         this.detailImage = detailImage;
         this.thumbnail = thumbnail;
+        this.option = option;
     }
 }

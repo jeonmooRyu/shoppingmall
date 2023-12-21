@@ -109,6 +109,11 @@
         .bd-mode-toggle .dropdown-menu .active .bi {
             display: block !important;
         }
+
+        ul {
+            list-style: none
+        }
+
     </style>
 
 
@@ -202,32 +207,50 @@
     </symbol>
 </svg>
 
-<main class="container">
+<main class="container-fluid">
     <div>
         <th:block th:replace="header :: headerFragment"></th:block>
     </div>
     <div class="row g-5">
         <div class="col-md-8">
-            <h3 class="pb-4 mb-4 fst-italic border-bottom">
-                From the Firehose
-            </h3>
-            <div>   <!-- 여기에 이미지 넣기 -->
-                <img th:src="${product.detailImage}"/>
+            <div class="col-md-8">
+                <div id="location-detail-img">
+                </div>
+                <input th:id="detail-img" th:type="hidden" th:value="${product.detailImage}"
+                       th:src="${product.detailImage}"/>
             </div>
         </div>
 
         <div class="col-md-4">
-            <div class="position-sticky" style="top: 10rem;" th:object="${product}">
+            <div class="position-sticky" style="top: 10rem; right: 0;" th:object="${product}">
                 <div class="p-4 mb-3 bg-body-tertiary rounded">
-                    <h4 class="fst-italic">About</h4>
-                    <input th:type="hidden" th:id="productCode" th:name="productCode" th:value="*{productCode}">
-                    <input th:type="hidden" th:text="*{productName}">
-                    <div><span>quantity : </span><input type="number" th:id="quantity" th:name="quantity" value="1">
-                    </div>
+                    <h4 class="fst-italic"><input th:type="hidden" th:text="*{productName}"></h4><br>
                     <div>price : <span th:text="*{price}"></span></div>
+                    <br>
+                    <span>size : </span>
+                    <span class="dropdown">
+                        <a class="btn btn-secondary dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
+                           aria-expanded="false">
+                            option
+                        </a>
+                        <ul class="dropdown-menu" id="location-option">
+                        </ul>
+                    </span><br><br>
+                    <div>
+                        <ul th:class="select-option">
+
+                        </ul>
+                        <!--                        <span>M <input th:type="number"  th:value="1"></span>-->
+                        <!--                        <div><span>quantity : </span><input type="number" th:id="quantity" th:name="quantity" value="1"></div>-->
+                    </div>
+                    <br>
+
+                    <input th:type="hidden" th:id="productCode" th:name="productCode" th:value="*{productCode}">
                     <input th:type="hidden" th:id="productName" th:name="productName" th:value="*{productName}">
                     <input th:type="hidden" th:id="price" th:name="price" th:value="*{price}">
-                    <button class="w-100 btn btn-primary btn-lg" id="sbm-btn">Continue to checkout</button>
+                    <input th:type="hidden" th:id="option" th:name="options" th:value="*{option}">
+                    <button class="w-100 btn btn-success btn-lg" id="sbm-cart-btn">Add to Cart</button><br><br>
+                    <button class="w-100 btn btn-primary btn-lg" id="sbm-orders-btn">Continue to checkout</button>
                 </div>
             </div>
         </div>
@@ -243,23 +266,122 @@
 
 <script>
     $(document).ready(function () {
-        $('#sbm-btn').click(function () {
+        /* 옵션 dropdown 생성 */
+        let options = $('#option').val().split(',');
+        options.forEach(option => {
+            $('#location-option').append('<li><a class="dropdown-item" value="' + option + '">' + option + '</a></li>')
+        })
+
+        /* option 선택시 하단에 추가 또는 확인 */
+        $('.dropdown-item').click(function () {
+            let selectedOptionValue = $(this).attr('value');
+            let selectedOptionId = 'option-' + selectedOptionValue;
+
+            // 이미 선택된 옵션인지 확인
+            if ($('#' + selectedOptionId).length === 0) {
+                // 선택된 옵션이 없으면 추가
+                let tag = '<li>' + selectedOptionValue +
+                    ' <button class="quantity-btn btn btn-outline-danger" data-target="' + selectedOptionId + '" data-action="decrement">' +
+                    '   <i class="bi bi-dash"></i> -' +
+                    ' </button>' +
+                    ' <input type="number" name="'+ selectedOptionId +'" id="' + selectedOptionId + '" value="1">' +
+                    ' <button class="quantity-btn btn btn-outline-success" data-target="' + selectedOptionId + '" data-action="increment">' +
+                    '   <i class="bi bi-plus"></i> +' +
+                    ' </button></li>';
+                $('.select-option').append(tag);
+
+                // 버튼 클릭 이벤트 리스너 등록
+                $('.quantity-btn').off('click').on('click', function () {
+                    let targetId = $(this).data('target');
+                    let action = $(this).data('action');
+                    let targetInput = $('#' + targetId);
+
+                    if (action === 'decrement') {
+                        // - 버튼 클릭
+                        let currentValue = parseInt(targetInput.val());
+                        if (currentValue > 1) {
+                            targetInput.val(currentValue - 1);
+                        }
+                    } else if (action === 'increment') {
+                        // + 버튼 클릭
+                        let currentValue = parseInt(targetInput.val());
+                        targetInput.val(currentValue + 1);
+                    }
+                });
+            } else {
+                alert("이미 선택된 옵션입니다.");
+            }
+        });
+
+        /* 디테일 이미지 생성 */
+        let detailImages = $('#detail-img').val().split(',');
+        detailImages.forEach(imageUrl => {
+            $('#location-detail-img').prepend($('<img>', {
+                src: imageUrl
+            }))
+        })
+
+        /* 장바구니 버튼 */
+        $('#sbm-cart-btn').click(function () {
+            if ($('[id^=option-]').length === 0) {
+                alert("선택된 옵션이 없습니다.")
+                return;
+            }
+
+            let sendData = new Object();
+            sendData.cartDetails = [];
+            let options = $('.select-option input');
+            options.each(function() {
+                let detail = new Object();
+                detail.productCode = $("#productCode").val();
+                let option = $(this).attr('name');
+                detail.option = option.substring(option.indexOf('-') + 1);
+                detail.quantity = $(this).val();
+                sendData.cartDetails.push(detail);
+            })
+
+            $.ajax({
+                type: 'post',
+                async: false,
+                url: '/cart/v1',
+                data: JSON.stringify(sendData),
+                contentType: "application/json; charset=utf-8",
+                dataType: 'json',
+                success: function (data) {
+                    alert("장바구니에 담았습니다.")
+                }
+            });
+        });
+
+        /* 주문 버튼 */
+        $('#sbm-orders-btn').click(function () {
+            if ($('[id^=option-]').length === 0) {
+                alert("선택된 옵션이 없습니다.")
+                return;
+            }
 
             let sendData = new Object();
             sendData.deliveryFee = 3000;
             sendData.promotionDiscount = 0;
             sendData.paymentType = 'CARD';
+            sendData.totalPrice = 0;
+            sendData.totalQuantity = 0;
             sendData.ordersDetails = [];
-            let detail = new Object();
-            detail.productCode = $("#productCode").val();
-            detail.productName = $("#productName").val();
-            detail.quantity = $("#quantity").val();
-            detail.originPrice = $("#price").val();
-            detail.finalPrice = detail.originPrice * detail.quantity;
-            sendData.ordersDetails.push(detail);
+            let options = $('.select-option input');
+            options.each(function() {
+                let detail = new Object();
+                detail.productCode = $("#productCode").val();
+                detail.productName = $("#productName").val();
+                let option = $(this).attr('name');
+                detail.option = option.substring(option.indexOf('-') + 1);
+                detail.quantity = $(this).val();
+                detail.originPrice = $("#price").val();
+                detail.finalPrice = detail.originPrice * detail.quantity;
+                sendData.totalPrice += detail.finalPrice;
+                sendData.totalQuantity += parseInt(detail.quantity);
+                sendData.ordersDetails.push(detail);
+            })
 
-            sendData.totalPrice = parseInt($("#quantity").val()) * parseInt($("#price").val());
-            const xhr = new XMLHttpRequest();
             $.ajax({
                 type: 'post',
                 async: false,

@@ -42,6 +42,8 @@ public class Orders extends BaseEntity {
     @Setter
     private BigDecimal totalPrice;      // 상품가격 + 배송비
     @Setter
+    private Integer totalQuantity;
+    @Setter
     private BigDecimal deliveryFee;
     @Setter
     private BigDecimal promotionDiscount;
@@ -56,17 +58,17 @@ public class Orders extends BaseEntity {
     @JoinColumn(name = "user.id")
     private Users user;
 
-    @OneToMany(mappedBy = "orders", cascade = CascadeType.PERSIST, orphanRemoval = true)
+    @OneToMany(mappedBy = "orders", cascade = CascadeType.PERSIST, orphanRemoval = true, fetch = FetchType.LAZY)
     private List<OrdersDetail> ordersDetails;
 
     @Setter
-    @OneToOne(mappedBy = "orders", cascade = CascadeType.PERSIST, orphanRemoval = true)
+    @OneToOne(mappedBy = "orders", cascade = CascadeType.PERSIST, orphanRemoval = true, fetch = FetchType.LAZY)
     private Payment payment;
 
     @Builder
     public Orders(String uid, String receiverName, String receiverTel,
                   String receiverAddr, String receiverAddrDetail, String deliveryMsg,
-                  BigDecimal totalPrice, BigDecimal deliveryFee, BigDecimal promotionDiscount,
+                  BigDecimal totalPrice, Integer totalQuantity, BigDecimal deliveryFee, BigDecimal promotionDiscount,
                   PaymentType paymentType, List<OrdersDetail> ordersDetails) {
         this.uid = uid;
         this.isPay = false;
@@ -77,6 +79,7 @@ public class Orders extends BaseEntity {
         this.receiverAddrDetail = receiverAddrDetail;
         this.deliveryMsg = deliveryMsg;
         this.totalPrice = totalPrice;
+        this.totalQuantity = totalQuantity;
         this.deliveryFee = deliveryFee;
         this.promotionDiscount = promotionDiscount;
         this.paymentType = paymentType;
