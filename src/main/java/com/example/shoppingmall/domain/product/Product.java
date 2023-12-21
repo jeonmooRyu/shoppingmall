@@ -20,19 +20,31 @@ import java.util.List;
 @ToString
 public class Product extends BaseEntity {
 
-    @Id @GeneratedValue(strategy = GenerationType.AUTO)
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-    @Setter private String productCode;
-    @Setter private String productName;
-    @Setter private ProductType productType;
-    @Setter private ServiceType serviceType;
-    @Setter private BigDecimal price;
-    @Setter private Boolean isDelete;
-//    @Setter private String seller;
-    @Setter @Size(max = 1000)
+    @Setter
+    private String productCode;
+    @Setter
+    private String productName;
+    @Setter
+    @Enumerated(value = EnumType.STRING)
+    private ProductType productType;
+    @Setter
+    @Enumerated(value = EnumType.STRING)
+    private ServiceType serviceType;
+    @Setter
+    private BigDecimal price;
+    @Setter
+    private Boolean isDelete;
+    //    @Setter private String seller;
+    @Setter
+    @Size(max = 1000)
     private String detailImage;
-    @Setter private String thumbnail;
-    @Setter private String option;
+    @Setter
+    private String thumbnail;
+    @Setter
+    private String option;
 
 //    @OneToOne(mappedBy = "product")
 //    @JoinColumn

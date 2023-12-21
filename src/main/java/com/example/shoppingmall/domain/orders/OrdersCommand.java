@@ -27,6 +27,7 @@ public class OrdersCommand {
         public Orders toEntity() {
             var orders = Orders.builder()
                     .uid(uid)
+                    .deliveryFee(deliveryFee)
                     .totalPrice(totalPrice)
                     .totalQuantity(totalQuantity)
                     .promotionDiscount(promotionDiscount)
