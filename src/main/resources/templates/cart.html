@@ -45,6 +45,18 @@
         .product-link:hover {
             text-decoration: underline;
         }
+
+        /* 추가된 스타일 */
+        .btn-container {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 20px; /* 버튼과 테이블 사이의 간격 조절 */
+        }
+
+        .btn-container button {
+            flex: 1; /* 버튼이 컨테이너의 남은 공간을 모두 차지하도록 수정 */
+            margin: 0 100px; /* 양쪽 마진을 추가하여 화면 바깥쪽과 여백 조절 */
+        }
     </style>
 </head>
 <body>
@@ -71,27 +83,38 @@
                 </thead>
                 <tbody>
                 <tr th:each="cart : ${carts}">
-                    <td class="align-middle text-center"><input th:type="checkbox"></td>
+                    <td class="align-middle text-center"><input th:type="checkbox" th:name="cb-cart"
+                                                                th:value="${cart.cartId}"></td>
                     <td class="align-middle text-center">
                         <div class="thumbnail-container">
                             <!-- 이미지를 감싸는 링크 -->
                             <a th:href="@{/product/v1/{productCode}(productCode=${cart.productCode})}"
-                               class="product-link"></a>
+                               class="product-link" th:name="product-code" th:data-code="${cart.productCode}"></a>
                             <!-- 이미지 태그 -->
                             <img th:src="${cart.thumbnail}">
                         </div>
                     </td>
                     <td class="align-middle text-center">
-                        <a th:href="@{/product/v1/{productCode}(productCode=${cart.productCode})}"
-                           th:text="${cart.productName}" class="product-link"></a>
+                        <a th:name="product-name"
+                           th:href="@{/product/v1/{productCode}(productCode=${cart.productCode})}"
+                           th:text="${cart.productName}" th:data-name="${cart.productName}" class="product-link"></a>
                     </td>
-                    <td class="align-middle text-center" th:text="${cart.option}"></td>
-                    <td class="align-middle text-center" th:text="${cart.quantity}"></td>
-                    <td class="align-middle text-center" th:text="${cart.price}"></td>
+                    <td class="align-middle text-center" th:name="option" th:data-option="${cart.option}"
+                        th:text="${cart.option}"></td>
+                    <td class="align-middle text-center" th:name="quantity" th:data-quantity="${cart.quantity}"
+                        th:text="${cart.quantity}"></td>
+                    <td class="align-middle text-center" th:name="price" th:data-price="${cart.price}"
+                        th:text="${cart.price}"></td>
                 </tr>
                 </tbody>
             </table>
         </div>
+    </div>
+
+    <!-- 버튼 컨테이너 추가 -->
+    <div class="btn-container">
+        <button class="btn btn-success btn-lg" id="sbm-deleteCart-btn">Remove</button>
+        <button class="btn btn-primary btn-lg" id="sbm-orders-btn">Checkout</button>
     </div>
 </div>
 
@@ -112,6 +135,85 @@
             window.location.href = $(this).find('.product-link').attr('href');
         });
     });
+
+    /* 삭제 버튼 */
+    $('#sbm-deleteCart-btn').click(function () {
+        callDeleteCartApi(true);
+    });
+
+    function callDeleteCartApi(isAlert) {
+        let checkbox = $("input:checkbox[name='cb-cart']:checked");
+        if (checkbox.length === 0) {
+            alert("선택된 항목이 없습니다.")
+            return;
+        }
+
+        let sendData = new Object();
+        sendData.cartIds = [];
+        checkbox.each(function () {
+            sendData.cartIds.push($(this).val());
+        })
+
+        $.ajax({
+            type: 'post',
+            async: false,
+            url: '/cart/v1/delete',
+            data: JSON.stringify(sendData),
+            contentType: "application/json; charset=utf-8",
+            dataType: 'json',
+            success: function (data) {
+                if (isAlert) {
+                    alert("장바구니에서 삭제되었습니다.");
+                    location.reload();
+                }
+            }
+        });
+    }
+
+    /* 주문 버튼 */
+    $('#sbm-orders-btn').click(function () {
+        let checkbox = $("input:checkbox[name='cb-cart']:checked");
+        if (checkbox.length === 0) {
+            alert("선택된 항목이 없습니다.")
+            return;
+        }
+
+        let sendData = new Object();
+        sendData.deliveryFee = 3000;
+        sendData.promotionDiscount = 0;
+        sendData.paymentType = 'CARD';
+        sendData.totalPrice = 0;
+        sendData.totalQuantity = 0;
+        sendData.ordersDetails = [];
+
+        checkbox.each(function () {
+            let detail = new Object();
+            let row = $(this).closest('tr');
+            detail.productCode = row.find('[name="product-code"]').data('code');
+            detail.productName = row.find('[name="product-name"]').data('name');
+            detail.option = row.find('[name="option"]').data('option');
+            detail.quantity = row.find('[name="quantity"]').data('quantity');
+            detail.originPrice = row.find('[name="price"]').data('price');
+            detail.finalPrice = detail.originPrice * detail.quantity;
+            sendData.totalPrice += detail.finalPrice;
+            sendData.totalQuantity += detail.quantity;
+            sendData.ordersDetails.push(detail);
+        })
+        console.log(sendData);
+
+        $.ajax({
+            type: 'post',
+            async: false,
+            url: '/orders/v1',
+            data: JSON.stringify(sendData),
+            contentType: "application/json; charset=utf-8",
+            dataType: 'json',
+            success: function (data) {
+                callDeleteCartApi(false);
+                window.location.href = "/orders/v1/" + data.orderToken;
+            }
+        });
+    })
 </script>
 
 </body>
