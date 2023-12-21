@@ -17,12 +17,17 @@ public class CartServiceImpl implements CartService {
     private final CartRepositorySupport cartRepositorySupport;
 
     @Override
-    public List<Cart> gerCarts() {
+    public List<Cart> getCarts() {
         return cartRepositorySupport.findCart();
     }
 
     @Transactional
     public List<Cart> addCarts(List<Cart> cart) {
         return cartRepository.saveAll(cart);
+    }
+
+    @Override
+    public void deleteCart(List<Long> cartIds) {
+        cartRepository.deleteAllByIdInBatch(cartIds);
     }
 }

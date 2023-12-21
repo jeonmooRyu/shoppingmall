@@ -20,7 +20,7 @@ public class CartFacade {
 
     @Transactional
     public List<Cart> getCarts() {
-        return cartService.gerCarts();
+        return cartService.getCarts();
     }
 
     @Transactional
@@ -33,8 +33,12 @@ public class CartFacade {
             cart.setProduct(product);
             carts.add(cart);
         });
-
         return cartService.addCarts(carts);
+    }
+
+    @Transactional
+    public void deleteCart(List<Long> cartIds) {
+        cartService.deleteCart(cartIds);
     }
 
 }

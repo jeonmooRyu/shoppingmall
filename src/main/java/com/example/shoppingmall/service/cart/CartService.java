@@ -6,8 +6,10 @@ import java.util.List;
 
 public interface CartService {
 
-    List<Cart> gerCarts();
+    List<Cart> getCarts();
 
     List<Cart> addCarts(List<Cart> cart);
+
+    void deleteCart(List<Long> cartIds);
 
 }

@@ -10,14 +10,18 @@ import org.mapstruct.*;
 public interface CartDtoMapper {
 
     @Mappings({
+            @Mapping(source = "id", target = "cartId"),
             @Mapping(source = "cart.product.productName", target = "productName"),
             @Mapping(source = "cart.product.thumbnail", target = "thumbnail"),
             @Mapping(source = "cart.product.price", target = "price"),
             @Mapping(source = "cart.product.productCode", target = "productCode"),
     })
     CartDto.CartResponse of(Cart cart);
+
     CartCommand of(CartDto.AddCartRequest.CartDetail request);
-    CartDto.AddCartResponse toSuccess(Boolean isSuccess);
-    CartDto.AddCartResponse toFail(Boolean isSuccess);
+
+    CartDto.CartResultResponse toSuccess(Boolean isSuccess);
+
+    CartDto.CartResultResponse toFail(Boolean isSuccess);
 
 }

@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.*;
 public class CartController {
 
     private final CartFacade cartFacade;
-
     private final CartDtoMapper cartDtoMapper;
 
     @GetMapping
@@ -25,7 +24,7 @@ public class CartController {
     }
 
     @PostMapping
-    public @ResponseBody CartDto.AddCartResponse addToCart(@RequestBody CartDto.AddCartRequest request) {
+    public @ResponseBody CartDto.CartResultResponse addToCart(@RequestBody CartDto.AddCartRequest request) {
         var commands = request.getCartDetails().stream().map(cartDtoMapper::of).toList();
         var carts = cartFacade.addCarts(commands);
         if (request.getCartDetails().size() == carts.size()) {
@@ -33,6 +32,14 @@ public class CartController {
         }
         return cartDtoMapper.toFail(false);
     }
+
+    @PostMapping("/delete") // 다건 일괄삭제를 위해 @DeleteMapping 대신 @PostMapping 사용
+    public @ResponseBody CartDto.CartResultResponse deleteCart(@RequestBody CartDto.DeleteCartRequest request) {
+        cartFacade.deleteCart(request.getCartIds());
+        return cartDtoMapper.toSuccess(true);
+    }
+
+
 
 
 

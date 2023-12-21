@@ -15,15 +15,21 @@ import javax.persistence.*;
 @ToString
 public class Cart extends BaseEntity {
 
-    @Id @GeneratedValue(strategy = GenerationType.AUTO)
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-    @Setter private String uid;
-    @Setter private Option option;
-    @Setter private Integer quantity;
+    @Setter
+    private String uid;
+    @Setter
+    @Enumerated(value = EnumType.STRING)
+    private Option option;
+    @Setter
+    private Integer quantity;
 
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "product.id")
-    @Setter private Product product;
+    @Setter
+    private Product product;
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "users.id")

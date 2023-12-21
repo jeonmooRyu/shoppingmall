@@ -13,6 +13,7 @@ public class CartDto {
     @Setter
     @ToString
     public static class CartResponse {
+        private Long cartId;
         private String thumbnail;
         private String productName;
         private Option option;
@@ -41,9 +42,17 @@ public class CartDto {
     @Getter
     @Setter
     @ToString
-    public static class AddCartResponse {
+    public static class CartResultResponse {
         private Boolean isSuccess;
     }
+
+    @Getter
+    @Setter
+    @ToString
+    public static class DeleteCartRequest {
+        private List<Long> cartIds;
+    }
+
 
 
 }
