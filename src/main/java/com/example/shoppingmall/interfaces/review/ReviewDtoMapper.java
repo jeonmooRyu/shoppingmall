@@ -8,7 +8,7 @@ import org.mapstruct.ReportingPolicy;
 @Mapper(
         componentModel = "Spring",
         injectionStrategy = InjectionStrategy.CONSTRUCTOR,
-        unmappedTargetPolicy = ReportingPolicy.ERROR
+        unmappedTargetPolicy = ReportingPolicy.IGNORE
 )
 public interface ReviewDtoMapper {
 

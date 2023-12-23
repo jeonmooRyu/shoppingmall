@@ -1,5 +1,6 @@
 package com.example.shoppingmall.service.users;
 
+import com.example.shoppingmall.common.Util;
 import com.example.shoppingmall.domain.users.Users;
 import com.example.shoppingmall.repository.UsersRepository;
 import lombok.RequiredArgsConstructor;
@@ -25,5 +26,10 @@ public class UsersServiceImpl implements UsersService{
     @Transactional
     public Users getUsersByEmail(String email) {
         return usersRepository.findUsersByEmail(email);
+    }
+
+    @Override
+    public Users getUsers() {
+        return usersRepository.findByUid(Util.getUid().orElseThrow());
     }
 }

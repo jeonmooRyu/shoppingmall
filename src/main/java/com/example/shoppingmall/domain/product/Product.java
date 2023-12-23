@@ -50,7 +50,7 @@ public class Product extends BaseEntity {
 //    private OrdersDetail ordersDetail;
 
     @OneToMany(mappedBy = "product")
-    private List<Review> review;
+    private List<Review> reviews;
 
     @OneToMany(mappedBy = "product")
     private List<Promotion> promotions;
@@ -69,7 +69,7 @@ public class Product extends BaseEntity {
     }
 
     public void setReview(Review review) {
-        this.getReview().add(review);
+        this.getReviews().add(review);
         review.setProduct(this);
     }
 
