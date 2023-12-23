@@ -23,7 +23,8 @@ public interface ProductDtoMapper {
 
     @Mappings({
             @Mapping(source = "users.name", target = "userName"),
-            @Mapping(source = "id", target = "reviewId")
+            @Mapping(source = "id", target = "reviewId"),
+            @Mapping(expression = "java(review.getCreatedAt().toLocalDate())", target = "createdAt")
     })
     ProductDto.ProductResponse.Review toReviewsResponse(Review review);
 

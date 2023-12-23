@@ -7,7 +7,7 @@ import lombok.Setter;
 import lombok.ToString;
 
 import java.math.BigDecimal;
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 import java.util.List;
 
 public class ProductDto {
@@ -63,7 +63,7 @@ public class ProductDto {
             private String userName;
             private String content;
             private Integer score;
-            private LocalDateTime createdAt;
+            private LocalDate createdAt;
         }
 
     }
