@@ -24,8 +24,10 @@ public class ProductController {
     @GetMapping("/{productCode}")
     public String gotoProduct(@PathVariable String productCode, Model model) {
         var product = productFacade.getProduct(productCode);
-        var response = productDtoMapper.toResponse(product);
+        var reviewsDto = product.getReviews().stream().map(productDtoMapper::toReviewsResponse).toList();
+        var response = productDtoMapper.toResponse(product, reviewsDto);
         model.addAttribute("product", response);
+        model.addAttribute("reviews", response.getReviews());
         return "product";
     }
 }
