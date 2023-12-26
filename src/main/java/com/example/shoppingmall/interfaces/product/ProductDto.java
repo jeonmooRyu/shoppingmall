@@ -7,6 +7,7 @@ import lombok.Setter;
 import lombok.ToString;
 
 import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.util.List;
 
 public class ProductDto {
@@ -52,6 +53,19 @@ public class ProductDto {
         private String productName;
         private String detailImage;
         private BigDecimal price;   // 원래 가격
+        private List<Review> reviews;
+
+        @Getter
+        @Setter
+        @ToString
+        public static class Review {
+            private Long reviewId;
+            private String userName;
+            private String content;
+            private Integer score;
+            private LocalDate createdAt;
+        }
+
     }
 
 }

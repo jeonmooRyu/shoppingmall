@@ -33,45 +33,9 @@
 
 
     <style>
-        .bd-placeholder-img {
-            font-size: 1.125rem;
-            text-anchor: middle;
-            -webkit-user-select: none;
-            -moz-user-select: none;
-            user-select: none;
-        }
-
-        @media (min-width: 768px) {
-            .bd-placeholder-img-lg {
-                font-size: 3.5rem;
-            }
-        }
-
-        .b-example-divider {
-            width: 100%;
-            height: 3rem;
-            background-color: rgba(0, 0, 0, .1);
-            border: solid rgba(0, 0, 0, .15);
-            border-width: 1px 0;
-            box-shadow: inset 0 .5em 1.5em rgba(0, 0, 0, .1), inset 0 .125em .5em rgba(0, 0, 0, .15);
-        }
-
-        .b-example-vr {
-            flex-shrink: 0;
-            width: 1.5rem;
-            height: 100vh;
-        }
-
         .bi {
             vertical-align: -.125em;
             fill: currentColor;
-        }
-
-        .nav-scroller {
-            position: relative;
-            z-index: 2;
-            height: 2.75rem;
-            overflow-y: hidden;
         }
 
         .nav-scroller .nav {
@@ -112,6 +76,25 @@
 
         ul {
             list-style: none
+        }
+
+        .review-form div {
+            margin-bottom: 20px;
+        }
+
+        .review-form textarea {
+            resize: vertical;
+        }
+
+        .location-reviewStar {
+            width: 10px;
+            height: 10px;
+        }
+
+        .reviewStar {
+            white-space: nowrap;  /* 공백을 무시하고 한 줄에 표시하도록 설정 */
+            display: inline-block;  /* 인라인 요소로 설정하여 가로로 나열되도록 함 */
+            margin-right: 5px;  /* 이모지 간의 간격을 조정할 수 있습니다. */
         }
 
     </style>
@@ -240,8 +223,6 @@
                         <ul th:class="select-option">
 
                         </ul>
-                        <!--                        <span>M <input th:type="number"  th:value="1"></span>-->
-                        <!--                        <div><span>quantity : </span><input type="number" th:id="quantity" th:name="quantity" value="1"></div>-->
                     </div>
                     <br>
 
@@ -249,12 +230,47 @@
                     <input th:type="hidden" th:id="productName" th:name="productName" th:value="*{productName}">
                     <input th:type="hidden" th:id="price" th:name="price" th:value="*{price}">
                     <input th:type="hidden" th:id="option" th:name="options" th:value="*{option}">
-                    <button class="w-100 btn btn-success btn-lg" id="sbm-cart-btn">Add to Cart</button><br><br>
+                    <button class="w-100 btn btn-success btn-lg" id="sbm-cart-btn">Add to Cart</button>
+                    <br><br>
                     <button class="w-100 btn btn-primary btn-lg" id="sbm-orders-btn">Continue to checkout</button>
                 </div>
             </div>
         </div>
     </div>
+
+    <hr class="my-4">
+
+    <!-- 리뷰 -->
+    <div class="container mt-5">
+        <div class="row row-cols-1 row-cols-md-3 g-4">
+
+            <!-- Thymeleaf 반복문으로 리뷰 카드 생성 -->
+            <input type="hidden" th:id="reviews" th:value="${reviews}">
+            <div class="col" th:each="review : ${reviews}">
+                <div class="card border p-3">
+                    <div class="d-flex justify-content-between align-items-center mb-2">
+                        <span class="fw-bold" th:text="${review.userName}"></span>
+                        <span class="text-secondary" th:text="${review.createdAt}"></span>
+                    </div>
+
+                    <div class="location-reviewStar mb-2">
+                        <div th:id="|location-reviewStar-${review.reviewId}|">
+                        </div>
+                    </div>
+                    <br>
+                    <div class="mb-2">
+                        <p id="content" th:text="${review.content}"></p>
+                    </div>
+                </div>
+            </div>
+            <!-- 반복 블록의 끝 -->
+
+        </div>
+    </div>
+
+
+
+
 
 </main>
 <div>
@@ -262,9 +278,7 @@
 </div>
 <script src="https://code.jquery.com/jquery-3.7.1.min.js"
         integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
-</body>
-
-<script>
+<script th:inline="javascript">
     $(document).ready(function () {
         /* 옵션 dropdown 생성 */
         let options = $('#option').val().split(',');
@@ -284,7 +298,7 @@
                     ' <button class="quantity-btn btn btn-outline-danger" data-target="' + selectedOptionId + '" data-action="decrement">' +
                     '   <i class="bi bi-dash"></i> -' +
                     ' </button>' +
-                    ' <input type="number" name="'+ selectedOptionId +'" id="' + selectedOptionId + '" value="1">' +
+                    ' <input type="number" name="' + selectedOptionId + '" id="' + selectedOptionId + '" value="1">' +
                     ' <button class="quantity-btn btn btn-outline-success" data-target="' + selectedOptionId + '" data-action="increment">' +
                     '   <i class="bi bi-plus"></i> +' +
                     ' </button></li>';
@@ -321,6 +335,20 @@
             }))
         })
 
+        /* 현재 리뷰의 별점 값을 가져오기 */
+        let reviews = [[${reviews}]];
+        $.each(reviews, function (i, review) {
+            let score = review.score;
+            let reviewId = 'location-reviewStar-' + review.reviewId;
+            let tag = "<span class='reviewStar'>";  // 리뷰마다 새로운 태그를 초기화
+            for (let i = 0; i < score; i++) {
+                tag += "★";  // 태그에 계속해서 별을 추가
+                // tag += "⭐";  // 태그에 계속해서 별을 추가
+            }
+            tag += "</span>"
+            $('#' + reviewId).append(tag);  // 줄바꿈이 없는 태그를 리뷰 위치에 추가
+        });
+
         /* 장바구니 버튼 */
         $('#sbm-cart-btn').click(function () {
             if ($('[id^=option-]').length === 0) {
@@ -331,7 +359,7 @@
             let sendData = new Object();
             sendData.cartDetails = [];
             let options = $('.select-option input');
-            options.each(function() {
+            options.each(function () {
                 let detail = new Object();
                 detail.productCode = $("#productCode").val();
                 let option = $(this).attr('name');
@@ -368,7 +396,7 @@
             sendData.totalQuantity = 0;
             sendData.ordersDetails = [];
             let options = $('.select-option input');
-            options.each(function() {
+            options.each(function () {
                 let detail = new Object();
                 detail.productCode = $("#productCode").val();
                 detail.productName = $("#productName").val();
@@ -396,6 +424,8 @@
         });
     });
 </script>
+</body>
+
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"

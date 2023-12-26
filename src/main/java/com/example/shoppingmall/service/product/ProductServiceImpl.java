@@ -18,7 +18,7 @@ public class ProductServiceImpl implements ProductService{
 
     @Transactional
     public Product getProduct(String productCode) {
-        return productRepository.findByProductCode(productCode);
+        return productRepositorySupport.getProductByProductCode(productCode);
     }
 
     @Transactional
