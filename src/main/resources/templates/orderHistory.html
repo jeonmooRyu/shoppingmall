@@ -64,7 +64,6 @@
                     <th>Total Quantity</th>
                     <th>Total Price</th>
                     <th></th>
-                    <th></th>
                 </tr>
                 </thead>
                 <tbody>
@@ -97,6 +96,8 @@
                         <li><a class="dropdown-item" href="#" value="1" onclick="onScore(1)">1</a></li>
                     </ul>
                 </div>
+                <input type="hidden" id="review-score">
+                <input type="hidden" id="review-productCode">
                 <br>
                 <!-- 리뷰 내용 작성란 -->
                 <div class="form-floating">
@@ -107,7 +108,7 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary">Regist</button>
+                <button type="button" class="btn btn-primary" id="regist-review">Regist</button>
             </div>
         </div>
     </div>
@@ -154,11 +155,6 @@
             callOrderHistoryApi(startDate, endDate);
         });
 
-        /* 리뷰 > 모달 > 별점 선택시 모달 기본값 노출*/
-        function onScore(score) {
-            $('#modal-review-score').append("Score" + score)
-        }
-
         function callOrderHistoryApi(startDate, endDate) {
             let urlStr = '/orders/v1/orderHistory';
             if (startDate !== null && startDate !== undefined) {
@@ -174,8 +170,6 @@
                 async: true,
                 dataType: 'json',
                 success: function (data) {
-                    console.log("data : " + data)
-                    console.log("data type : " + typeof data)
                     populateOrderTable(data)
                 },
                 error: function () {
@@ -197,11 +191,6 @@
                     '<td>' + order.orderToken + '</td>' +
                     '<td>' + order.totalQuantity + '</td>' +
                     '<td>' + order.totalPrice + '</td>' +
-                    '<td>' +
-                    '<button type="button" class="btn btn-primary" data-bs-toggle="modal"' +
-                    'data-bs-target="#modal-review">' +
-                    'Review' +
-                    '</button>' + '</td>' +
                     '<td>' +
                     '<button class="btn btn-info view-details" data-bs-toggle="collapse" data-bs-target="#orderDetail' + order.orderToken + '" aria-expanded="false" aria-controls="orderDetail' + order.orderToken + '">' +
                     'View Details' +
@@ -227,6 +216,12 @@
                         '<td>' + detail.quantity + '</td>' +
                         '<td>' + detail.option + '</td>' +
                         '<td>' + detail.originPrice + '</td>' +
+                        '<td>' +
+                        '<button type="button" class="btn btn-primary" data-bs-toggle="modal"' +
+                        'data-bs-target="#modal-review">' +
+                        'Review' +
+                        '</button>' + '</td>' +
+                        '<td class="productCode" style="display: none;" >' + detail.productCode + '</td>' +
                         '</tr>';
                 });
 
@@ -241,7 +236,51 @@
         $(document).on('click.bs.dropdown.data-api', '.datepicker', function (e) {
             e.stopPropagation();
         });
+
+        $(document).on('click', '.btn-primary', function() {
+            // 해당 productCode를 찾아 setModalProductCode 호출
+            let productCode = $(this).closest('tr').find('.productCode').text();
+            console.log(productCode)
+            $('#review-productCode').val(productCode)
+            setModalProductCode(productCode);
+        });
+
+
+        /* 모달 등록 버튼 */
+        $('#regist-review').click(function () {
+            let sendData = new Object();
+            sendData.score = $('#review-score').val()
+            sendData.content = $('#floatingTextarea').val();
+            sendData.productCode = $('#review-productCode').val();
+            console.log('productCode : ' + sendData.productCode)
+
+            $.ajax({
+                type: 'post',
+                async: true,
+                url: '/review/v1',
+                method: 'post',
+                dataType: 'json',
+                data: JSON.stringify(sendData),
+                contentType: "application/json; charset=utf-8",
+                success: function () {
+                    alert('리뷰가 등록되었습니다.')
+                    // $('#modal-review').modal('hide');
+                    location.reload()
+                },
+            });
+        });
     });
+
+    function setModalProductCode (productCode) {
+
+    }
+
+    /* 리뷰 > 모달 > 별점 선택시 모달 기본값 노출*/
+    function onScore(score) {
+        let dropDownScore = $('#modal-review-score');
+        $('#review-score').val(score)
+        dropDownScore.html(score)
+    }
 </script>
 
 </body>

@@ -111,6 +111,7 @@ public class OrdersDto {
         @ToString
         public static class OrdersDetail {
             private String productName;
+            private String productCode;
             private BigDecimal originPrice;
             private String quantity;
             private Option option;
