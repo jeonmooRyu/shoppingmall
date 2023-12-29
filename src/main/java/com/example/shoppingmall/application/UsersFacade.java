@@ -21,7 +21,7 @@ public class UsersFacade {
 
     @Transactional
     public Boolean isCheckDuplicateEmail(String email) {
-        return usersService.isDuplicateUser(email);
+        return usersService.isAlreadySignUpEmail(email);
     }
 
 }

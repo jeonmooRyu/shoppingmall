@@ -4,11 +4,13 @@ import com.example.shoppingmall.domain.enums.Authority;
 import lombok.Builder;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.oauth2.core.user.OAuth2User;
 
 import java.util.Collection;
 import java.util.HashSet;
+import java.util.Map;
 
-public class CustomUserDetails implements UserDetails {
+public class CustomUserDetails implements UserDetails, OAuth2User {
 
     private final Collection<GrantedAuthority> authorities;
     private final String password;
@@ -27,6 +29,14 @@ public class CustomUserDetails implements UserDetails {
         this.authorities = collection;
         this.password = password;
         this.usersName = usersName;
+    }
+
+    /**
+     * Oauth2User
+     */
+    @Override
+    public Map<String, Object> getAttributes() {
+        return null;
     }
 
     /**
@@ -99,5 +109,13 @@ public class CustomUserDetails implements UserDetails {
     @Override
     public boolean isEnabled() {
         return true;
+    }
+
+    /**
+     * OAuth2User
+     */
+    @Override
+    public String getName() {
+        return null;
     }
 }

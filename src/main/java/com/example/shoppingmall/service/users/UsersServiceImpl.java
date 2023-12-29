@@ -19,8 +19,13 @@ public class UsersServiceImpl implements UsersService{
     }
 
     @Transactional
-    public Boolean isDuplicateUser(String email) {
+    public Boolean isAlreadySignUpEmail(String email) {
         return usersRepository.existsByEmail(email);
+    }
+
+    @Transactional
+    public Users getUsers(String uid) {
+        return usersRepository.findByUid(uid);
     }
 
     @Transactional
