@@ -3,11 +3,10 @@ package com.example.shoppingmall.domain.enums;
 import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
-public enum Authority {
+public enum SignUpType {
 
-    // 권한관
-    ROLE_COMMON("일반권한"),
-    ROLE_ADMIN("관리자권한");
+    COMMON("일반 회원가입"),
+    KAKAO("카카오 회원가입");
 
     private final String description;
 }

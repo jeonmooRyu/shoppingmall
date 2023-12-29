@@ -4,6 +4,7 @@ import com.example.shoppingmall.common.TokenGenerator;
 import com.example.shoppingmall.domain.cart.Cart;
 import com.example.shoppingmall.domain.baseEntity.BaseEntity;
 import com.example.shoppingmall.domain.enums.Authority;
+import com.example.shoppingmall.domain.enums.SignUpType;
 import com.example.shoppingmall.domain.enums.UserType;
 import lombok.*;
 
@@ -35,9 +36,13 @@ public class Users extends BaseEntity {
     @Enumerated(value = EnumType.STRING)
     private UserType userType;
     @Setter
+    @Enumerated(value = EnumType.STRING)
     private Authority authority;
     @Setter
     private Integer point;
+    @Setter
+    @Enumerated(value = EnumType.STRING)
+    private SignUpType signUpType;
 
     //    @OneToMany(mappedBy = "user")
 //    private List<Orders> orders;
@@ -55,15 +60,16 @@ public class Users extends BaseEntity {
 //    private List<Auth> auths;
 
     @Builder
-    private Users(String email, String name, String phoneNumber, String password) {
+    private Users(String email, String name, String phoneNumber, String password, String uid, SignUpType signUpType) {
         this.email = email;
         this.name = name;
         this.phoneNumber = phoneNumber;
-        this.password = password;
+        this.password = signUpType == SignUpType.COMMON ? password : null;
         this.userType = UserType.MEMBER_COMMON;
-        this.uid = TokenGenerator.generateUid();
+        this.uid = uid == null ? TokenGenerator.generateUid() : uid;
         this.point = 0;
-        this.authority = Authority.COMMON;
+        this.authority = Authority.ROLE_COMMON;
+        this.signUpType = signUpType;
     }
 
 }

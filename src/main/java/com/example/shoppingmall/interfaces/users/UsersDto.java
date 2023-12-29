@@ -1,5 +1,6 @@
 package com.example.shoppingmall.interfaces.users;
 
+import com.example.shoppingmall.domain.enums.SignUpType;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
@@ -31,6 +32,8 @@ public class UsersDto {
         private String email;
         @NonNull
         private String password;
+        @NonNull
+        private SignUpType signUpType;
     }
 
     @Getter

@@ -1,5 +1,6 @@
 package com.example.shoppingmall.domain.users;
 
+import com.example.shoppingmall.domain.enums.SignUpType;
 import lombok.*;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
@@ -15,6 +16,8 @@ public class UsersCommand {
         private String password;
         private String name;
         private String phoneNumber;
+        private SignUpType signUpType;
+        private String uid;
 
         public Users toEntity() {
             return Users.builder()
@@ -22,6 +25,17 @@ public class UsersCommand {
                     .password(new BCryptPasswordEncoder().encode(password))
                     .name(name)
                     .phoneNumber(phoneNumber)
+                    .signUpType(signUpType)
+                    .build();
+        }
+
+        public Users toEntityByOath2() {
+            return Users.builder()
+                    .uid(uid)
+                    .email(email)
+                    .name(name)
+                    .phoneNumber(phoneNumber)
+                    .signUpType(signUpType)
                     .build();
         }
     }
