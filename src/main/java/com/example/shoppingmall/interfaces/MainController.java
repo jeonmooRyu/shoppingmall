@@ -22,7 +22,7 @@ public class MainController {
         return "logout";
     }
 
-    @GetMapping("/main")
+    @GetMapping
     public String goToMain(Model model) {
         var products = productFacade.getMainProducts();
         model.addAttribute("products", products);
