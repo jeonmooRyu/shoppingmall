@@ -11,9 +11,9 @@ import org.mapstruct.*;
 )
 public interface UsersDtoMapper {
 
-    UsersCommand.SignUpRequest of(UsersDto.SignUpUserRequest request);
+    UsersCommand of(UsersDto.SignUpUserRequest request);
 
-    UsersCommand.SignUpRequest of(String uid, SignUpType signUpType, String name);
+    UsersCommand of(String uid, SignUpType signUpType, String name, String phoneNumber);
 
     UsersDto.SignUpCheckEmailResponse toResponse(Boolean isDuplicated);
 }
