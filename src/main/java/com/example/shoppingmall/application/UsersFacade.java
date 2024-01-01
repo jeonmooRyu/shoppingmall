@@ -14,14 +14,14 @@ public class UsersFacade {
     private final UsersService usersService;
 
     @Transactional
-    public Users signUp(UsersCommand.SignUpRequest usersCommand) {
+    public Users signUp(UsersCommand usersCommand) {
         var user = usersCommand.toEntity();
         return usersService.signUp(user);
     }
 
     @Transactional
     public Boolean isCheckDuplicateEmail(String email) {
-        return usersService.isDuplicateUser(email);
+        return usersService.isAlreadySignUpEmail(email);
     }
 
 }

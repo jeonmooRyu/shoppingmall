@@ -6,7 +6,9 @@ public interface UsersService {
 
     Users signUp(Users user);
 
-    Boolean isDuplicateUser(String email);
+    Boolean isAlreadySignUpEmail(String email);
+
+    Users getUsers(String uid);
 
     Users getUsersByEmail(String email);
 

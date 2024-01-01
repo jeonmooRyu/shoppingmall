@@ -76,4 +76,9 @@ gradle-app.setting
 # Cache of project
 .gradletasknamecache
 
+# yml
+*.yml
 
+# out
+out
+.DS_Store
