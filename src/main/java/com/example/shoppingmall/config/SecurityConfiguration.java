@@ -27,6 +27,7 @@ public class SecurityConfiguration {
                                 .requestMatchers(new AntPathRequestMatcher("/product/v1/*")).permitAll()
                                 .requestMatchers(new AntPathRequestMatcher("/product/v1")).permitAll()
                                 .requestMatchers(new AntPathRequestMatcher("/signUp")).permitAll()
+                                .requestMatchers(new AntPathRequestMatcher("/users/v1/signUp/check")).permitAll()
                                 .requestMatchers(new AntPathRequestMatcher("/users/v1")).permitAll()
                                 .requestMatchers(new AntPathRequestMatcher("/review/v1")).permitAll()
 //                                .antMatchers("/users/v1/signUp").permitAll()

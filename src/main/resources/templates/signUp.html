@@ -115,6 +115,10 @@
         .bd-mode-toggle .dropdown-menu .active .bi {
             display: block !important;
         }
+
+        .error-msg {
+            color: red;
+        }
     </style>
 
 
@@ -201,14 +205,17 @@
             </div>
             <div class="col-md-7 col-lg-8">
                 <h4 class="mb-3">SIGN UP !</h4>
-                <form class="needs-validation" th:action="@{/users/v1}" method="post" novalidate>
+<!--                <form class="needs-validation" th:action="@{/users/v1}" method="post" novalidate>-->
                     <div class="row g-3">
 
                         <div class="col-12">
                             <label for="email" class="form-label">Email<span class="text-body-secondary"></span></label>
-                            <input type="email" class="form-control" id="email" name="email"
-                                   placeholder="you@example.com" required onblur="checkEmail()">
-                            <div id="emailErrorMsg"></div>
+                            <div class="input-group">
+                                <input type="email" class="form-control" id="email" name="email"
+                                       placeholder="you@exam|ple.com" required onblur="checkEmail()">
+                                <button type="button" id="email-check-btn" class="btn btn-primary">Check</button>
+                            </div>
+                            <div class="error-msg" id="emailErrorMsg"></div>
                             <div class="invalid-feedback">
                                 Please enter a valid email address for shipping updates.
                             </div>
@@ -219,7 +226,7 @@
                             <input type="password" class="form-control" id="password1" name="password"
                                    placeholder="password" value=""
                                    required onblur="checkPassword1()">
-                            <div id="pw1ErrorMsg"></div>
+                            <div class="error-msg" id="pw1ErrorMsg"></div>
                             <div class="invalid-feedback">
                                 Valid first name is required.
                             </div>
@@ -229,7 +236,7 @@
                             <label for="password2" class="form-label">password check</label>
                             <input type="password" class="form-control" id="password2" placeholder="password" value=""
                                    required onblur="checkPassword2()">
-                            <div id="pw2ErrorMsg"></div>
+                            <div class="error-msg" id="pw2ErrorMsg"></div>
                             <div class="invalid-feedback">
                                 Valid first name is required.
                             </div>
@@ -239,7 +246,7 @@
                             <label for="username" class="form-label">name</label>
                             <input type="text" class="form-control" id="username" name="name" placeholder="name"
                                    value="" required onblur="checkName()">
-                            <div id="nameErrorMsg"></div>
+                            <div class="error-msg" id="nameErrorMsg"></div>
                             <div class="invalid-feedback">
                                 Valid first name is required.
                             </div>
@@ -249,17 +256,17 @@
                             <label for="phone" class="form-label">Phone<span class="text-body-secondary"></span></label>
                             <input type="number" class="form-control" id="phone" name="phoneNumber"
                                    placeholder="01012345678" required onblur="checkPhone()">
-                            <div id="phoneErrorMsg"></div>
+                            <div class="error-msg" id="phoneErrorMsg"></div>
                             <div class="invalid-feedback">
                                 Please enter a valid email address for shipping updates.
                             </div>
                         </div>
 
-                        <input type="hidden" value="COMMON" name="signUpType">
+<!--                        <input type="hidden" id="signUpType" value="COMMON" name="signUpType">-->
 
-                        <button class="w-100 btn btn-primary btn-lg" type="submit">PLAY TO STORE !</button>
+                        <button class="w-100 btn btn-primary btn-lg" id="sbm-btn" type="submit">PLAY TO STORE !</button>
                     </div>
-                </form>
+<!--                </form>-->
             </div>
         </div>
     </main>
@@ -270,6 +277,8 @@
 <script src="https://getbootstrap.com/docs/5.3/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
         crossorigin="anonymous"></script>
+<script src="https://code.jquery.com/jquery-3.7.1.min.js"
+        integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
 <script>
     let isMailCheck = false;
     let isNameCheck = false;
@@ -279,16 +288,29 @@
 
     // 이메일 중복확인
     const EMAIL_DUPLICATED_ERROR_MSG = "중복된 이메일 입니다.";
+    const EMAIL_EMPTY_ERROR_MSG = "이메일을 입력해 주세요.";
 
-    function checkDuplicateEmail() {
-        let usersEmail = document.getElementById("email").value;
-        let serverUrl = "http://localhost:8080/users/v1/signUp/check";
+    $('#email-check-btn').click(function () {
+        let email = $('#email').val();
+        // 이메일 미입력 체크
+        if (email.length === 0) {
+            isMailCheck = false;
+            document.getElementById("emailErrorMsg").innerText = EMAIL_EMPTY_ERROR_MSG;
+            return
+        }
+
+        if (!checkEmail()) {
+            return
+        }
+        let sendData = new Object();
+        sendData.email = email;
         $.ajax({
-            url: serverUrl,
-            contentType: "application/json",
-            dataType: "json",
-            data: JSON.stringify({email: usersEmail}),
-            type: "post",
+            type: 'post',
+            async: true,
+            url: '/users/v1/signUp/check',
+            data: JSON.stringify(sendData),
+            contentType: "application/json; charset=utf-8",
+            dataType: 'json',
             success: function (response) {
                 if (response.isDuplicated) {
                     isMailCheck = false;
@@ -296,31 +318,66 @@
                 } else {
                     isMailCheck = true;
                 }
-            }
+            },
+            error: function (request, status, error) {
+            },
         })
+    });
 
-    }
+    $('#sbm-btn').click(function () {
+        if (isMailCheck && isPw1Check && isPw2Check && isNameCheck && isPhoneCheck) {
+            let email = $('#email').val();
+            let password = $('#password1').val();
+            let name = $('#username').val();
+            let phone = $('#phone').val();
+            let signUpType = 'COMMON';
+
+            let sendData = new Object();
+            sendData.email = email;
+            sendData.password = password;
+            sendData.phone = phone;
+            sendData.name = name;
+            sendData.signUpType = signUpType;
+
+            $.ajax({
+                type: 'post',
+                async: false,
+                url: '/users/v1',
+                data: JSON.stringify(sendData),
+                contentType: "application/json; charset=utf-8",
+                dataType: 'json',
+                success: function (data) {
+                    alert("성공")
+                    window.location.href = 'signUpSuccess.html'
+                }
+            })
+        }
+
+
+    });
 
     // 이메일 체크
-    const EMAIL_REGEX = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+.[a-zA-Z]{2,4}$/;
+    const EMAIL_REGEX = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}[a-zA-Z]*$/;
     const EMAIL_ERROR_MSG = "이메일을 올바르게 입력해주세요."
 
     function checkEmail() {
-        let email = document.getElementById("email");
-        if (!EMAIL_REGEX.test(email.value)) {
+        let email = $('#email').val();
+        if (!EMAIL_REGEX.test(email)) {
             document.getElementById("emailErrorMsg").innerText = EMAIL_ERROR_MSG;
+            return false;
         } else {
             document.getElementById("emailErrorMsg").innerText = "";
+            return true;
         }
     }
 
     // 비밀번호1 체크
     const PW1_REGEX = /^(?=.*[A-Za-z])(?=.*\d|.*[!@#$%^&*()-_+=])[A-Za-z\d!@#$%^&*()-_+=]{8,20}$/;
-    const PW_ERROR_MSG = "비밀번호 확인해주세요."
+    const PW_ERROR_MSG = "비밀번호는 8자 이상, 20자 이하, 1가지 이상의 특수기호를 포함해야 합니다."
 
     function checkPassword1() {
-        let pw1 = document.getElementById("password1");
-        if (!PW1_REGEX.test(pw1.value)) {
+        let pw1 = $('#password1').val();
+        if (!PW1_REGEX.test(pw1)) {
             isPw1Check = false;
             document.getElementById("pw1ErrorMsg").innerText = PW_ERROR_MSG;
         } else {
@@ -333,9 +390,9 @@
     const PW2_ERROR_MSG = "비밀번호가 일치하지 않습니다."
 
     function checkPassword2() {
-        let pw1 = document.getElementById("password1");
-        let pw2 = document.getElementById("password2");
-        if (pw1.value !== pw2.value) {
+        let pw1 = $('#password1').val();
+        let pw2 = $('#password2').val();
+        if (pw1 !== pw2) {
             isPw2Check = false;
             document.getElementById("pw2ErrorMsg").innerText = PW2_ERROR_MSG;
         } else {
@@ -349,8 +406,8 @@
     const NAME_ERROR_MSG = "영문과 한글만 입력해주세요.";
 
     function checkName() {
-        let name = document.getElementById("name");
-        if (name === null || !NAME_REGEX.test(name.value)) {
+        let name = $('#username').val();
+        if (name === null || !NAME_REGEX.test(name)) {
             isNameCheck = false;
             document.getElementById("nameErrorMsg").innerText = NAME_ERROR_MSG;
         } else {
@@ -363,8 +420,8 @@
     const PHONE_ERROR_MSG = "휴대폰번호를 확인해주세요.";
 
     function checkPhone() {
-        let phone = document.getElementById("phone");
-        if (phone.value.length !== 11) {
+        let phone = $('#phone').val();
+        if (phone.length !== 11) {
             isPhoneCheck = false;
             document.getElementById("phoneErrorMsg").innerText = PHONE_ERROR_MSG;
         } else {
