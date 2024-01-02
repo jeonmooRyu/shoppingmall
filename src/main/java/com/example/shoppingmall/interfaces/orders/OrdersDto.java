@@ -101,7 +101,7 @@ public class OrdersDto {
     public static class OrdersHistoryResponse {
         private String thumbnail;
         private String orderToken;
-        private String totalPrice;
+        private Integer totalPrice;
         private String totalQuantity;
         private LocalDateTime createdAt;
         private List<OrdersDetail> ordersDetails;
@@ -112,7 +112,7 @@ public class OrdersDto {
         public static class OrdersDetail {
             private String productName;
             private String productCode;
-            private BigDecimal originPrice;
+            private Integer originPrice;
             private String quantity;
             private Option option;
         }

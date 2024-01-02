@@ -18,7 +18,7 @@ public class CartDto {
         private String productName;
         private Option option;
         private Integer quantity;
-        private String price;
+        private Integer price;
         private String productCode;
     }
 

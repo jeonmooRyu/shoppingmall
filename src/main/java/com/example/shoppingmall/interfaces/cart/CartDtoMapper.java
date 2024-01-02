@@ -13,7 +13,7 @@ public interface CartDtoMapper {
             @Mapping(source = "id", target = "cartId"),
             @Mapping(source = "cart.product.productName", target = "productName"),
             @Mapping(source = "cart.product.thumbnail", target = "thumbnail"),
-            @Mapping(source = "cart.product.price", target = "price"),
+            @Mapping(expression = "java(cart.getProduct().getPrice().intValue())", target = "price"),
             @Mapping(source = "cart.product.productCode", target = "productCode"),
     })
     CartDto.CartResponse of(Cart cart);

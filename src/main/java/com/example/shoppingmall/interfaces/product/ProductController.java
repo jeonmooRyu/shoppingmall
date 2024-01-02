@@ -1,6 +1,7 @@
 package com.example.shoppingmall.interfaces.product;
 
 import com.example.shoppingmall.application.ProductFacade;
+import com.example.shoppingmall.common.Util;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -28,6 +29,7 @@ public class ProductController {
         var response = productDtoMapper.toResponse(product, reviewsDto);
         model.addAttribute("product", response);
         model.addAttribute("reviews", response.getReviews());
+        model.addAttribute("isLogin", Util.getUid().isPresent());
         return "product";
     }
 }

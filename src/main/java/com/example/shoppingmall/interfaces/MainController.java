@@ -1,6 +1,7 @@
 package com.example.shoppingmall.interfaces;
 
 import com.example.shoppingmall.application.ProductFacade;
+import com.example.shoppingmall.interfaces.product.ProductDtoMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -11,6 +12,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 public class MainController {
 
     private final ProductFacade productFacade;
+    private final ProductDtoMapper productDtoMapper;
 
     @GetMapping("/login")
     public String goToLogin() {
@@ -25,7 +27,8 @@ public class MainController {
     @GetMapping
     public String goToMain(Model model) {
         var products = productFacade.getMainProducts();
-        model.addAttribute("products", products);
+        var result = products.stream().map(productDtoMapper::of).toList();
+        model.addAttribute("products", result);
         return "main";
     }
 

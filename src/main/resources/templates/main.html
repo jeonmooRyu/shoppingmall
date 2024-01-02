@@ -110,6 +110,11 @@
             display: block !important;
         }
 
+        a {
+            color: black;
+            text-decoration-line: none;
+        }
+
     </style>
 
 
@@ -275,16 +280,17 @@
                                     <image th:href="${product.thumbnail}" class="img-fluid" width="100%" height="225"></image>
                                 </svg>
                                 <div class="card-body">
-                                    <p class="card-text">따뜻한 베이지 코트</p>
+                                    <span class="card-text" th:text="${product.productName}"></span><br>
+                                    <span class="card-text" th:text="${product.price}"></span>
                                 </div>
                             </a>
-                            <div class="d-flex justify-content-between align-items-center card-body">
-                                <div class="btn-group">
-                                    <button type="button" class="btn btn-sm btn-outline-secondary">like</button>
-                                    <button type="button" class="btn btn-sm btn-outline-secondary">cart</button>
-                                </div>
-                                <small class="text-body-secondary">9 mins</small>
-                            </div>
+<!--                            <div class="d-flex justify-content-between align-items-center card-body">-->
+<!--                                <div class="btn-group">-->
+<!--                                    <button type="button" class="btn btn-sm btn-outline-secondary">like</button>-->
+<!--                                    <button type="button" class="btn btn-sm btn-outline-secondary">cart</button>-->
+<!--                                </div>-->
+<!--                                <small class="text-body-secondary">9 mins</small>-->
+<!--                            </div>-->
                         </div>
                     </div>
                     <br>
