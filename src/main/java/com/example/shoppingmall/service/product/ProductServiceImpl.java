@@ -1,5 +1,6 @@
 package com.example.shoppingmall.service.product;
 
+import com.example.shoppingmall.domain.enums.ProductType;
 import com.example.shoppingmall.domain.product.Product;
 import com.example.shoppingmall.repository.ProductRepository;
 import com.example.shoppingmall.repository.support.ProductRepositorySupport;
@@ -27,7 +28,7 @@ public class ProductServiceImpl implements ProductService{
     }
 
     @Transactional
-    public List<Product> getProducts() {
-        return productRepositorySupport.getProducts();
+    public List<Product> getProducts(ProductType productType) {
+        return productRepositorySupport.getProducts(productType);
     }
 }

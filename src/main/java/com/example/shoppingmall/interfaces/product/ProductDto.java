@@ -28,7 +28,7 @@ public class ProductDto {
     @Getter
     @Setter
     @ToString
-    public static class ProductMainViewResponses {
+    public static class ProductPreviewResponses {
 
         private String productCode;
         private String thumbnail;

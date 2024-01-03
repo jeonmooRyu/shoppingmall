@@ -1,9 +1,11 @@
 package com.example.shoppingmall.application;
 
+import com.example.shoppingmall.domain.enums.ProductType;
 import com.example.shoppingmall.domain.product.Product;
 import com.example.shoppingmall.domain.product.ProductCommand;
 import com.example.shoppingmall.service.product.ProductService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.lang.Nullable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -28,7 +30,7 @@ public class ProductFacade {
 
     // 초기 노출 상품 리스트
     @Transactional
-    public List<Product> getMainProducts() {
-        return productService.getProducts();
+    public List<Product> getProducts(@Nullable ProductType productType) {
+        return productService.getProducts(productType);
     }
 }

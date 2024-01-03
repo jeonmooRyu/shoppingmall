@@ -26,7 +26,7 @@ public class MainController {
 
     @GetMapping
     public String goToMain(Model model) {
-        var products = productFacade.getMainProducts();
+        var products = productFacade.getProducts(null);
         var result = products.stream().map(productDtoMapper::of).toList();
         model.addAttribute("products", result);
         return "main";

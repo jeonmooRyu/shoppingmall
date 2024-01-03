@@ -18,7 +18,7 @@ public interface ProductDtoMapper {
     @Mappings({
             @Mapping(expression = "java(product.getPrice().intValue())", target = "price")
     })
-    ProductDto.ProductMainViewResponses of(Product product);
+    ProductDto.ProductPreviewResponses of(Product product);
 
     @Mappings({
             @Mapping(source = "reviews", target = "reviews"),
