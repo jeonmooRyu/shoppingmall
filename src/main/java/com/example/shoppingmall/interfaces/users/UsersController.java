@@ -27,7 +27,6 @@ public class UsersController {
         return usersDtoMapper.toResponse(result);
     }
 
-
     @PostMapping
     public String signUp(@ModelAttribute UsersDto.SignUpUserRequest request, Model model) {
         var usersCommand = usersDtoMapper.of(request);

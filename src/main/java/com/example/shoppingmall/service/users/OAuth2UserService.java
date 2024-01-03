@@ -34,7 +34,7 @@ public class OAuth2UserService extends DefaultOAuth2UserService {
             var oauthUsers = command.toEntityByOath2();
             users = usersService.signUp(oauthUsers);
         }
-        return new CustomUserDetails(users.getAuthority(), null, users.getName());
+        return new CustomUserDetails(users.getAuthority(), null, users.getName(), users.getUid());
     }
 
 }

@@ -13,6 +13,6 @@ public class Util {
             return Optional.empty();
         }
         var customUserDetails = (CustomUserDetails) authentication.getPrincipal();
-        return Optional.of(customUserDetails.getUsername());
+        return Optional.of(customUserDetails.getUid());
     }
 }
