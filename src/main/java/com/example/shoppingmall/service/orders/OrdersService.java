@@ -11,7 +11,7 @@ public interface OrdersService {
 
     List<Orders> getOrders(LocalDateTime startDateTime, LocalDateTime endDateTime);
 
-    Orders getOrder(String orderToken);
+    Orders getOrders(String orderToken);
 
     Orders checkout(Orders orders, String receiverName, String receiverTel, String receiverAddr, String receiverAddrDetail, String deliveryMsg);
 

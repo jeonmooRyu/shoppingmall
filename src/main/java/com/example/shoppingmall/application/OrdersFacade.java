@@ -33,13 +33,13 @@ public class OrdersFacade {
 
     @Transactional
     public Orders getOrder(String orderToken) {
-        return ordersService.getOrder(orderToken);
+        return ordersService.getOrders(orderToken);
     }
 
     @Transactional
     public Orders checkoutOrder(OrdersDto.CheckoutOrderDto checkoutOrderDto, PaymentDto.PaymentRequest paymentRequest) {
         // 결제 진행
-        var orders = ordersService.getOrder(checkoutOrderDto.getOrderToken());
+        var orders = ordersService.getOrders(checkoutOrderDto.getOrderToken());
         paymentService.payOrders(orders, paymentRequest);
 
         // order checkout process

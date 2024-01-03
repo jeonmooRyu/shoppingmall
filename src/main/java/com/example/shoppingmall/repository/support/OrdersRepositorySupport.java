@@ -20,6 +20,14 @@ public class OrdersRepositorySupport {
 
     private final JPAQueryFactory jpaQueryFactory;
 
+    public Orders findOrdersByOrderToken(String orderToken) {
+        return jpaQueryFactory.selectFrom(orders)
+                .leftJoin(orders.ordersDetails, ordersDetail)
+                .fetchJoin()
+                .where(orders.orderToken.eq(orderToken))
+                .fetchOne();
+    }
+
     public List<Orders> findOrders(LocalDateTime startDateTime, LocalDateTime endDateTime) {
         return jpaQueryFactory.selectFrom(orders)
                 .distinct()

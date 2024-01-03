@@ -28,8 +28,8 @@ public class OrdersServiceImpl implements OrdersService{
     }
 
     @Transactional
-    public Orders getOrder(String orderToken) {
-        return ordersRepository.findOrdersByOrderToken(orderToken);
+    public Orders getOrders(String orderToken) {
+        return ordersRepositorySupport.findOrdersByOrderToken(orderToken);
     }
 
     @Transactional

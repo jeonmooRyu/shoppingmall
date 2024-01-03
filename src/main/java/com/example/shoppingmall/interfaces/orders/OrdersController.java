@@ -25,11 +25,13 @@ public class OrdersController {
 
     @GetMapping("/{orderToken}")
     public String goToCheckout(@PathVariable String orderToken, Model model) {
-        var order = ordersFacade.getOrder(orderToken);
-        model.addAttribute("order", order);
+        var orders = ordersFacade.getOrder(orderToken);
+        var response = ordersDtoMapper.toCheckoutViewDto(orders);
+        model.addAttribute("order", response);
         return "checkout";
     }
 
+    // 최초 주문등록 ( 결제전 )
     @PostMapping
     public @ResponseBody OrdersDto.RegistOrderResponse registOrder(@RequestBody OrdersDto.RegistOrderRequest request, Model model) {
         var ordersDetailsCommand = request.getOrdersDetails().stream()
@@ -42,6 +44,7 @@ public class OrdersController {
         return result;
     }
 
+    // 등록된 주문 결제완료 api
     @PostMapping("/checkout")
     public @ResponseBody OrdersDto.CheckoutOrderResponse checkoutOrder(@RequestBody OrdersDto.CheckoutOrderRequest request) {
         var checkoutOrder = ordersDtoMapper.toCheckoutOrders(request);

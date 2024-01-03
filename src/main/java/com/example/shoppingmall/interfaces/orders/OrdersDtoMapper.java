@@ -19,7 +19,10 @@ public interface OrdersDtoMapper {
     OrdersDto.RegistOrderResponse of(Orders orders);
 
     OrdersDto.CheckoutOrderDto toCheckoutOrders(OrdersDto.CheckoutOrderRequest request);
+
     PaymentCommand of(OrdersDto.CheckoutOrderRequest request);
+
+    OrdersDto.CheckoutViewResponse toCheckoutViewDto(Orders orders);
 
     OrdersDto.CheckoutOrderResponse toCheckOrderResponse(Orders orders);
 
