@@ -119,6 +119,10 @@
         .error-msg {
             color: red;
         }
+
+        .pass-msg {
+            color: darkgreen;
+        }
     </style>
 
 
@@ -216,6 +220,7 @@
                                 <button type="button" id="email-check-btn" class="btn btn-primary">Check</button>
                             </div>
                             <div class="error-msg" id="emailErrorMsg"></div>
+                            <div class="pass-msg" id="emailPassMsg"></div>
                             <div class="invalid-feedback">
                                 Please enter a valid email address for shipping updates.
                             </div>
@@ -289,6 +294,7 @@
     // 이메일 중복확인
     const EMAIL_DUPLICATED_ERROR_MSG = "중복된 이메일 입니다.";
     const EMAIL_EMPTY_ERROR_MSG = "이메일을 입력해 주세요.";
+    const EMAIL_PASS_MSG = "사용가능한 이메일 입니다.";
 
     $('#email-check-btn').click(function () {
         let email = $('#email').val();
@@ -314,8 +320,9 @@
             success: function (response) {
                 if (response.isDuplicated) {
                     isMailCheck = false;
-                    document.getElementById("emailErrorMsg").innerText = EMAIL_DUPLICATED_ERROR_MSG;
+                    $('#emailErrorMsg').text(EMAIL_DUPLICATED_ERROR_MSG);
                 } else {
+                    $('#emailPassMsg').text(EMAIL_PASS_MSG);
                     isMailCheck = true;
                 }
             },
@@ -325,33 +332,35 @@
     });
 
     $('#sbm-btn').click(function () {
-        if (isMailCheck && isPw1Check && isPw2Check && isNameCheck && isPhoneCheck) {
-            let email = $('#email').val();
-            let password = $('#password1').val();
-            let name = $('#username').val();
-            let phone = $('#phone').val();
-            let signUpType = 'COMMON';
-
-            let sendData = new Object();
-            sendData.email = email;
-            sendData.password = password;
-            sendData.phone = phone;
-            sendData.name = name;
-            sendData.signUpType = signUpType;
-
-            $.ajax({
-                type: 'post',
-                async: false,
-                url: '/users/v1',
-                data: JSON.stringify(sendData),
-                contentType: "application/json; charset=utf-8",
-                dataType: 'json',
-                success: function (data) {
-                    alert("성공")
-                    window.location.href = 'signUpSuccess.html'
-                }
-            })
+        if (!isMailCheck || !isPw1Check || !isPw2Check || !isNameCheck || !isPhoneCheck) {
+            alert('입력하지 않은 항목이 있습니다.')
+            return
         }
+        let email = $('#email').val();
+        let password = $('#password1').val();
+        let name = $('#username').val();
+        let phone = $('#phone').val();
+        let signUpType = 'COMMON';
+
+        let sendData = new Object();
+        sendData.email = email;
+        sendData.password = password;
+        sendData.phoneNumber = phone;
+        sendData.name = name;
+        sendData.signUpType = signUpType;
+
+        $.ajax({
+            type: 'post',
+            async: false,
+            url: '/users/v1',
+            data: JSON.stringify(sendData),
+            contentType: "application/json; charset=utf-8",
+            dataType: 'json',
+            success: function (data) {
+                alert("성공")
+                window.location.href = 'signUpSuccess.html'
+            }
+        })
 
 
     });
@@ -363,10 +372,10 @@
     function checkEmail() {
         let email = $('#email').val();
         if (!EMAIL_REGEX.test(email)) {
-            document.getElementById("emailErrorMsg").innerText = EMAIL_ERROR_MSG;
+            $('#emailErrorMsg').text(EMAIL_ERROR_MSG);
             return false;
         } else {
-            document.getElementById("emailErrorMsg").innerText = "";
+            $('#emailErrorMsg').text('');
             return true;
         }
     }
@@ -379,9 +388,9 @@
         let pw1 = $('#password1').val();
         if (!PW1_REGEX.test(pw1)) {
             isPw1Check = false;
-            document.getElementById("pw1ErrorMsg").innerText = PW_ERROR_MSG;
+            $('#pw1ErrorMsg').text(PW_ERROR_MSG);
         } else {
-            document.getElementById("pw1ErrorMsg").innerText = "";
+            $('#pw1ErrorMsg').text('');
             isPw1Check = true;
         }
     }
@@ -394,10 +403,10 @@
         let pw2 = $('#password2').val();
         if (pw1 !== pw2) {
             isPw2Check = false;
-            document.getElementById("pw2ErrorMsg").innerText = PW2_ERROR_MSG;
+            $('#pw2ErrorMsg').text(PW2_ERROR_MSG);
         } else {
             isPw2Check = true;
-            document.getElementById("pw2ErrorMsg").innerText = "";
+            $('#pw2ErrorMsg').text('');
         }
     }
 
@@ -409,10 +418,10 @@
         let name = $('#username').val();
         if (name === null || !NAME_REGEX.test(name)) {
             isNameCheck = false;
-            document.getElementById("nameErrorMsg").innerText = NAME_ERROR_MSG;
+            $('#nameErrorMsg').text(NAME_ERROR_MSG);
         } else {
             isNameCheck = true;
-            document.getElementById("nameErrorMsg").innerText = "";
+            $('#nameErrorMsg').text('');
         }
     }
 
@@ -423,10 +432,10 @@
         let phone = $('#phone').val();
         if (phone.length !== 11) {
             isPhoneCheck = false;
-            document.getElementById("phoneErrorMsg").innerText = PHONE_ERROR_MSG;
+            $('#phoneErrorMsg').text(PHONE_ERROR_MSG);
         } else {
             isPhoneCheck = true;
-            document.getElementById("phoneErrorMsg").innerText = "";
+            $('#phoneErrorMsg').text('');
         }
     }
 

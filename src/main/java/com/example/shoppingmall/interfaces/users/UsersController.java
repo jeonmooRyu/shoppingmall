@@ -28,7 +28,7 @@ public class UsersController {
     }
 
     @PostMapping
-    public String signUp(@ModelAttribute UsersDto.SignUpUserRequest request, Model model) {
+    public String signUp(@RequestBody UsersDto.SignUpUserRequest request, Model model) {
         var usersCommand = usersDtoMapper.of(request);
         var user = usersFacade.signUp(usersCommand);
         model.addAttribute("user", user);
