@@ -44,7 +44,7 @@ public class OrdersController {
         return result;
     }
 
-    // 등록된 주문 결제완료 api
+    // 등록된 주문 결제
     @PostMapping("/checkout")
     public @ResponseBody OrdersDto.CheckoutOrderResponse checkoutOrder(@RequestBody OrdersDto.CheckoutOrderRequest request) {
         var checkoutOrder = ordersDtoMapper.toCheckoutOrders(request);

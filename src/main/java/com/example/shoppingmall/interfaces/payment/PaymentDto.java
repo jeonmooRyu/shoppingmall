@@ -8,6 +8,8 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 
+import java.math.BigDecimal;
+
 public class PaymentDto {
 
     @Getter
@@ -15,6 +17,7 @@ public class PaymentDto {
     @ToString
     public static class PaymentRequest {
         private String orderToken;
+        private BigDecimal totalPrice;
         private PaymentType paymentType;
         private CardCompany cardCompany;
         private String cardNo;

@@ -4,7 +4,6 @@ import com.example.shoppingmall.domain.enums.CardCompany;
 import com.example.shoppingmall.domain.enums.Option;
 import com.example.shoppingmall.domain.enums.OrderStatus;
 import com.example.shoppingmall.domain.enums.PaymentType;
-import com.example.shoppingmall.domain.orders.OrdersDetail;
 import com.example.shoppingmall.domain.users.Users;
 import lombok.Getter;
 import lombok.Setter;
@@ -20,10 +19,7 @@ public class OrdersDto {
     @Setter
     @ToString
     public static class RegistOrderRequest {
-        //        private String uid;
-        private BigDecimal totalPrice;
         private Integer totalQuantity;
-        private BigDecimal deliveryFee;
         private List<OrdersDetail> ordersDetails;
 
         @Setter
@@ -35,7 +31,6 @@ public class OrdersDto {
             private Option option;
             private Integer quantity;
             private BigDecimal originPrice;   // 원래 가격
-            private BigDecimal finalPrice;   // 최종 금액 ( 원래가격 - 할인액 )
         }
     }
 
@@ -74,7 +69,7 @@ public class OrdersDto {
         @Getter
         @Setter
         @ToString
-        public static class ordersDetail {
+        public static class OrdersDetail {
             private Long id;
             private String productCode;
             private String productName;
@@ -92,6 +87,8 @@ public class OrdersDto {
     @ToString
     public static class CheckoutOrderRequest {
         private String orderToken;
+        private BigDecimal totalPrice;
+        private BigDecimal deliveryFee;
         private String receiverName;
         private String receiverTel;
         private String receiverAddr;
@@ -118,6 +115,8 @@ public class OrdersDto {
     @ToString
     public static class CheckoutOrderDto {
         private String orderToken;
+        private BigDecimal totalPrice;
+        private BigDecimal deliveryFee;
         private String receiverName;
         private String receiverTel;
         private String receiverAddr;

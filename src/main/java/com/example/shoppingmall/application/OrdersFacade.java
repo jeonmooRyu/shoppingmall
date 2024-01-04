@@ -43,12 +43,15 @@ public class OrdersFacade {
         paymentService.payOrders(orders, paymentRequest);
 
         // order checkout process
+        var paymentType = paymentRequest.getPaymentType();
+        var totalPrice = paymentRequest.getTotalPrice();
+        var deliveryFee = checkoutOrderDto.getDeliveryFee();
         var receiverName = checkoutOrderDto.getReceiverName();
         var receiverTel = checkoutOrderDto.getReceiverTel();
         var receiverAddr = checkoutOrderDto.getReceiverAddr();
         var receiverAddrDetail = checkoutOrderDto.getReceiverAddrDetail();
         var deliveryMsg = checkoutOrderDto.getDeliveryMsg();
-        return ordersService.checkout(orders, receiverName, receiverTel, receiverAddr, receiverAddrDetail, deliveryMsg);
+        return ordersService.checkout(orders, paymentType, totalPrice, deliveryFee, receiverName, receiverTel, receiverAddr, receiverAddrDetail, deliveryMsg);
     }
 
 
