@@ -205,49 +205,41 @@
                 it.</p>
         </div>
 
-        <div class="row g-5">
+        <div class="row g-5" th:object="${order}">
             <div class="col-md-5 col-lg-4 order-md-last">
                 <h4 class="d-flex justify-content-between align-items-center mb-3">
                     <span class="text-primary">Your cart</span>
-                    <span class="badge bg-primary rounded-pill">3</span>
+                    <span class="badge bg-primary rounded-pill" th:text="*{ordersDetails.size()}"></span>
                 </h4>
 
                 <ul class="list-group mb-3">
-                    <li class="list-group-item d-flex justify-content-between lh-sm">
-                        <div>
-                            <h6 class="my-0">Product name</h6>
-                            <small class="text-body-secondary">Brief description</small>
-                        </div>
-                        <span class="text-body-secondary">₩ 12</span>
-                    </li>
-
-                    <!--          <li class="list-group-item d-flex justify-content-between lh-sm">-->
-                    <!--            <div>-->
-                    <!--              <h6 class="my-0">Second product</h6>-->
-                    <!--              <small class="text-body-secondary">Brief description</small>-->
-                    <!--            </div>-->
-                    <!--            <span class="text-body-secondary">$8</span>-->
-                    <!--          </li>-->
+<!--                    <li class="list-group-item d-flex justify-content-between lh-sm">-->
+<!--                        <div>-->
+<!--                            <h6 class="my-0">Total quantity</h6>-->
+<!--                            <small class="text-body-secondary">Brief description</small>-->
+<!--                        </div>-->
+<!--                        <span class="text-body-secondary" th:text="*{totalQuantity}"></span>-->
+<!--                    </li>-->
 
                     <li class="list-group-item d-flex justify-content-between lh-sm">
                         <div>
-                            <h6 class="my-0">Shipping fee</h6>
-                            <small class="text-body-secondary">Brief description</small>
+                            <h6 class="my-0">Delivery fee</h6>
+<!--                            <small class="text-body-secondary">Brief description</small>-->
                         </div>
-                        <span class="text-body-secondary">₩ 5</span>
+                        <span class="text-body-secondary" id="deliveryFee"></span>
                     </li>
 
                     <li class="list-group-item d-flex justify-content-between bg-body-tertiary">
                         <div class="text-success">
                             <h6 class="my-0">Discount</h6>
-                            <small>할인 쿠폰 내용</small>
+<!--                            <small>할인 쿠폰 내용</small>-->
                         </div>
-                        <span class="text-success">- ₩ 5</span>
+                        <span class="text-success">₩ 0</span>
                     </li>
 
                     <li class="list-group-item d-flex justify-content-between">
                         <span>Total</span>
-                        <strong>₩ 20</strong>
+                        <strong id="totalPrice"></strong>
                     </li>
 
                 </ul>
@@ -290,8 +282,8 @@
 
                     <div class="col-sm-6">
                         <label for="phone" class="form-label">phone</label>
-                        <input type="number" class="form-control" id="phone" name="receiverTel" placeholder=""
-                               value="" required>
+                        <input type="text" class="form-control" id="phone" name="receiverTel" placeholder=""
+                               oninput="this.value = this.value.replace(/[^0-9]/g, '');" maxlength="11" value="" required>
                         <div class="invalid-feedback">
                             Valid last name is required.
                         </div>
@@ -323,12 +315,8 @@
                     </div>
 
                     <div>
-                        <input th:type="hidden" th:id="orderToken" th:name="orderToken" th:value="${order.orderToken}">
-                        <input th:type="hidden" th:name="totalPrice" th:value="10000">
-                        <input th:type="hidden" th:name="price" th:value="10000">
-                        <input th:type="hidden" th:name="deliveryFee" th:value="3000">
-                        <input th:type="hidden" th:name="promotionDiscount" th:value="0">
-                        <input th:type="hidden" th:name="totalPrice" th:value="10000">
+                        <input th:type="hidden" th:id="orderToken" th:name="orderToken" th:value="*{orderToken}">
+                        <input th:type="hidden" th:id="ordersDetails" th:name="ordersDetails" th:value="*{ordersDetails}">
                     </div>
 
                     <!-- 나중에 히든 풀고 상단에 리스트 노출해줘야함 -->
@@ -339,66 +327,25 @@
                     <!--                        </div>-->
 
 
-                    <!--            <div class="col-md-5">-->
-                    <!--              <label for="country" class="form-label">Country</label>-->
-                    <!--              <select class="form-select" id="country" required>-->
-                    <!--                <option value="">Choose...</option>-->
-                    <!--                <option>United States</option>-->
-                    <!--              </select>-->
-                    <!--              <div class="invalid-feedback">-->
-                    <!--                Please select a valid country.-->
-                    <!--              </div>-->
-                    <!--            </div>-->
-
-                    <!--            <div class="col-md-4">-->
-                    <!--              <label for="state" class="form-label">State</label>-->
-                    <!--              <select class="form-select" id="state" required>-->
-                    <!--                <option value="">Choose...</option>-->
-                    <!--                <option>California</option>-->
-                    <!--              </select>-->
-                    <!--              <div class="invalid-feedback">-->
-                    <!--                Please provide a valid state.-->
-                    <!--              </div>-->
-                    <!--            </div>-->
-
-                    <!--            <div class="col-md-3">-->
-                    <!--              <label for="zip" class="form-label">Zip</label>-->
-                    <!--              <input type="text" class="form-control" id="zip" placeholder="" required>-->
-                    <!--              <div class="invalid-feedback">-->
-                    <!--                Zip code required.-->
-                    <!--              </div>-->
-                    <!--            </div>-->
                 </div>
 
                 <hr class="my-4">
 
-                <!--          <div class="form-check">-->
-                <!--            <input type="checkbox" class="form-check-input" id="same-address">-->
-                <!--            <label class="form-check-label" for="same-address">Shipping address is the same as my billing address</label>-->
-                <!--          </div>-->
-
-                <!--          <div class="form-check">-->
-                <!--            <input type="checkbox" class="form-check-input" id="save-info">-->
-                <!--            <label class="form-check-label" for="save-info">Save this information for next time</label>-->
-                <!--          </div>-->
-
-                <!--          <hr class="my-4">-->
-
                 <h4 class="mb-3">Payment</h4>
 
-                <div class="my-3">
-                    <div class="form-check">
-                        <input id="credit" type="radio" class="form-check-input" name="paymentType" value="CARD"
-                               checked required>
-                        <label class="form-check-label" for="credit">Credit card</label>
-                    </div>
+<!--                <div class="my-3">-->
+<!--                    <div class="form-check">-->
+<!--                        <input id="credit" type="radio" class="form-check-input" name="paymentType" value="CARD"-->
+<!--                               checked required>-->
+<!--                        <label class="form-check-label" for="credit">Credit card</label>-->
+<!--                    </div>-->
 
-                    <div class="form-check">
-                        <input id="account" type="radio" class="form-check-input"
-                               name="paymentType" value="ACCOUNT" required>
-                        <label class="form-check-label" for="account">Bank account</label>
-                    </div>
-                </div>
+<!--                    <div class="form-check">-->
+<!--                        <input id="account" type="radio" class="form-check-input"-->
+<!--                               name="paymentType" value="ACCOUNT" required>-->
+<!--                        <label class="form-check-label" for="account">Bank account</label>-->
+<!--                    </div>-->
+<!--                </div>-->
 
                 <div class="row gy-3">
                     <div class="col-md-6">
@@ -420,7 +367,7 @@
 
                     <div class="col-md-6">
                         <label for="cc-number" class="form-label">Credit card number</label>
-                        <input type="text" class="form-control" id="cc-number" placeholder="" required>
+                        <input type="text" class="form-control" id="cc-number" oninput="this.value = this.value.replace(/[^0-9]/g, '');" maxlength="12" placeholder="" required>
                         <div class="invalid-feedback">
                             Credit card number is required
                         </div>
@@ -428,7 +375,7 @@
 
                     <div class="col-md-2">
                         <label for="cc-expYear" class="form-label">Expiration (YY)</label>
-                        <input type="text" class="form-control" id="cc-expYear" placeholder="" required>
+                        <input type="text" class="form-control" id="cc-expYear" oninput="this.value = this.value.replace(/[^0-9]/g, '');" maxlength="2" placeholder="" required>
                         <div class="invalid-feedback">
                             Expiration date required
                         </div>
@@ -436,15 +383,15 @@
 
                     <div class="col-md-2">
                         <label for="cc-expMon" class="form-label">Expiration (MM)</label>
-                        <input type="text" class="form-control" id="cc-expMon" placeholder="" required>
+                        <input type="text" class="form-control" id="cc-expMon" oninput="this.value = this.value.replace(/[^0-9]/g, '');" maxlength="2" placeholder="" required>
                         <div class="invalid-feedback">
                             Expiration date required
                         </div>
                     </div>
 
                     <div class="col-md-2">
-                        <label for="cc-cvv" class="form-label">CVV </label><br>
-                        <input type="text" class="form-control" id="cc-cvv" maxlength="3" placeholder="" required>
+                        <label for="cc-cvv" class="form-label">CVV</label>
+                        <input type="text" class="form-control" id="cc-cvv" oninput="this.value = this.value.replace(/[^0-9]/g, '');" maxlength="3" placeholder="" required>
                         <div class="invalid-feedback">
                             Security code required
                         </div>
@@ -452,7 +399,7 @@
 
                     <div class="col-md-3">
                         <label for="cc-pw" class="form-label">PW (first two letters)</label>
-                        <input type="text" class="form-control" id="cc-pw" maxlength="2" placeholder="" required>
+                        <input type="text" class="form-control" id="cc-pw" oninput="this.value = this.value.replace(/[^0-9]/g, '');" maxlength="2" placeholder="" required>
                         <div class="invalid-feedback">
                             Security code required
                         </div>
@@ -483,13 +430,33 @@
 <script src="https://code.jquery.com/jquery-3.7.1.min.js"
         integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
 
-<script>
+<script th:inline="javascript">
     $(document).ready(
         function () {
+            // totalPrice 값 넣기
+            let deliveryFee = 3000;
+            let totalPrice = 0;
+            let ordersDetails = [[${order.ordersDetails}]]
+            $.each(ordersDetails, function (index, detail) {
+                totalPrice += detail.originPrice * detail.quantity;
+            });
+            totalPrice += deliveryFee;
+            $('#totalPrice').text('₩ ' + totalPrice);
+            $('#deliveryFee').text('₩ ' + deliveryFee);
+
+            // checkout 버튼
             $("#sbm-btn").click(function () {
+
+                if (!isValidate()) {
+                    alert('입력하지 않은 항목이 있습니다.')
+                    return
+                }
 
                 let sendData = new Object();
                 sendData.orderToken = $("#orderToken").val();
+                sendData.totalPrice = totalPrice;
+                sendData.deliveryFee = deliveryFee;
+                sendData.totalPrice = totalPrice + sendData.deliveryFee;
                 sendData.receiverName = $("#name").val();
                 sendData.receiverTel = $("#phone").val();
                 sendData.receiverAddr = $("#address").val();
@@ -517,6 +484,25 @@
             });
         }
     );
+
+    function isValidate() {
+        let isNameEmpty = $("#name").val() === '';
+        let isPhoneEmpty = $("#phone").val() === '';
+        let isAddrEmpty = $("#address").val() === '';
+        let isAddrDetailEmpty = $("#addressDetail").val() === '';
+        let isCcNumEmpty = $("#cc-number").val() === '';
+        let isCcExpEmpty = $("#cc-expiration").val() === '';
+        let isCcExpMonEmpty = $("#cc-expMon").val() === '';
+        let isCcExpYearEmpty = $("#cc-expYear").val() === '';
+        let isCcCvvEmpty = $("#cc-cvv").val() === '';
+        let isCcPwEmpty = $("#cc-pw").val() === '';
+
+        if (isNameEmpty || isPhoneEmpty || isAddrEmpty || isAddrDetailEmpty || isCcNumEmpty
+            || isCcExpEmpty || isCcExpMonEmpty || isCcExpYearEmpty || isCcCvvEmpty || isCcPwEmpty) {
+            return false
+        }
+        return true;
+    }
 </script>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
