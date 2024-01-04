@@ -11,7 +11,6 @@ import java.math.BigDecimal;
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
-@ToString
 public class OrdersDetail extends BaseEntity {
 
     @Id @GeneratedValue(strategy = GenerationType.AUTO)

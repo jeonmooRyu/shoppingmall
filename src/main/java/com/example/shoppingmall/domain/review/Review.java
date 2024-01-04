@@ -11,7 +11,6 @@ import javax.persistence.*;
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
-@ToString
 public class Review extends BaseEntity {
 
     @Id @GeneratedValue(strategy = GenerationType.AUTO)
