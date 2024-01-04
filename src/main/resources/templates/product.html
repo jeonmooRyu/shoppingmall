@@ -403,10 +403,6 @@
             }
 
             let sendData = new Object();
-            sendData.deliveryFee = 3000;
-            sendData.promotionDiscount = 0;
-            sendData.paymentType = 'CARD';
-            sendData.totalPrice = 0;
             sendData.totalQuantity = 0;
             sendData.ordersDetails = [];
             let options = $('.select-option input');
@@ -418,8 +414,6 @@
                 detail.option = option.substring(option.indexOf('-') + 1);
                 detail.quantity = $(this).val();
                 detail.originPrice = $("#price").val();
-                detail.finalPrice = detail.originPrice * detail.quantity;
-                sendData.totalPrice += detail.finalPrice;
                 sendData.totalQuantity += parseInt(detail.quantity);
                 sendData.ordersDetails.push(detail);
             })
