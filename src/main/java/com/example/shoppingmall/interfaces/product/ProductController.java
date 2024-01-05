@@ -37,8 +37,8 @@ public class ProductController {
 
     // 리스트 상품 조회
     @GetMapping("/list")
-    public String goToProductList(@RequestParam ProductType productType,  Model model) {
-        var products = productFacade.getProducts(productType);
+    public String goToProductList(@RequestParam(required = false) ProductType productType, @RequestParam(required = false) String productName,  Model model) {
+        var products = productFacade.getProducts(productType, productName);
         var response = products.stream().map(productDtoMapper::of).toList();
         model.addAttribute("products", response);
         return "productList";

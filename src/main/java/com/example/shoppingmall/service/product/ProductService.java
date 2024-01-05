@@ -11,5 +11,5 @@ public interface ProductService {
 
     Product registProduct(Product product);
 
-    List<Product> getProducts(ProductType productType);
+    List<Product> getProducts(ProductType productType, String productName);
 }

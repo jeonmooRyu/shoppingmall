@@ -28,7 +28,7 @@ public class ProductServiceImpl implements ProductService{
     }
 
     @Transactional
-    public List<Product> getProducts(ProductType productType) {
-        return productRepositorySupport.getProducts(productType);
+    public List<Product> getProducts(ProductType productType, String productName) {
+        return productRepositorySupport.getProducts(productType, productName);
     }
 }

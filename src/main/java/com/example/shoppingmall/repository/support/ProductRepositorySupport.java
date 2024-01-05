@@ -20,10 +20,10 @@ public class ProductRepositorySupport {
     private final JPAQueryFactory jpaQueryFactory;
 
     // 메인페이지 상품 조회
-    public List<Product> getProducts(ProductType productType) {
+    public List<Product> getProducts(ProductType productType, String productName) {
         return jpaQueryFactory.selectFrom(product)
 //                .limit(10)
-                .where(eqProductType(productType))
+                .where(eqProductType(productType), likeProductName(productName))    // where 절 ,(컴마)는 and 연산을 함, .and()와 같음
                 .fetch();
     }
 
@@ -32,6 +32,13 @@ public class ProductRepositorySupport {
             return null;
         }
         return product.productType.eq(productType);
+    }
+
+    public BooleanExpression likeProductName(String productName) {
+        if (productName == null) {
+            return null;
+        }
+        return product.productName.likeIgnoreCase("%" + productName + "%");
     }
 
     public Product getProductByProductCode(String productCode) {

@@ -30,7 +30,7 @@ public class ProductFacade {
 
     // 초기 노출 상품 리스트
     @Transactional
-    public List<Product> getProducts(@Nullable ProductType productType) {
-        return productService.getProducts(productType);
+    public List<Product> getProducts(@Nullable ProductType productType, @Nullable String productName) {
+        return productService.getProducts(productType, productName);
     }
 }
