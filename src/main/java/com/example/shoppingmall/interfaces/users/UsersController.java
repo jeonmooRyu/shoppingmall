@@ -3,7 +3,6 @@ package com.example.shoppingmall.interfaces.users;
 import com.example.shoppingmall.application.UsersFacade;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 @Controller
@@ -24,15 +23,18 @@ public class UsersController {
     @PostMapping("/signUp/check")
     public @ResponseBody UsersDto.SignUpCheckEmailResponse checkDuplicateUser(@RequestBody UsersDto.SignUpCheckEmailRequest request) {
         var result = usersFacade.isCheckDuplicateEmail(request.getEmail());
-        return usersDtoMapper.toResponse(result);
+        return usersDtoMapper.toEmailCheckResponse(result);
     }
 
     @PostMapping
-    public String signUp(@RequestBody UsersDto.SignUpUserRequest request, Model model) {
+    public @ResponseBody UsersDto.SignUpUserResponse signUp(@RequestBody UsersDto.SignUpUserRequest request) {
         var usersCommand = usersDtoMapper.of(request);
-        var user = usersFacade.signUp(usersCommand);
-        model.addAttribute("user", user);
-        return "/signUpSuccess";
+        usersFacade.signUp(usersCommand);
+        return usersDtoMapper.toSignUpResponse(true);
     }
 
+    @GetMapping("/signUp/success")
+    public String goToSignUpSeccess() {
+        return "signUpSuccess";
+    }
 }

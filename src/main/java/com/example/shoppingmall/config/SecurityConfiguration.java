@@ -28,10 +28,9 @@ public class SecurityConfiguration {
                                 .requestMatchers(new AntPathRequestMatcher("/product/v1")).permitAll()
                                 .requestMatchers(new AntPathRequestMatcher("/signUp")).permitAll()
                                 .requestMatchers(new AntPathRequestMatcher("/users/v1/signUp/check")).permitAll()
+                                .requestMatchers(new AntPathRequestMatcher("/users/v1/signUp/success")).permitAll()
                                 .requestMatchers(new AntPathRequestMatcher("/users/v1")).permitAll()
                                 .requestMatchers(new AntPathRequestMatcher("/review/v1")).permitAll()
-//                                .antMatchers("/users/v1/signUp").permitAll()
-//                        .requestMatchers("", "/home").permitAll()
                                 .anyRequest().authenticated()
                 )
                 .formLogin((form) -> form
@@ -41,7 +40,7 @@ public class SecurityConfiguration {
                 )
                 .logout((logout) -> logout
                                 .permitAll()
-//                        .logoutRequestMatcher()
+//                        .logoutRequestMatcher()   // 기본 logout 경로말고 다른 경로로 수정
                                 .logoutSuccessUrl("/")
                                 .invalidateHttpSession(true)
                 )
