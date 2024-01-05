@@ -1,6 +1,8 @@
 package com.example.shoppingmall.interfaces.product;
 
 import com.example.shoppingmall.application.ProductFacade;
+import com.example.shoppingmall.common.Util;
+import com.example.shoppingmall.domain.enums.ProductType;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -21,6 +23,7 @@ public class ProductController {
         return result.toString();
     }
 
+    // 단일 상품 조회
     @GetMapping("/{productCode}")
     public String gotoProduct(@PathVariable String productCode, Model model) {
         var product = productFacade.getProduct(productCode);
@@ -28,6 +31,16 @@ public class ProductController {
         var response = productDtoMapper.toResponse(product, reviewsDto);
         model.addAttribute("product", response);
         model.addAttribute("reviews", response.getReviews());
+        model.addAttribute("isLogin", Util.getUid().isPresent());
         return "product";
+    }
+
+    // 리스트 상품 조회
+    @GetMapping("/list")
+    public String goToProductList(@RequestParam(required = false) ProductType productType, @RequestParam(required = false) String productName,  Model model) {
+        var products = productFacade.getProducts(productType, productName);
+        var response = products.stream().map(productDtoMapper::of).toList();
+        model.addAttribute("products", response);
+        return "productList";
     }
 }

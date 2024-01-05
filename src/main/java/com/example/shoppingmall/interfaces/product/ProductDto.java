@@ -28,19 +28,13 @@ public class ProductDto {
     @Getter
     @Setter
     @ToString
-    public static class ProductResponses {
+    public static class ProductPreviewResponses {
 
-        private List<ProductDetail> productDetails;
-
-        @Getter
-        @Setter
-        @ToString
-        public static class ProductDetail {
-            private String productCode;
-            private String productName;
-            private String detailImage;
-            private BigDecimal price;   // 원래 가격
-        }
+        private String productCode;
+        private String thumbnail;
+        private String productName;
+        private String detailImage;
+        private Integer price;   // 원래 가격
 
     }
 
@@ -52,7 +46,7 @@ public class ProductDto {
         private String option;
         private String productName;
         private String detailImage;
-        private BigDecimal price;   // 원래 가격
+        private Integer price;   // 원래 가격
         private List<Review> reviews;
 
         @Getter

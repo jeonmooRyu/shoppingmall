@@ -17,7 +17,6 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
-@ToString
 public class Product extends BaseEntity {
 
     @Id
@@ -44,10 +43,6 @@ public class Product extends BaseEntity {
     private String thumbnail;
     @Setter
     private String option;
-
-//    @OneToOne(mappedBy = "product")
-//    @JoinColumn
-//    private OrdersDetail ordersDetail;
 
     @OneToMany(mappedBy = "product")
     private List<Review> reviews;

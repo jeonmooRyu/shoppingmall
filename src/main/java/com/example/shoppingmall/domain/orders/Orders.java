@@ -16,7 +16,7 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
-@ToString
+//@ToString
 public class Orders extends BaseEntity {
 
     @Id @GeneratedValue(strategy = GenerationType.AUTO)
@@ -94,13 +94,17 @@ public class Orders extends BaseEntity {
         });
     }
 
-    public Orders checkout(String receiverName, String receiverTel, String receiverAddr, String receiverAddrDetail, String deliveryMsg) {
-        this.isPay = true;
+    public Orders checkout(PaymentType paymentType, BigDecimal totalPrice, BigDecimal deliveryFee, String receiverName, String receiverTel, String receiverAddr, String receiverAddrDetail, String deliveryMsg) {
+        this.totalPrice = totalPrice;
+        this.deliveryFee = deliveryFee;
         this.receiverName = receiverName;
         this.receiverTel = receiverTel;
         this.receiverAddr = receiverAddr;
         this.receiverAddrDetail = receiverAddrDetail;
         this.deliveryMsg = deliveryMsg;
+        this.isPay = true;
+        this.paymentType = paymentType;
+        this.orderStatus = OrderStatus.ORDER_PAID;
         return this;
     }
 }

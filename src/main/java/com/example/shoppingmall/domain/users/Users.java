@@ -16,7 +16,6 @@ import java.util.List;
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
-@ToString
 public class Users extends BaseEntity {
 
     @Id
@@ -49,15 +48,6 @@ public class Users extends BaseEntity {
 //
     @OneToMany(mappedBy = "user")
     private List<Cart> carts = new ArrayList<>();
-//
-//    @OneToMany(mappedBy = "user")
-//    private List<DeliveryAddress> deliveryAddresses;
-//
-//    @OneToMany(mappedBy = "user")
-//    private List<PaymentMethod> paymentMethods;
-//
-//    @OneToMany(mappedBy = "user")
-//    private List<Auth> auths;
 
     @Builder
     private Users(String email, String name, String phoneNumber, String password, String uid, SignUpType signUpType) {

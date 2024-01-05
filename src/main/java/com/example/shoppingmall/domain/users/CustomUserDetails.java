@@ -15,9 +15,10 @@ public class CustomUserDetails implements UserDetails, OAuth2User {
     private final Collection<GrantedAuthority> authorities;
     private final String password;
     private final String usersName;
+    private final String uid;
 
     @Builder
-    public CustomUserDetails(Authority authority, String password, String usersName) {
+    public CustomUserDetails(Authority authority, String password, String usersName, String uid) {
         Collection<GrantedAuthority> collection = new HashSet<>();
         collection.add(new GrantedAuthority() {
             @Override
@@ -29,6 +30,7 @@ public class CustomUserDetails implements UserDetails, OAuth2User {
         this.authorities = collection;
         this.password = password;
         this.usersName = usersName;
+        this.uid = uid;
     }
 
     /**
@@ -117,5 +119,9 @@ public class CustomUserDetails implements UserDetails, OAuth2User {
     @Override
     public String getName() {
         return null;
+    }
+
+    public String getUid() {
+        return uid;
     }
 }

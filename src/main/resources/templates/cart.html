@@ -104,7 +104,7 @@
                     <td class="align-middle text-center" th:name="quantity" th:data-quantity="${cart.quantity}"
                         th:text="${cart.quantity}"></td>
                     <td class="align-middle text-center" th:name="price" th:data-price="${cart.price}"
-                        th:text="${cart.price}"></td>
+                        th:text="|₩ ${cart.price}|"></td>
                 </tr>
                 </tbody>
             </table>

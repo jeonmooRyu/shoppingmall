@@ -208,7 +208,7 @@
             <div class="position-sticky" style="top: 10rem; right: 0;" th:object="${product}">
                 <div class="p-4 mb-3 bg-body-tertiary rounded">
                     <h4 class="fst-italic"><input th:type="hidden" th:text="*{productName}"></h4><br>
-                    <div>price : <span th:text="*{price}"></span></div>
+                    <div>price : <span th:text="|₩ *{price}|"></span></div>
                     <br>
                     <span>size : </span>
                     <span class="dropdown">
@@ -351,8 +351,15 @@
 
         /* 장바구니 버튼 */
         $('#sbm-cart-btn').click(function () {
+            // 미 로그인시 로그인 페이지로 이동
+            let userCookie = [[${isLogin}]]
+            if (!userCookie) {
+                let redirectUrl = encodeURIComponent(window.location.href);
+                window.location.href = '/login';
+            }
+
             if ($('[id^=option-]').length === 0) {
-                alert("선택된 옵션이 없습니다.")
+                alert("선택된 옵션이 없습니다.");
                 return;
             }
 
@@ -383,16 +390,19 @@
 
         /* 주문 버튼 */
         $('#sbm-orders-btn').click(function () {
+            // 미 로그인시 로그인 페이지로 이동
+            let userCookie = [[${isLogin}]]
+            if (!userCookie) {
+                let redirectUrl = encodeURIComponent(window.location.href);
+                window.location.href = '/login';
+            }
+
             if ($('[id^=option-]').length === 0) {
                 alert("선택된 옵션이 없습니다.")
                 return;
             }
 
             let sendData = new Object();
-            sendData.deliveryFee = 3000;
-            sendData.promotionDiscount = 0;
-            sendData.paymentType = 'CARD';
-            sendData.totalPrice = 0;
             sendData.totalQuantity = 0;
             sendData.ordersDetails = [];
             let options = $('.select-option input');
@@ -404,8 +414,6 @@
                 detail.option = option.substring(option.indexOf('-') + 1);
                 detail.quantity = $(this).val();
                 detail.originPrice = $("#price").val();
-                detail.finalPrice = detail.originPrice * detail.quantity;
-                sendData.totalPrice += detail.finalPrice;
                 sendData.totalQuantity += parseInt(detail.quantity);
                 sendData.ordersDetails.push(detail);
             })

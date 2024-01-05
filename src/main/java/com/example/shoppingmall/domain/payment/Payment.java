@@ -12,7 +12,6 @@ import java.math.BigDecimal;
 @Entity
 @NoArgsConstructor
 @Getter
-@ToString
 public class Payment extends BaseEntity {
 
     @Id

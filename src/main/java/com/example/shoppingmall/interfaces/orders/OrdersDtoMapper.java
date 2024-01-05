@@ -3,9 +3,7 @@ package com.example.shoppingmall.interfaces.orders;
 import com.example.shoppingmall.domain.orders.Orders;
 import com.example.shoppingmall.domain.orders.OrdersCommand;
 import com.example.shoppingmall.domain.payment.PaymentCommand;
-import org.mapstruct.InjectionStrategy;
-import org.mapstruct.Mapper;
-import org.mapstruct.ReportingPolicy;
+import org.mapstruct.*;
 
 import java.util.List;
 
@@ -21,9 +19,15 @@ public interface OrdersDtoMapper {
     OrdersDto.RegistOrderResponse of(Orders orders);
 
     OrdersDto.CheckoutOrderDto toCheckoutOrders(OrdersDto.CheckoutOrderRequest request);
+
     PaymentCommand of(OrdersDto.CheckoutOrderRequest request);
+
+    OrdersDto.CheckoutViewResponse toCheckoutViewDto(Orders orders);
 
     OrdersDto.CheckoutOrderResponse toCheckOrderResponse(Orders orders);
 
+    @Mappings({
+            @Mapping(expression = "java(orders.getTotalPrice().intValue())", target = "totalPrice")
+    })
     OrdersDto.OrdersHistoryResponse toOrdersHistoryResponse(Orders orders);
 }

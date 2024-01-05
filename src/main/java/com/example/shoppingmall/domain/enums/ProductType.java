@@ -5,10 +5,9 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public enum ProductType {
 
-    FOOD("식품"),
-    DIGITAL("전자기기"),
-    CLOTHES("의류"),
-    SPORTS("스포츠용품");
+    TOP("상의"),
+    OUTER("아우터"),
+    BOTTOM("하의");
 
     private final String description;
 

@@ -33,22 +33,25 @@ public class OrdersFacade {
 
     @Transactional
     public Orders getOrder(String orderToken) {
-        return ordersService.getOrder(orderToken);
+        return ordersService.getOrders(orderToken);
     }
 
     @Transactional
     public Orders checkoutOrder(OrdersDto.CheckoutOrderDto checkoutOrderDto, PaymentDto.PaymentRequest paymentRequest) {
         // 결제 진행
-        var orders = ordersService.getOrder(checkoutOrderDto.getOrderToken());
+        var orders = ordersService.getOrders(checkoutOrderDto.getOrderToken());
         paymentService.payOrders(orders, paymentRequest);
 
         // order checkout process
+        var paymentType = paymentRequest.getPaymentType();
+        var totalPrice = paymentRequest.getTotalPrice();
+        var deliveryFee = checkoutOrderDto.getDeliveryFee();
         var receiverName = checkoutOrderDto.getReceiverName();
         var receiverTel = checkoutOrderDto.getReceiverTel();
         var receiverAddr = checkoutOrderDto.getReceiverAddr();
         var receiverAddrDetail = checkoutOrderDto.getReceiverAddrDetail();
         var deliveryMsg = checkoutOrderDto.getDeliveryMsg();
-        return ordersService.checkout(orders, receiverName, receiverTel, receiverAddr, receiverAddrDetail, deliveryMsg);
+        return ordersService.checkout(orders, paymentType, totalPrice, deliveryFee, receiverName, receiverTel, receiverAddr, receiverAddrDetail, deliveryMsg);
     }
 
 

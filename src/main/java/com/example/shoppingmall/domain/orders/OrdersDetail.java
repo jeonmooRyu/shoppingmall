@@ -11,12 +11,10 @@ import java.math.BigDecimal;
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
-@ToString
 public class OrdersDetail extends BaseEntity {
 
     @Id @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-//    @Setter private String orderNumber;
     @Setter private String productCode;
     @Setter private String productName;
     @Setter private BigDecimal originPrice;   // 원래 가격
@@ -28,10 +26,6 @@ public class OrdersDetail extends BaseEntity {
     @ManyToOne
     @JoinColumn(name = "orders.id")
     private Orders orders;
-
-//    @OneToOne
-//    @JoinColumn(name = "product.id")
-//    private Product product;
 
     @Builder
     public OrdersDetail(String productCode, String productName, BigDecimal originPrice, BigDecimal discount, BigDecimal finalPrice, Option option, Integer quantity, Orders orders) {

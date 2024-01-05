@@ -16,7 +16,13 @@ public interface ProductDtoMapper {
     ProductCommand.ProductRegist of(ProductDto.ProductRegistRequest request);
 
     @Mappings({
+            @Mapping(expression = "java(product.getPrice().intValue())", target = "price")
+    })
+    ProductDto.ProductPreviewResponses of(Product product);
+
+    @Mappings({
             @Mapping(source = "reviews", target = "reviews"),
+            @Mapping(expression = "java(product.getPrice().intValue())", target = "price")
     })
     ProductDto.ProductResponse toResponse(Product product, List<ProductDto.ProductResponse.Review> reviews);
 
