@@ -16,9 +16,7 @@ public class Review extends BaseEntity {
     @Id @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     @Setter private String uid;
-//    @Setter private String productCode;
     @Setter private String content;
-//    @Setter private String summary;
     @Setter private Integer score;
 
     @Setter
@@ -37,7 +35,4 @@ public class Review extends BaseEntity {
         this.score = score;
     }
 
-//    public void setUsers(Users users) {
-//        this.users = users;
-//    }
 }

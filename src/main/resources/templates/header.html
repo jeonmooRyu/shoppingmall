@@ -53,9 +53,6 @@
                     <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
                     <button class="btn btn-outline-success" type="submit">Search</button>
                 </form>
-<!--                <div sec:authorize="isAuthenticated()">-->
-<!--                    <div th:text="${#authentication.principal.username}"></div>-->
-<!--                </div>-->
                 <a class="btn btn-outline-info" sec:authorize="isAnonymous()" th:href="@{/login}">Login</a>
                 <a class="btn btn-outline-info" sec:authorize="isAnonymous()" th:href="@{/signUp}">SignUp</a>
                 <form sec:authorize="isAuthenticated()" th:action="@{/logout}" method="post">

@@ -15,5 +15,6 @@ public interface UsersDtoMapper {
 
     UsersCommand of(String uid, SignUpType signUpType, String name, String phoneNumber);
 
-    UsersDto.SignUpCheckEmailResponse toResponse(Boolean isDuplicated);
+    UsersDto.SignUpUserResponse toSignUpResponse(Boolean isSuccess);
+    UsersDto.SignUpCheckEmailResponse toEmailCheckResponse(Boolean isDuplicated);
 }

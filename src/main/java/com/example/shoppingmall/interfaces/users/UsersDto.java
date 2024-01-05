@@ -1,7 +1,6 @@
 package com.example.shoppingmall.interfaces.users;
 
 import com.example.shoppingmall.domain.enums.SignUpType;
-import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -34,6 +33,13 @@ public class UsersDto {
         private String password;
         @NonNull
         private SignUpType signUpType;
+    }
+
+    @Getter
+    @Setter
+    @ToString
+    public static class SignUpUserResponse {
+        private Boolean isSuccess;
     }
 
     @Getter

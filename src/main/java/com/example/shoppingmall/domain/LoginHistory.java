@@ -12,7 +12,7 @@ import javax.persistence.*;
 @Builder
 @Getter
 @ToString
-public class Auth extends BaseEntity {
+public class LoginHistory extends BaseEntity {
 
     @Id @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;

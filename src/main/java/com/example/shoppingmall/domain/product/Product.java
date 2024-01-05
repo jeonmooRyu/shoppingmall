@@ -44,10 +44,6 @@ public class Product extends BaseEntity {
     @Setter
     private String option;
 
-//    @OneToOne(mappedBy = "product")
-//    @JoinColumn
-//    private OrdersDetail ordersDetail;
-
     @OneToMany(mappedBy = "product")
     private List<Review> reviews;
 

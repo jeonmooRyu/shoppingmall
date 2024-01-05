@@ -19,11 +19,6 @@ public class MainController {
         return "login";
     }
 
-    @GetMapping("/logout")
-    public String goToLogout() {
-        return "logout";
-    }
-
     @GetMapping
     public String goToMain(Model model) {
         var products = productFacade.getProducts(null);
