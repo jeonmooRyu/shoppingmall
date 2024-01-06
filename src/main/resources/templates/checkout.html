@@ -280,6 +280,7 @@
                     <div>
                         <input th:type="hidden" th:id="orderToken" th:name="orderToken" th:value="*{orderToken}">
                         <input th:type="hidden" th:id="ordersDetails" th:name="ordersDetails" th:value="*{ordersDetails}">
+                        <input th:type="hidden" th:id="isPay" th:name="isPay" th:value="*{isPay}">
                     </div>
 
                     <!-- 나중에 히든 풀고 상단에 리스트 노출해줘야함 -->
@@ -388,6 +389,11 @@
 <script th:inline="javascript">
     $(document).ready(
         function () {
+            let isPay = [[${order.isPay}]]
+            if (isPay !== false) {
+                alert('이미 결제된 주문입니다.')
+                window.location.href = '/';
+            }
             // totalPrice 값 넣기
             let deliveryFee = 3000;
             let totalPrice = 0;
@@ -433,7 +439,13 @@
                     contentType: "application/json; charset=utf-8",
                     dataType: 'json',
                     success: function (data) {
-                        window.location.href = "/orders/v1/complete";
+                        if (data.isSuccess) {
+                            window.location.href = "/orders/v1/complete";
+                        } else {
+                            alert("결제에 실패했습니다.")
+                            window.location.href = "/";
+                        }
+
                     }
                 })
             });

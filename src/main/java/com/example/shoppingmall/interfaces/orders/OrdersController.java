@@ -50,7 +50,10 @@ public class OrdersController {
         var checkoutOrder = ordersDtoMapper.toCheckoutOrders(request);
         var paymentRequest = paymentDtoMapper.of(request);
         var orders = ordersFacade.checkoutOrder(checkoutOrder, paymentRequest);
-        return ordersDtoMapper.toCheckOrderResponse(orders);
+        if (orders == null) {
+            return ordersDtoMapper.toCheckOrderResponse(false);
+        }
+        return ordersDtoMapper.toCheckOrderResponse(true);
     }
 
     @GetMapping("/complete")

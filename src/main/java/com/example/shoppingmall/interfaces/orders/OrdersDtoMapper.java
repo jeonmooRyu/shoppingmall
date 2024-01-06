@@ -24,7 +24,7 @@ public interface OrdersDtoMapper {
 
     OrdersDto.CheckoutViewResponse toCheckoutViewDto(Orders orders);
 
-    OrdersDto.CheckoutOrderResponse toCheckOrderResponse(Orders orders);
+    OrdersDto.CheckoutOrderResponse toCheckOrderResponse(Boolean isSuccess);
 
     @Mappings({
             @Mapping(expression = "java(orders.getTotalPrice().intValue())", target = "totalPrice")

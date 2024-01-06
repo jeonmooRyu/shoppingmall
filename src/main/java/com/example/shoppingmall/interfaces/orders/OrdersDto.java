@@ -107,7 +107,7 @@ public class OrdersDto {
     @Setter
     @ToString
     public static class CheckoutOrderResponse {
-        private String orderToken;
+        private Boolean isSuccess;
     }
 
     @Getter
