@@ -15,7 +15,7 @@ public class Review extends BaseEntity {
 
     @Id @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-    @Setter private String uid;
+//    @Setter private String uid;
     @Setter private String content;
     @Setter private Integer score;
 
@@ -30,8 +30,7 @@ public class Review extends BaseEntity {
     private Product product;
 
     @Builder
-    public Review(String uid, String content, Integer score) {
-        this.uid = uid;
+    public Review(String content, Integer score) {
         this.content = content;
         this.score = score;
     }
