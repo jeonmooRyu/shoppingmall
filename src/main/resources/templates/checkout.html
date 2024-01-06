@@ -362,7 +362,7 @@
 
                     <div class="col-md-3">
                         <label for="cc-pw" class="form-label">PW (first two letters)</label>
-                        <input type="text" class="form-control" id="cc-pw" oninput="this.value = this.value.replace(/[^0-9]/g, '');" maxlength="2" placeholder="" required>
+                        <input type="password" class="form-control" id="cc-pw" oninput="this.value = this.value.replace(/[^0-9]/g, '');" maxlength="2" placeholder="" required>
                         <div class="invalid-feedback">
                             Security code required
                         </div>
@@ -388,6 +388,11 @@
 <script th:inline="javascript">
     $(document).ready(
         function () {
+            let isPay = [[${order.isPay}]]
+            if (isPay !== false) {
+                alert('이미 결제된 주문입니다.')
+                window.location.href = '/';
+            }
             // totalPrice 값 넣기
             let deliveryFee = 3000;
             let totalPrice = 0;
@@ -433,7 +438,13 @@
                     contentType: "application/json; charset=utf-8",
                     dataType: 'json',
                     success: function (data) {
-                        window.location.href = "/orders/v1/complete";
+                        if (data.isSuccess) {
+                            window.location.href = "/orders/v1/complete";
+                        } else {
+                            alert("결제에 실패했습니다.")
+                            window.location.href = "/";
+                        }
+
                     }
                 })
             });

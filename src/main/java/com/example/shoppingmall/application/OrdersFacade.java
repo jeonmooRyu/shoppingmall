@@ -38,8 +38,12 @@ public class OrdersFacade {
 
     @Transactional
     public Orders checkoutOrder(OrdersDto.CheckoutOrderDto checkoutOrderDto, PaymentDto.PaymentRequest paymentRequest) {
-        // 결제 진행
+        // 기 결제건 체크
         var orders = ordersService.getOrders(checkoutOrderDto.getOrderToken());
+        if (orders.getIsPay()) {
+            return null;
+        }
+        // 결제 진행
         paymentService.payOrders(orders, paymentRequest);
 
         // order checkout process

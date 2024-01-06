@@ -54,9 +54,9 @@ public class Orders extends BaseEntity {
     @Enumerated(value = EnumType.STRING)
     private OrderStatus orderStatus;
 
-    @ManyToOne
-    @JoinColumn(name = "user.id")
-    private Users user;
+//    @ManyToOne
+//    @JoinColumn(name = "user.id")
+//    private Users user;
 
     @OneToMany(mappedBy = "orders", cascade = CascadeType.PERSIST, orphanRemoval = true, fetch = FetchType.LAZY)
     private List<OrdersDetail> ordersDetails;
