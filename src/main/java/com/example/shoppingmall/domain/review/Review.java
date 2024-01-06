@@ -19,10 +19,10 @@ public class Review extends BaseEntity {
     @Setter private String content;
     @Setter private Integer score;
 
-//    @Setter
-//    @OneToOne
-//    @JoinColumn(name = "users.id")
-//    private Users users;
+    @Setter
+    @OneToOne
+    @JoinColumn(name = "users.id")
+    private Users users;
 
     @Setter
     @ManyToOne

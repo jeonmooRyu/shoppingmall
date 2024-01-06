@@ -15,14 +15,14 @@ public class ReviewCommand {
     private String content;
     private Integer score;
 
-    public Review toEntity(Product product) {
+    public Review toEntity(Users users, Product product) {
         var review = Review.builder()
-                .uid(Util.getUid().orElseThrow())
+//                .uid(Util.getUid().orElseThrow())
                 .content(content)
                 .score(score)
                 .build();
         product.setReview(review);
-//        review.setUsers(users);
+        review.setUsers(users);
         return review;
     }
 }
