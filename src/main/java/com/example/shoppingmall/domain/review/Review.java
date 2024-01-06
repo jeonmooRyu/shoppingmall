@@ -19,10 +19,10 @@ public class Review extends BaseEntity {
     @Setter private String content;
     @Setter private Integer score;
 
-    @Setter
-    @OneToOne
-    @JoinColumn(name = "users.id")
-    private Users users;
+//    @Setter
+//    @OneToOne
+//    @JoinColumn(name = "users.id")
+//    private Users users;
 
     @Setter
     @ManyToOne
@@ -30,7 +30,8 @@ public class Review extends BaseEntity {
     private Product product;
 
     @Builder
-    public Review(String content, Integer score) {
+    public Review(String uid, String content, Integer score) {
+        this.uid = uid;
         this.content = content;
         this.score = score;
     }

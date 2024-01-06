@@ -20,8 +20,8 @@ public class ReviewFacade {
     @Transactional
     public Review registReview(ReviewCommand command, String productCode) {
         var product = productService.getProduct(productCode);
-        var users = usersService.getUsers();
-        var review = command.toEntity(users, product);
+//        var users = usersService.getUsers();
+        var review = command.toEntity(product);
         return reviewService.registReview(review);
     }
 }
