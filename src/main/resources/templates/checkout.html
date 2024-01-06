@@ -280,7 +280,6 @@
                     <div>
                         <input th:type="hidden" th:id="orderToken" th:name="orderToken" th:value="*{orderToken}">
                         <input th:type="hidden" th:id="ordersDetails" th:name="ordersDetails" th:value="*{ordersDetails}">
-                        <input th:type="hidden" th:id="isPay" th:name="isPay" th:value="*{isPay}">
                     </div>
 
                     <!-- 나중에 히든 풀고 상단에 리스트 노출해줘야함 -->
@@ -363,7 +362,7 @@
 
                     <div class="col-md-3">
                         <label for="cc-pw" class="form-label">PW (first two letters)</label>
-                        <input type="text" class="form-control" id="cc-pw" oninput="this.value = this.value.replace(/[^0-9]/g, '');" maxlength="2" placeholder="" required>
+                        <input type="password" class="form-control" id="cc-pw" oninput="this.value = this.value.replace(/[^0-9]/g, '');" maxlength="2" placeholder="" required>
                         <div class="invalid-feedback">
                             Security code required
                         </div>
