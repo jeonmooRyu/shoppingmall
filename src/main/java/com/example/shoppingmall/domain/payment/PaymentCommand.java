@@ -1,5 +1,6 @@
 package com.example.shoppingmall.domain.payment;
 
+import com.example.shoppingmall.common.Util;
 import com.example.shoppingmall.domain.enums.CardCompany;
 import com.example.shoppingmall.domain.enums.PaymentType;
 import com.example.shoppingmall.domain.orders.Orders;
@@ -26,6 +27,7 @@ public class PaymentCommand {
 
     public Payment toEntity(Orders orders) {
         var payment = Payment.builder()
+                .uid(Util.getUid().orElseThrow())
                 .payAmount(payAmount)
                 .payCompanyCode(payCompanyCode)
                 .paymentType(paymentType)
