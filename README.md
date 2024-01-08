@@ -46,7 +46,7 @@
 ![image](https://github.com/jeonmoo/shoppingmall/assets/86511348/0b7046fa-97d4-45bf-8860-df066f503cbf)
 
 - 결제 페이지
-![image](https://github.com/jeonmoo/shoppingmall/assets/86511348/653a29b9-1ac4-4d1a-8fe7-356541766292)
+![image](https://github.com/jeonmoo/shoppingmall/assets/86511348/cedffde4-f8b2-4c44-8ea3-29029a37c48a)
 
 - 주문조회
 ![image](https://github.com/jeonmoo/shoppingmall/assets/86511348/b007483d-ec6b-4055-95a2-98afc0717840)

@@ -85,6 +85,14 @@
         .bd-mode-toggle .dropdown-menu .active .bi {
             display: block !important;
         }
+
+        .fixed-summary {
+            position: sticky;
+            top: 0; /* 스크롤을 올릴 때 상단에 고정되도록 0으로 설정 */
+            bottom: 0; /* 스크롤을 내릴 때 하단에 고정되도록 0으로 설정 */
+            margin-top: auto; /* 중앙에 고정되도록 나머지 여백을 자동으로 설정 */
+            margin-bottom: auto; /* 중앙에 고정되도록 나머지 여백을 자동으로 설정 */
+        }
     </style>
 
 
@@ -176,7 +184,7 @@
 <!--        </div>-->
 
         <div class="row g-5" th:object="${order}">
-            <div class="col-md-5 col-lg-4 order-md-last">
+            <div class="col-md-5 col-lg-4 order-md-last fixed-summary">
                 <h4 class="d-flex justify-content-between align-items-center mb-3">
                     <span class="text-primary">Your cart</span>
                     <span class="badge bg-primary rounded-pill" th:text="*{ordersDetails.size()}"></span>
