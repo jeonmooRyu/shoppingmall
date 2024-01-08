@@ -34,3 +34,22 @@
 
 ## 기타
 - 개발 기간 : 23.11.14 ~ 24.01.05
+
+## 페이지별 스크린샷
+- 로그인 페이지
+![image](https://github.com/jeonmoo/shoppingmall/assets/86511348/54e76faf-642d-482b-95ec-44b343e37380)
+
+- 회원가입
+![image](https://github.com/jeonmoo/shoppingmall/assets/86511348/af4f38a0-95d1-438b-b0ff-5b7eb4893997)
+
+- 상품 페이지
+![image](https://github.com/jeonmoo/shoppingmall/assets/86511348/0b7046fa-97d4-45bf-8860-df066f503cbf)
+
+- 결제 페이지
+![image](https://github.com/jeonmoo/shoppingmall/assets/86511348/653a29b9-1ac4-4d1a-8fe7-356541766292)
+
+- 주문조회
+![image](https://github.com/jeonmoo/shoppingmall/assets/86511348/b007483d-ec6b-4055-95a2-98afc0717840)
+
+- 장바구니
+![image](https://github.com/jeonmoo/shoppingmall/assets/86511348/442d6733-38f4-4cf5-b953-e3b615c2a2dd)
