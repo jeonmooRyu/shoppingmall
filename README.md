@@ -26,7 +26,8 @@
 
 ## 개발환경
 - Front : Thymeleaf, bootstrap5.3, Jquery
-- Backend : Java(17), JPA(+ QueryDsl), MapStruct, Lombok
+- Backend : Java(17), JPA(+ QueryDsl), Facade 패턴, MapStruct, Gradle
+- DB : Postgresql
 - 버전 관리 : GitHub, GitFlow, 일반적인 커밋 컨벤션 준수
 
 ## ERD
