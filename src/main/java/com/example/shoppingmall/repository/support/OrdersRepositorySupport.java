@@ -24,7 +24,7 @@ public class OrdersRepositorySupport {
         return jpaQueryFactory.selectFrom(orders)
                 .leftJoin(orders.ordersDetails, ordersDetail)
                 .fetchJoin()
-                .where(orders.orderToken.eq(orderToken))
+                .where(orders.uid.eq(Util.getUid().orElseThrow()), orders.orderToken.eq(orderToken))
                 .fetchOne();
     }
 

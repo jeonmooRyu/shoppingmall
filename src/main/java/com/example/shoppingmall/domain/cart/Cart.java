@@ -30,9 +30,9 @@ public class Cart extends BaseEntity {
     @Setter
     private Product product;
 
-    @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "users.id")
-    private Users user;
+//    @ManyToOne(fetch = FetchType.EAGER)
+//    @JoinColumn(name = "users.id")
+//    private Users user;
 
     @Builder
     public Cart(String uid, Option option, Integer quantity) {

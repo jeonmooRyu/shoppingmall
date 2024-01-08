@@ -5,7 +5,6 @@ import com.example.shoppingmall.domain.Promotion;
 import com.example.shoppingmall.domain.review.Review;
 import com.example.shoppingmall.domain.baseEntity.BaseEntity;
 import com.example.shoppingmall.domain.enums.ProductType;
-import com.example.shoppingmall.domain.enums.ServiceType;
 import lombok.*;
 
 import javax.persistence.*;
@@ -30,9 +29,6 @@ public class Product extends BaseEntity {
     @Enumerated(value = EnumType.STRING)
     private ProductType productType;
     @Setter
-    @Enumerated(value = EnumType.STRING)
-    private ServiceType serviceType;
-    @Setter
     private BigDecimal price;
     @Setter
     private Boolean isDelete;
@@ -51,11 +47,10 @@ public class Product extends BaseEntity {
     private List<Promotion> promotions;
 
     @Builder
-    public Product(String productName, ProductType productType, ServiceType serviceType, BigDecimal price, String detailImage, String thumbnail, String option) {
+    public Product(String productName, ProductType productType, BigDecimal price, String detailImage, String thumbnail, String option) {
         this.productCode = TokenGenerator.generateProductCode();
         this.productName = productName;
         this.productType = productType;
-        this.serviceType = serviceType;
         this.price = price;
         this.isDelete = false;
         this.detailImage = detailImage;

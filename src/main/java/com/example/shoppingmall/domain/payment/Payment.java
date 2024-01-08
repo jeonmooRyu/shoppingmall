@@ -18,6 +18,8 @@ public class Payment extends BaseEntity {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     @Setter
+    private String uid;
+    @Setter
     private BigDecimal payAmount;
     @Setter
     private String payCompanyCode;  // 결제사에서 발급한 결제코드
@@ -43,7 +45,8 @@ public class Payment extends BaseEntity {
     private Orders orders;
 
     @Builder
-    public Payment(BigDecimal payAmount, String payCompanyCode, PaymentType paymentType, CardCompany cardCompany, String cardNo, String cardExpYear, String cardExpMon, String cardCvv, String cardPw, Orders orders) {
+    public Payment(String uid, BigDecimal payAmount, String payCompanyCode, PaymentType paymentType, CardCompany cardCompany, String cardNo, String cardExpYear, String cardExpMon, String cardCvv, String cardPw, Orders orders) {
+        this.uid = uid;
         this.payAmount = payAmount;
         this.payCompanyCode = payCompanyCode;
         this.paymentType = paymentType;

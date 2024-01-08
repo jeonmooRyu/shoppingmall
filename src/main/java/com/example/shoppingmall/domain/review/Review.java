@@ -15,7 +15,7 @@ public class Review extends BaseEntity {
 
     @Id @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-    @Setter private String uid;
+//    @Setter private String uid;
     @Setter private String content;
     @Setter private Integer score;
 
