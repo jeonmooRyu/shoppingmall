@@ -1,39 +1,3 @@
-Skip to content
-jeonmoo
-/
-shoppingmall
-
-Type / to search
-
-Code
-Issues
-Pull requests
-1
-Actions
-Projects
-Security
-Insights
-Settings
-Create README.md #1
-Open
-jeonmoo wants to merge 1 commit into master from jeonmoo-patch-1
-+36 −0
-Conversation 0
-Commits 1
-Checks 0
-Files changed 1
-Open
-Create README.md
-#1
-File filter
-
-Create README.md
-jeonmoo-patch-1 (#1)
-@jeonmoojeonmoo committed 1 minute ago
-commit 43e8063d150f0004cb24b5d0aefebffb83b8d76d
-36 changes: 36 additions & 0 deletions36  
-README.md
-@@ -0,0 +1,36 @@
 # 👕 의류 쇼핑몰
 ![image](https://github.com/jeonmoo/shoppingmall/assets/86511348/64133731-2767-4732-a65c-19eedc456763 "메인페이지 이미지")
 
@@ -70,15 +34,3 @@ README.md
 
 ## 기타
 - 개발 기간 : 23.11.14 ~ 24.01.05
-  Footer
-  © 2024 GitHub, Inc.
-  Footer navigation
-  Terms
-  Privacy
-  Security
-  Status
-  Docs
-  Contact
-  Manage cookies
-  Do not share my personal information
-  Create README.md by jeonmoo · Pull Request #1 · jeonmoo/shoppingmall 
