@@ -1,7 +1,6 @@
 package com.example.shoppingmall.interfaces.product;
 
 import com.example.shoppingmall.domain.enums.ProductType;
-import com.example.shoppingmall.domain.enums.ServiceType;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -19,7 +18,6 @@ public class ProductDto {
         private String productName;
         private String option;
         private ProductType productType;
-        private ServiceType serviceType;
         private BigDecimal price;
         private String detailImage;
         private String thumbnail;
