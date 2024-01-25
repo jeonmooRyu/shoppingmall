@@ -22,7 +22,7 @@
     - 장바구니
         - 장바구니 등록
     - 리뷰
-        - 리뷰작성
+        - 리뷰작성 
 
 ## 개발환경
 - Front : Thymeleaf, bootstrap5.3, Jquery
